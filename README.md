@@ -3,5 +3,8 @@
 
 Awfully decompiled the new beta Brick Hill Workshop for 25$.
 
-- **Found the beta-build - me.** (http://www.brick-hell.ml/download)
+- **Found the experimental-build - me.**
 - **Decompiled - thedenbruh**. (https://github.com/thedenbruh)
+
+# I want to compile it!
+Oops, we couldn't to compile it, but you can try compile via Godot Game Engine. (https://godotengine.org/)
