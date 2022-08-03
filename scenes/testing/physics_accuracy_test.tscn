@@ -1,0 +1,233 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/testing/physics_accuracy_test.gd" type="Script" id=1]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+
+[sub_resource type="ConcavePolygonShape" id=2]
+data = PoolVector3Array( -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5 )
+
+[node name="PhysicsAccuracyTest" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+test_scenario = 8
+ceiling_height = 20.0
+spawn_pattern = 3
+spawn_count = 32
+spawn_radius = 6.5
+spawn_velocity = 0.167
+spawn_translation_offset = Vector3( 2.562, 0, 0 )
+spawn_rotation_offset = Vector3( 0, -45, 0 )
+additional_spawn_velocity = Vector3( 0, -0.163, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Geometry" type="Spatial" parent="."]
+
+[node name="Floor" type="StaticBody" parent="Geometry"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+input_ray_pickable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Geometry/Floor"]
+transform = Transform( 300, 0, 0, 0, 1, 0, 0, 0, 300, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="Ceiling" type="StaticBody" parent="Geometry"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
+input_ray_pickable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling"]
+transform = Transform( 300, 0, 0, 0, 1, 0, 0, 0, 300, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="PhysicsTesters" type="Spatial" parent="."]
+
+[node name="CameraRig" type="Spatial" parent="."]
+
+[node name="RightRemoteTransform" type="RemoteTransform" parent="CameraRig"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 160, 0, 0 )
+remote_path = NodePath("../../HBoxContainer/Viewports/RightViewportContainer/Viewport/Camera")
+
+[node name="TopRemoteTransform" type="RemoteTransform" parent="CameraRig"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 160, 0 )
+remote_path = NodePath("../../HBoxContainer/Viewports/TopViewportContainer/Viewport/Camera")
+
+[node name="FrontRemoteTransform" type="RemoteTransform" parent="CameraRig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 160 )
+remote_path = NodePath("../../HBoxContainer/Viewports/FrontViewportContainer/Viewport/Camera")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewports" type="Control" parent="HBoxContainer"]
+margin_right = 876.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="RightViewportContainer" type="ViewportContainer" parent="HBoxContainer/Viewports"]
+anchor_right = 0.5
+anchor_bottom = 0.5
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="HBoxContainer/Viewports/RightViewportContainer"]
+size = Vector2( 438, 360 )
+handle_input_locally = false
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="Camera" type="Camera" parent="HBoxContainer/Viewports/RightViewportContainer/Viewport"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 160, 0, 0 )
+projection = 1
+current = true
+size = 15.0
+near = 0.01
+far = 8192.0
+
+[node name="TopViewportContainer" type="ViewportContainer" parent="HBoxContainer/Viewports"]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="HBoxContainer/Viewports/TopViewportContainer"]
+size = Vector2( 438, 360 )
+handle_input_locally = false
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="Camera" type="Camera" parent="HBoxContainer/Viewports/TopViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 160, 0 )
+projection = 1
+current = true
+size = 15.0
+near = 0.01
+far = 8192.0
+
+[node name="FrontViewportContainer" type="ViewportContainer" parent="HBoxContainer/Viewports"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="HBoxContainer/Viewports/FrontViewportContainer"]
+size = Vector2( 438, 360 )
+handle_input_locally = false
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="Camera" type="Camera" parent="HBoxContainer/Viewports/FrontViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 160 )
+projection = 1
+current = true
+size = 15.0
+near = 0.01
+far = 8192.0
+
+[node name="PerspectiveViewportContainer" type="ViewportContainer" parent="HBoxContainer/Viewports"]
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="HBoxContainer/Viewports/PerspectiveViewportContainer"]
+size = Vector2( 438, 360 )
+handle_input_locally = false
+msaa = 2
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="Camera" type="Camera" parent="HBoxContainer/Viewports/PerspectiveViewportContainer/Viewport"]
+transform = Transform( 0.707107, -0.353553, 0.612373, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612373, 6, 6, 6 )
+current = true
+size = 15.0
+near = 0.01
+far = 8192.0
+
+[node name="Panel" type="Panel" parent="HBoxContainer"]
+margin_left = 880.0
+margin_right = 1280.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 400, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 11.0
+margin_top = 10.0
+margin_right = -9.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Panel/VBoxContainer"]
+margin_right = 380.0
+margin_bottom = 24.0
+
+[node name="LateralCheckBox" type="CheckBox" parent="HBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+margin_right = 71.0
+margin_bottom = 24.0
+pressed = true
+text = "Lateral"
+
+[node name="VerticalCheckBox" type="CheckBox" parent="HBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 75.0
+margin_right = 151.0
+margin_bottom = 24.0
+pressed = true
+text = "Vertical"
+
+[node name="SlideSpinBox" type="SpinBox" parent="HBoxContainer/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 155.0
+margin_right = 380.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+rounded = true
+prefix = "Slide"
+
+[node name="DebugPrint" type="RichTextLabel" parent="HBoxContainer/Panel/VBoxContainer"]
+margin_top = 28.0
+margin_right = 380.0
+margin_bottom = 700.0
+focus_mode = 1
+size_flags_vertical = 3
+bbcode_enabled = true
+__meta__ = {
+"_edit_lock_": true
+}
+[connection signal="gui_input" from="HBoxContainer/Viewports/RightViewportContainer" to="HBoxContainer/Viewports/RightViewportContainer/Viewport" method="unhandled_input"]
+[connection signal="gui_input" from="HBoxContainer/Viewports/RightViewportContainer" to="." method="viewport_input" binds= [ 0 ]]
+[connection signal="gui_input" from="HBoxContainer/Viewports/TopViewportContainer" to="HBoxContainer/Viewports/TopViewportContainer/Viewport" method="unhandled_input"]
+[connection signal="gui_input" from="HBoxContainer/Viewports/TopViewportContainer" to="." method="viewport_input" binds= [ 1 ]]
+[connection signal="gui_input" from="HBoxContainer/Viewports/FrontViewportContainer" to="HBoxContainer/Viewports/FrontViewportContainer/Viewport" method="unhandled_input"]
+[connection signal="gui_input" from="HBoxContainer/Viewports/FrontViewportContainer" to="." method="viewport_input" binds= [ 2 ]]
+[connection signal="gui_input" from="HBoxContainer/Viewports/PerspectiveViewportContainer" to="HBoxContainer/Viewports/PerspectiveViewportContainer/Viewport" method="unhandled_input"]
+[connection signal="gui_input" from="HBoxContainer/Viewports/PerspectiveViewportContainer" to="." method="viewport_input" binds= [ 3 ]]
+[connection signal="toggled" from="HBoxContainer/Panel/VBoxContainer/HBoxContainer/LateralCheckBox" to="." method="set_show_lateral"]
+[connection signal="toggled" from="HBoxContainer/Panel/VBoxContainer/HBoxContainer/VerticalCheckBox" to="." method="set_show_vertical"]
+[connection signal="value_changed" from="HBoxContainer/Panel/VBoxContainer/HBoxContainer/SlideSpinBox" to="." method="set_slide_index_float"]

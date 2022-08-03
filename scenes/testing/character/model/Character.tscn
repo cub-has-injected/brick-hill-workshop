@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/testing/character/src/ik_pose.gd" type="Script" id=1]
+[ext_resource path="res://scenes/testing/character/model/character.dae" type="PackedScene" id=2]
+
+[node name="Character" instance=ExtResource( 2 )]
+
+[node name="Skeleton" parent="lp_guy" index="0"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+
+[node name="LeftShoulderIK" type="Position3D" parent="lp_guy/Skeleton" index="1"]
+transform = Transform( 1, 0, 0, 0, 0.999538, -0.030399, 0, 0.030399, 0.999538, 1.30873, 0.452957, -0.0250214 )
+script = ExtResource( 1 )
+bone = 0
+mode = 1
+axis = 0
+flip_axis = false
+_bone_name = ""
+
+[node name="RightShoulderIK" type="Position3D" parent="lp_guy/Skeleton" index="2"]
+transform = Transform( 1, 0, 0, 0, 0.999538, -0.030399, 0, 0.030399, 0.999538, -1.21182, 0.477389, -0.000474304 )
+script = ExtResource( 1 )
+bone = 0
+mode = 1
+axis = 0
+flip_axis = false
+_bone_name = ""
+
+[node name="LeftHipIK" type="Position3D" parent="lp_guy/Skeleton" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.260381, 0.371557, 1.04785 )
+script = ExtResource( 1 )
+bone = 0
+mode = 1
+axis = 0
+flip_axis = false
+_bone_name = ""
+
+[node name="RightHipIK" type="Position3D" parent="lp_guy/Skeleton" index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26, 0.372, 1.048 )
+script = ExtResource( 1 )
+bone = 0
+mode = 1
+axis = 0
+flip_axis = false
+_bone_name = ""
+
+[node name="LookTarget" type="Spatial" parent="lp_guy/Skeleton" index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HeadPitchIK" type="Position3D" parent="lp_guy/Skeleton/LookTarget" index="0"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+bone = 5
+mode = 0
+axis = 0
+out_axis = 0
+flip_axis = true
+_bone_name = "head"
+
+[node name="HeadYawIK" type="Position3D" parent="lp_guy/Skeleton/LookTarget" index="1"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+bone = 4
+mode = 0
+axis = 1
+out_axis = 2
+flip_axis = true
+_bone_name = "neck"
+
+[node name="TorsoIK" type="Position3D" parent="lp_guy/Skeleton" index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 2 )
+script = ExtResource( 1 )
+bone = 2
+mode = 0
+axis = 1
+out_axis = 2
+flip_axis = true
+_bone_name = "spine"
+
+[node name="AnimationPlayer" parent="." index="1"]
+playback_default_blend_time = 0.2

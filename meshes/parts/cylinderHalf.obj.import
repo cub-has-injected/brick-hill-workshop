@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/cylinderHalf.obj-e907de42a16931370fb896a03cab7b50.mesh"
+
+[deps]
+
+files=[ "res://.import/cylinderHalf.obj-e907de42a16931370fb896a03cab7b50.mesh" ]
+
+source_file="res://meshes/parts/cylinderHalf.obj"
+dest_files=[ "res://.import/cylinderHalf.obj-e907de42a16931370fb896a03cab7b50.mesh", "res://.import/cylinderHalf.obj-e907de42a16931370fb896a03cab7b50.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,366 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Environment.png" type="Texture" id=1]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Workspace.png" type="Texture" id=2]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectEnvironment.png" type="Texture" id=3]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Maps.png" type="Texture" id=4]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectWorkspace.png" type="Texture" id=5]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Stickers.png" type="Texture" id=6]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Meshes.png" type="Texture" id=7]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Models.png" type="Texture" id=8]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Sound.png" type="Texture" id=9]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectModels.png" type="Texture" id=10]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectMeshes.png" type="Texture" id=11]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectFile.png" type="Texture" id=12]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectStickers.png" type="Texture" id=13]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectSound.png" type="Texture" id=14]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectTools.png" type="Texture" id=15]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Tools.png" type="Texture" id=16]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectMaps.png" type="Texture" id=17]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/File.png" type="Texture" id=18]
+[ext_resource path="res://scripts/nodes/ui/icon_button.gd" type="Script" id=19]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PanelContainer
+
+signal button_index_pressed(index)
+
+func button_index_pressed(index: int) -> void:
+	emit_signal(\"button_index_pressed\", index)
+
+func set_disabled(new_disabled: bool) -> void:
+	var controls := [
+		$ScrollContainer/SidebarButtons/File,
+		$ScrollContainer/SidebarButtons/Workspace,
+		$ScrollContainer/SidebarButtons/Environment,
+	]
+
+	for control in controls:
+		control.disabled = new_disabled
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends VBoxContainer
+
+signal button_index_pressed(index)
+
+var buttons := []
+var current_idx := 0
+
+var button_group: ButtonGroup = null
+
+func _enter_tree() -> void:
+	button_group = ButtonGroup.new()
+
+	buttons.clear()
+	for child in get_children():
+		if child is Button:
+			child.group = button_group
+			child.connect('pressed', self, 'button_pressed', [buttons.size()])
+			buttons.append(child)
+
+func button_pressed(index: int) -> void:
+	if current_idx != index:
+		current_idx = index
+		emit_signal('button_index_pressed', index)
+	else:
+		close_sidebar()
+
+
+func close_sidebar() -> void:
+	current_idx = 0
+	emit_signal('button_index_pressed', 0)
+	buttons[0].set_pressed(true)
+"
+
+[sub_resource type="ButtonGroup" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=4]
+
+[node name="MenuBar" type="PanelContainer"]
+margin_right = 48.0
+margin_bottom = 680.0
+rect_min_size = Vector2( 48, 0 )
+focus_mode = 2
+size_flags_vertical = 3
+script = SubResource( 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 47.0
+margin_bottom = 673.0
+mouse_filter = 2
+scroll_horizontal_enabled = false
+
+[node name="SidebarButtons" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 40.0
+margin_bottom = 556.0
+rect_min_size = Vector2( 32, 0 )
+size_flags_horizontal = 3
+custom_constants/separation = 8
+script = SubResource( 2 )
+
+[node name="NullButton" type="Button" parent="ScrollContainer/SidebarButtons"]
+visible = false
+margin_right = 48.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Open"
+toggle_mode = true
+pressed = true
+keep_pressed_outside = true
+__meta__ = {
+"_editor_description_": "File"
+}
+
+[node name="File" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Open"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "File"
+}
+button_icon = ExtResource( 18 )
+pressed_icon = ExtResource( 12 )
+
+[node name="Separator1" type="CenterContainer" parent="ScrollContainer/SidebarButtons"]
+margin_top = 48.0
+margin_right = 40.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 40, 20 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SidebarButtons/Separator1"]
+margin_left = 11.0
+margin_top = 9.0
+margin_right = 29.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 18, 1 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Workspace" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 76.0
+margin_right = 40.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Workspace"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+group = SubResource( 3 )
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 2 )
+pressed_icon = ExtResource( 5 )
+
+[node name="Environment" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 124.0
+margin_right = 40.0
+margin_bottom = 164.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Environment"
+size_flags_horizontal = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 3 )
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Environment"
+}
+button_icon = ExtResource( 1 )
+pressed_icon = ExtResource( 3 )
+
+[node name="Separator2" type="CenterContainer" parent="ScrollContainer/SidebarButtons"]
+margin_top = 172.0
+margin_right = 40.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 40, 20 )
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SidebarButtons/Separator2"]
+margin_left = 11.0
+margin_top = 9.0
+margin_right = 29.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 18, 1 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Model" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 200.0
+margin_right = 40.0
+margin_bottom = 240.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Models"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+disabled = true
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Model"
+}
+button_icon = ExtResource( 8 )
+pressed_icon = ExtResource( 10 )
+
+[node name="Sticker" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 248.0
+margin_right = 40.0
+margin_bottom = 288.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Stickers"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+disabled = true
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Sticker"
+}
+button_icon = ExtResource( 6 )
+pressed_icon = ExtResource( 13 )
+
+[node name="Mesh" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 296.0
+margin_right = 40.0
+margin_bottom = 336.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Meshes"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Mesh"
+}
+button_icon = ExtResource( 7 )
+pressed_icon = ExtResource( 11 )
+
+[node name="Map" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 344.0
+margin_right = 40.0
+margin_bottom = 384.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Maps"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Map"
+}
+button_icon = ExtResource( 4 )
+pressed_icon = ExtResource( 17 )
+
+[node name="Tools" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 392.0
+margin_right = 40.0
+margin_bottom = 432.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Tools"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Item"
+}
+button_icon = ExtResource( 16 )
+pressed_icon = ExtResource( 15 )
+
+[node name="Sound" type="Button" parent="ScrollContainer/SidebarButtons"]
+margin_top = 440.0
+margin_right = 40.0
+margin_bottom = 480.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Sound"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Sound"
+}
+button_icon = ExtResource( 9 )
+pressed_icon = ExtResource( 14 )
+
+[node name="Separator3" type="CenterContainer" parent="ScrollContainer/SidebarButtons"]
+margin_top = 488.0
+margin_right = 40.0
+margin_bottom = 508.0
+rect_min_size = Vector2( 40, 20 )
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SidebarButtons/Separator3"]
+margin_left = 11.0
+margin_top = 9.0
+margin_right = 29.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 18, 1 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Debug" type="Button" parent="ScrollContainer/SidebarButtons"]
+material = SubResource( 4 )
+margin_top = 516.0
+margin_right = 40.0
+margin_bottom = 556.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Sound"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_description_": "Sound"
+}
+button_icon = ExtResource( 7 )
+pressed_icon = ExtResource( 11 )
+
+[connection signal="button_index_pressed" from="ScrollContainer/SidebarButtons" to="." method="button_index_pressed"]

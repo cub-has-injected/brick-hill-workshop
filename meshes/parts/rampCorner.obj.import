@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/rampCorner.obj-e0df357ce394519ec57413506445cdbb.mesh"
+
+[deps]
+
+files=[ "res://.import/rampCorner.obj-e0df357ce394519ec57413506445cdbb.mesh" ]
+
+source_file="res://meshes/parts/rampCorner.obj"
+dest_files=[ "res://.import/rampCorner.obj-e0df357ce394519ec57413506445cdbb.mesh", "res://.import/rampCorner.obj-e0df357ce394519ec57413506445cdbb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

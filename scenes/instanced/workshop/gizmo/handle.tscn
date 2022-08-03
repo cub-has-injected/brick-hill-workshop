@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/nodes/transform_gizmo/gizmo_handle.gd" type="Script" id=1]
+
+[sub_resource type="CylinderMesh" id=10]
+top_radius = 0.001
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="CylinderShape" id=11]
+resource_local_to_scene = true
+radius = 0.2
+height = 0.5
+
+[sub_resource type="Shader" id=13]
+code = "shader_type spatial;
+render_mode blend_mix,cull_disabled,unshaded,depth_test_disable;
+uniform vec4 color : hint_color;
+uniform float band_start = 4.0;
+
+void vertex() {
+	UV -= 0.5;
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	if (PROJECTION_MATRIX[3][3] != 0.0) {
+		float h = abs(1.0 / (2.0 * PROJECTION_MATRIX[1][1]));
+		float sc = (h * 2.0); //consistent with Y-fov
+		MODELVIEW_MATRIX[0]*=sc;
+		MODELVIEW_MATRIX[1]*=sc;
+		MODELVIEW_MATRIX[2]*=sc;
+	} else {
+		float sc = -(MODELVIEW_MATRIX)[3].z;
+		MODELVIEW_MATRIX[0]*=sc;
+		MODELVIEW_MATRIX[1]*=sc;
+		MODELVIEW_MATRIX[2]*=sc;
+	}
+}
+
+void fragment() {
+	vec2 frag_size = fwidth(UV);
+	float frag_width = (frag_size.x + frag_size.y) * 0.5;
+	frag_width *= 2.0;
+	
+	float d = length(UV) * 2.0;
+	float a = 1.0 - d;
+	
+	float color_fac = smoothstep(band_start, band_start - 1.0, a / frag_width);
+	vec3 final_color = mix(vec3(1.0), color.rgb, color_fac);
+	float alpha = smoothstep(0.0, frag_width, a);
+	
+	ALBEDO = final_color;
+	ALPHA = alpha;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 13 )
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="QuadMesh" id=9]
+size = Vector2( 0.02, 0.02 )
+
+[node name="GizmoHandle" type="Area"]
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 1 )
+mesh = SubResource( 10 )
+shape = SubResource( 11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+cast_shadow = 0
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="."]
+material_override = SubResource( 12 )
+cast_shadow = 0
+mesh = SubResource( 9 )
+material/0 = null

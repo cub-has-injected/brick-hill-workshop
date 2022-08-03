@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/arm.obj-0fcfa0ffeddc3378f7943767f9b50679.mesh"
+
+[deps]
+
+files=[ "res://.import/arm.obj-0fcfa0ffeddc3378f7943767f9b50679.mesh" ]
+
+source_file="res://models/avatar/arm.obj"
+dest_files=[ "res://.import/arm.obj-0fcfa0ffeddc3378f7943767f9b50679.mesh", "res://.import/arm.obj-0fcfa0ffeddc3378f7943767f9b50679.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

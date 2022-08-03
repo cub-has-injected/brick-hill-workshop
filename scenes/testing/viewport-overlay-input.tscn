@@ -1,0 +1,154 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://default_env.tres" type="Environment" id=1]
+[ext_resource path="res://scripts/nodes/ui/viewport_compositor.gd" type="Script" id=2]
+[ext_resource path="res://scripts/nodes/pickable_collision_object.gd" type="Script" id=3]
+[ext_resource path="res://scripts/nodes/object_picking_viewport.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+export(Script) var viewport_script
+export(Script) var object_script
+export(Script) var composite_viewport_script
+export(Array, ViewportTexture) var viewport_textures
+
+func viewport_resized() -> void:
+	$ViewportCompositor.size = $HBoxContainer/ViewportControl.rect_size
+"
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("ViewportCompositor/BaseViewport")
+
+[sub_resource type="ViewportTexture" id=3]
+viewport_path = NodePath("ViewportCompositor/OverlayViewport")
+
+[sub_resource type="World" id=4]
+environment = ExtResource( 1 )
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="BoxShape" id=6]
+
+[sub_resource type="World" id=7]
+environment = ExtResource( 1 )
+
+[sub_resource type="SphereMesh" id=8]
+
+[sub_resource type="SphereShape" id=9]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+viewport_script = ExtResource( 4 )
+object_script = ExtResource( 3 )
+composite_viewport_script = ExtResource( 2 )
+viewport_textures = [ SubResource( 2 ), SubResource( 3 ) ]
+
+[node name="ViewportCompositor" type="Node" parent="."]
+script = ExtResource( 2 )
+size = Vector2( 638, 720 )
+
+[node name="BaseViewport" type="Viewport" parent="ViewportCompositor"]
+size = Vector2( 638, 720 )
+own_world = true
+world = SubResource( 4 )
+handle_input_locally = false
+render_target_v_flip = true
+render_target_update_mode = 3
+physics_object_picking = true
+script = ExtResource( 4 )
+
+[node name="Spatial" type="Spatial" parent="ViewportCompositor/BaseViewport"]
+
+[node name="Camera" type="Camera" parent="ViewportCompositor/BaseViewport/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4 )
+
+[node name="CubeBody" type="KinematicBody" parent="ViewportCompositor/BaseViewport/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -4 )
+script = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportCompositor/BaseViewport/Spatial/CubeBody"]
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportCompositor/BaseViewport/Spatial/CubeBody"]
+shape = SubResource( 6 )
+
+[node name="OverlayViewport" type="Viewport" parent="ViewportCompositor"]
+size = Vector2( 638, 720 )
+own_world = true
+world = SubResource( 7 )
+transparent_bg = true
+handle_input_locally = false
+render_target_v_flip = true
+render_target_update_mode = 3
+physics_object_picking = true
+script = ExtResource( 4 )
+
+[node name="Spatial" type="Spatial" parent="ViewportCompositor/OverlayViewport"]
+
+[node name="SphereBody" type="KinematicBody" parent="ViewportCompositor/OverlayViewport/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -4 )
+script = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportCompositor/OverlayViewport/Spatial/SphereBody"]
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportCompositor/OverlayViewport/Spatial/SphereBody"]
+shape = SubResource( 9 )
+
+[node name="Camera" type="Camera" parent="ViewportCompositor/OverlayViewport/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Padding" type="Control" parent="HBoxContainer"]
+margin_right = 640.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportControl" type="Control" parent="HBoxContainer"]
+margin_left = 640.0
+margin_right = 1280.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BaseTextureRect" type="TextureRect" parent="HBoxContainer/ViewportControl"]
+margin_right = 638.0
+margin_bottom = 720.0
+mouse_filter = 2
+texture = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OverlayTextureRect" type="TextureRect" parent="HBoxContainer/ViewportControl"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="gui_input" from="HBoxContainer/ViewportControl" to="ViewportCompositor" method="viewport_input"]
+[connection signal="resized" from="HBoxContainer/ViewportControl" to="." method="viewport_resized"]

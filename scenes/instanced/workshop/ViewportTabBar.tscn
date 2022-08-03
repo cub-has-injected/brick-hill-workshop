@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/icons/workshop-assets/controls/HouseThumb.png" type="Texture" id=1]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/ScriptThumb.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.898039, 0.898039, 0.898039, 1 )
+
+[sub_resource type="GDScript" id=15]
+script/source = "extends Tabs
+tool
+
+export(Array, Dictionary) var tab_data := [
+	{
+		\"name\": \"Scene Editor\",
+		\"icon\": preload(\"res://ui/icons/workshop-assets/controls/HouseThumb.png\") as Texture,
+		\"close\": false
+	},
+	{
+		\"name\": \"Script Editor\",
+		\"icon\": preload(\"res://ui/icons/workshop-assets/Parts/Script.png\") as Texture,
+		\"close\": false
+	}
+] setget set_tab_data
+
+func set_tab_data(new_tab_data: Array) -> void:
+	if tab_data != new_tab_data:
+		tab_data = new_tab_data
+
+		while get_tab_count() > 0:
+			remove_tab(0)
+
+		for tab_data_inst in tab_data:
+			add_tab(tab_data_inst['name'], tab_data_inst['icon'])
+"
+
+[node name="ViewportTabBar" type="PanelContainer"]
+show_behind_parent = true
+margin_left = 48.0
+margin_top = 72.0
+margin_right = 1280.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 0, 40 )
+focus_mode = 1
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 14 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+margin_right = 1232.0
+margin_bottom = 40.0
+mouse_filter = 2
+
+[node name="Tabs" type="Tabs" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.37738
+margin_top = 8.37735
+margin_right = -5.62262
+margin_bottom = 0.37735
+focus_mode = 1
+size_flags_horizontal = 0
+size_flags_vertical = 0
+tab_align = 0
+tab_close_display_policy = 2
+drag_to_rearrange_enabled = true
+script = SubResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+tab_data = [ {
+"close": false,
+"icon": ExtResource( 1 ),
+"name": "Scene Editor"
+}, {
+"close": false,
+"icon": ExtResource( 2 ),
+"name": "Script Editor"
+} ]

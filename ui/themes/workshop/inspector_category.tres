@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=3 format=2]
+
+[ext_resource path="res://resources/dynamic_font/montserrat_regular.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[resource]
+default_font = ExtResource( 1 )
+ToolButton/colors/font_color = Color( 0.121569, 0.121569, 0.121569, 1 )
+ToolButton/colors/font_color_disabled = Color( 0.0980392, 0.0509804, 0, 0.301961 )
+ToolButton/colors/font_color_hover = Color( 0.0588235, 0.0588235, 0.0588235, 1 )
+ToolButton/colors/font_color_pressed = Color( 0, 0, 0, 1 )
+ToolButton/constants/hseparation = 3
+ToolButton/fonts/font = null
+ToolButton/icons/ = null
+ToolButton/styles/disabled = null
+ToolButton/styles/focus = null
+ToolButton/styles/hover = null
+ToolButton/styles/normal = null
+ToolButton/styles/pressed = SubResource( 1 )

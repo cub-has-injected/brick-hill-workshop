@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/nodes/camera_widget.gd" type="Script" id=1]
+
+[node name="CameraWidget" type="ColorRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -287.0
+margin_top = -29.0
+margin_right = -5.0
+margin_bottom = -5.0
+rect_min_size = Vector2( 0, 24 )
+color = Color( 0.996078, 0.996078, 0.996078, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 278.0
+margin_bottom = 20.0
+mouse_filter = 2
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_top = 1.0
+margin_right = 37.0
+margin_bottom = 15.0
+text = "Zoom"
+
+[node name="Slider" type="HSlider" parent="MarginContainer/HBoxContainer"]
+margin_left = 45.0
+margin_right = 274.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.0
+
+[node name="FadeOutTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="timeout" from="FadeOutTimer" to="." method="fade_out"]

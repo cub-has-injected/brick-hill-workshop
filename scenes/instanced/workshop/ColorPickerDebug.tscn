@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/themes/workshop_general.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/instanced/workshop/ColorPicker.tscn" type="PackedScene" id=2]
+
+
+[node name="Control" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.630249
+margin_right = 0.630249
+mouse_filter = 2
+theme = ExtResource( 1 )
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker" parent="." instance=ExtResource( 2 )]
+margin_left = 539.604
+margin_top = 250.0
+margin_right = -591.396
+margin_bottom = -299.0
+color_lens_size = 0.1

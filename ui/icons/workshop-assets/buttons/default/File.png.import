@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/File.png-8f08b78f42693d0c24f3986d5e11a14d.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://ui/icons/workshop-assets/buttons/default/File.png"
+dest_files=[ "res://.import/File.png-8f08b78f42693d0c24f3986d5e11a14d.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

@@ -1,0 +1,1755 @@
+[gd_scene load_steps=129 format=2]
+
+[ext_resource path="res://ui/themes/workshop_general.tres" type="Theme" id=1]
+[ext_resource path="res://scripts/nodes/workshop_root.gd" type="Script" id=2]
+[ext_resource path="res://scenes/instanced/workshop/ToolBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/instanced/workshop/MenuBar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/instanced/workshop/EditBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/instanced/workshop/CameraWidget.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/instanced/property_inspector.gd" type="Script" id=7]
+[ext_resource path="res://scripts/nodes/workshop_camera.gd" type="Script" id=8]
+[ext_resource path="res://addons/3d_widgets/gdscript/collision_object_input_handler.gd" type="Script" id=9]
+[ext_resource path="res://addons/scene_tree_control/scripts/scene_tree_control_new.gd" type="Script" id=10]
+[ext_resource path="res://scripts/nodes/ui/viewport_sizer.gd" type="Script" id=11]
+[ext_resource path="res://scripts/fsm_tree/group_manager.gd" type="Script" id=12]
+[ext_resource path="res://scripts/nodes/remote_rect.gd" type="Script" id=13]
+[ext_resource path="res://scripts/nodes/hotkey_manager.gd" type="Script" id=14]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_option_button.gd" type="Script" id=15]
+[ext_resource path="res://scenes/instanced/workshop/ViewportTabBar.tscn" type="PackedScene" id=16]
+[ext_resource path="res://addons/3d_widgets/gdscript/coordinate_space.gd" type="Script" id=17]
+[ext_resource path="res://addons/3d_widgets/gdscript/collision_settings.gd" type="Script" id=18]
+[ext_resource path="res://addons/3d_widgets/gdscript/hovered_node.gd" type="Script" id=19]
+[ext_resource path="res://addons/3d_widgets/gdscript/selected_nodes.gd" type="Script" id=20]
+[ext_resource path="res://addons/3d_widgets/gdscript/snap_settings.gd" type="Script" id=21]
+[ext_resource path="res://addons/3d_widgets/gdscript/mouse_plane_rotate_handler.gd" type="Script" id=22]
+[ext_resource path="res://scripts/fsm_tree/lock_manager.gd" type="Script" id=23]
+[ext_resource path="res://scripts/fsm_tree/anchor_manager.gd" type="Script" id=24]
+[ext_resource path="res://scripts/fsm_tree/paint_material_manager.gd" type="Script" id=25]
+[ext_resource path="res://scripts/fsm_tree/paint_surface_manager.gd" type="Script" id=26]
+[ext_resource path="res://scripts/fsm_tree/paint_color_manager.gd" type="Script" id=27]
+[ext_resource path="res://addons/3d_widgets/gdscript/mouse_plane_move_handler.gd" type="Script" id=28]
+[ext_resource path="res://addons/3d_widgets/gdscript/keyboard_move_handler.gd" type="Script" id=29]
+[ext_resource path="res://addons/3d_widgets/gdscript/mouse_plane/mouse_plane.gd" type="Script" id=30]
+[ext_resource path="res://scripts/nodes/color_picker_manager.gd" type="Script" id=31]
+[ext_resource path="res://scripts/fsm_tree/snap_to_face_manager.gd" type="Script" id=32]
+[ext_resource path="res://scenes/instanced/workshop/scene_tree_row/tree_row_control.tscn" type="PackedScene" id=33]
+[ext_resource path="res://scripts/nodes/eyedropper_manager.gd" type="Script" id=34]
+[ext_resource path="res://scenes/instanced/graphics_settings.tscn" type="PackedScene" id=35]
+[ext_resource path="res://scenes/instanced/property_inspector.tscn" type="PackedScene" id=36]
+[ext_resource path="res://scripts/inspector_controls/inspector_skybox.gd" type="Script" id=37]
+[ext_resource path="res://addons/bandbox_selector/scripts/band_box_selector.gd" type="Script" id=38]
+[ext_resource path="res://addons/debug_tools/gdscript/geometry_plane.gd" type="Script" id=39]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_check_box.gd" type="Script" id=40]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_button.gd" type="Script" id=41]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_line_edit.gd" type="Script" id=42]
+[ext_resource path="res://scripts/fsm_tree/camera_focus_manager.gd" type="Script" id=43]
+[ext_resource path="res://scripts/nodes/ui/sidebar_tab_container.gd" type="Script" id=44]
+[ext_resource path="res://scripts/fsm_tree/drag_bandbox_manager.gd" type="Script" id=45]
+[ext_resource path="res://scripts/nodes/scene_manager/legacy_loader.gd" type="Script" id=46]
+[ext_resource path="res://scripts/nodes/scene_manager/scene_loader.gd" type="Script" id=47]
+[ext_resource path="res://scripts/nodes/copy_buffer.gd" type="Script" id=48]
+[ext_resource path="res://addons/3d_widgets/gdscript/tool_mode.gd" type="Script" id=49]
+[ext_resource path="res://scripts/nodes/scene_manager.gd" type="Script" id=50]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_vector3.gd" type="Script" id=51]
+[ext_resource path="res://scripts/inspector_controls/inspector_color.gd" type="Script" id=52]
+[ext_resource path="res://scripts/inspector_controls/inspector_brick_material.gd" type="Script" id=53]
+[ext_resource path="res://scripts/inspector_controls/category_label.gd" type="Script" id=54]
+[ext_resource path="res://scripts/nodes/ui/recent_files_list.gd" type="Script" id=55]
+[ext_resource path="res://scripts/inspector_controls/inspector_brick_surface.gd" type="Script" id=56]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_spinbox_slider.gd" type="Script" id=57]
+[ext_resource path="res://scripts/nodes/ui/backups_list.gd" type="Script" id=58]
+[ext_resource path="res://scenes/instanced/workshop/BoxSelector.tscn" type="PackedScene" id=59]
+[ext_resource path="res://scripts/nodes/viewport_focus_manager.gd" type="Script" id=60]
+[ext_resource path="res://resources/dynamic_font/workspace_title.tres" type="DynamicFont" id=61]
+[ext_resource path="res://scripts/nodes/ui/add_object_control.gd" type="Script" id=62]
+[ext_resource path="res://addons/3d_widgets/gdscript/widgets_remote_transform.gd" type="Script" id=63]
+[ext_resource path="res://scripts/nodes/ui/sidebar_tab_header.gd" type="Script" id=64]
+[ext_resource path="res://addons/inspector_control/scripts/inspector_controls/inspector_bool3.gd" type="Script" id=65]
+[ext_resource path="res://addons/profiling/gdscript/trace_tree.gd" type="Script" id=66]
+[ext_resource path="res://scripts/nodes/brick_hill_viewport.gd" type="Script" id=71]
+[ext_resource path="res://scripts/nodes/grid_gizmo.gd" type="Script" id=72]
+[ext_resource path="res://resources/material/workshop/brick/grid_gizmo.tres" type="Material" id=73]
+[ext_resource path="res://resources/font/montserrat_regular.otf" type="DynamicFontData" id=78]
+[ext_resource path="res://resources/material/workshop/depth_overlay.tres" type="Material" id=79]
+[ext_resource path="res://resources/material/workshop/selection_outline.tres" type="Material" id=80]
+[ext_resource path="res://resources/material/workshop/brick_hover_outline.tres" type="Material" id=81]
+[ext_resource path="res://addons/3d_widgets/gdscript/mouse_plane/mouse_plane_control.gd" type="Script" id=82]
+[ext_resource path="res://addons/3d_widgets/gdscript/collision_object_input.gd" type="Script" id=85]
+[ext_resource path="res://scenes/instanced/workshop/MaterialPicker.tscn" type="PackedScene" id=86]
+[ext_resource path="res://scenes/instanced/workshop/SurfacePicker.tscn" type="PackedScene" id=89]
+[ext_resource path="res://addons/3d_widgets/gdscript/far_plane.gd" type="Script" id=91]
+[ext_resource path="res://scenes/instanced/workshop/ColorPicker.tscn" type="PackedScene" id=93]
+[ext_resource path="res://addons/3d_widgets/gdscript/composite_object.gd" type="Script" id=94]
+[ext_resource path="res://addons/debug_tools/gdscript/size_debug_geo.gd" type="Script" id=95]
+[ext_resource path="res://addons/3d_widgets/scenes/instanced/widgets.tscn" type="PackedScene" id=96]
+[ext_resource path="res://addons/3d_widgets/gdscript/movement_proxy.gd" type="Script" id=97]
+[ext_resource path="res://addons/debug_tools/gdscript/point_debug_geo.gd" type="Script" id=98]
+[ext_resource path="res://addons/3d_widgets/gdscript/resize_proxy/resize_proxy.gd" type="Script" id=100]
+[ext_resource path="res://addons/3d_widgets/gdscript/block_selection.gd" type="Script" id=101]
+[ext_resource path="res://scripts/fsm_tree/selection_input.gd" type="Script" id=102]
+[ext_resource path="res://scripts/fsm_tree/hover_input.gd" type="Script" id=103]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectLock.png" type="Texture" id=108]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectAnchor.png" type="Texture" id=112]
+[ext_resource path="res://scripts/nodes/ui/texture_property_overlay.gd" type="Script" id=123]
+[ext_resource path="res://scripts/resources/texture_property.gd" type="Script" id=124]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0.0227273, 0.0181818 ), 0.0, 2.71795, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+albedo_color = Color( 1, 1, 1, 0.705882 )
+
+[sub_resource type="BoxShape" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0, 0.647059, 1, 0.752941 )
+
+[sub_resource type="SpatialMaterial" id=6]
+next_pass = SubResource( 5 )
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+albedo_color = Color( 0, 0.647059, 1, 0.25098 )
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Shader" id=8]
+code = "shader_type spatial;
+render_mode blend_mix,cull_disabled,unshaded,depth_test_disable;
+uniform vec4 color : hint_color;
+uniform float band_start = 4.0;
+
+void vertex() {
+	UV -= 0.5;
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	if (PROJECTION_MATRIX[3][3] != 0.0) {
+		float h = abs(1.0 / (2.0 * PROJECTION_MATRIX[1][1]));
+		float sc = (h * 2.0); //consistent with Y-fov
+		MODELVIEW_MATRIX[0]*=sc;
+		MODELVIEW_MATRIX[1]*=sc;
+		MODELVIEW_MATRIX[2]*=sc;
+	} else {
+		float sc = -(MODELVIEW_MATRIX)[3].z;
+		MODELVIEW_MATRIX[0]*=sc;
+		MODELVIEW_MATRIX[1]*=sc;
+		MODELVIEW_MATRIX[2]*=sc;
+	}
+}
+
+void fragment() {
+	vec2 frag_size = fwidth(UV);
+	float frag_width = (frag_size.x + frag_size.y) * 0.5;
+	frag_width *= 2.0;
+	
+	float d = length(UV) * 2.0;
+	float a = 1.0 - d;
+	
+	float color_fac = smoothstep(band_start, band_start - 1.0, a / frag_width);
+	vec3 final_color = mix(vec3(1.0), color.rgb, color_fac);
+	float alpha = smoothstep(0.0, frag_width, a);
+	
+	ALBEDO = final_color;
+	ALPHA = alpha;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 8 )
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="QuadMesh" id=10]
+size = Vector2( 0.02, 0.02 )
+
+[sub_resource type="QuadMesh" id=11]
+size = Vector2( 2, 2 )
+
+[sub_resource type="QuadMesh" id=12]
+size = Vector2( 2, 2 )
+
+[sub_resource type="GDScript" id=13]
+script/source = "extends VBoxContainer
+
+func set_disabled(new_disabled: bool) -> void:
+	var nodes := [
+		$MarginContainer/VBoxContainer/NewButton,
+		$MarginContainer/VBoxContainer/LoadButton,
+		$MarginContainer/VBoxContainer/SaveHBox/SaveButton,
+		$MarginContainer/VBoxContainer/SaveHBox/SaveAsButton,
+		$MarginContainer/VBoxContainer/RecentFilesScroll/RecentFiles,
+		$MarginContainer/VBoxContainer/BackupsScroll/Backups,
+	]
+
+	for node in nodes:
+		node.set_disabled(new_disabled)
+"
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0, 0.75, 1, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0.533333, 0.8, 1 )
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0, 0.662745, 0.996078, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0.533333, 0.8, 1 )
+corner_detail = 1
+
+[sub_resource type="DynamicFont" id=16]
+size = 18
+font_data = ExtResource( 78 )
+
+[sub_resource type="GDScript" id=17]
+script/source = "extends Control
+
+func _init() -> void:
+	hide()
+
+func show() -> void:
+	visible = true
+
+func hide() -> void:
+	visible = false
+
+func toggle() -> void:
+	if not visible:
+		show()
+	else:
+		hide()
+
+func set_disabled(new_disabled: bool) -> void:
+	var nodes := [
+		$VSplitContainer/SceneTreeVBox/PanelContainer/MarginContainer/AddObjectControl,
+	]
+
+	for node in nodes:
+		node.set_disabled(new_disabled)
+
+	if new_disabled:
+		$VSplitContainer/SceneTreeVBox/SceneTreeControl.mouse_filter = MOUSE_FILTER_IGNORE
+		$VSplitContainer/PropertiesVBox/PanelContainer/PropertyInspector.mouse_filter = MOUSE_FILTER_IGNORE
+	else:
+		$VSplitContainer/SceneTreeVBox/SceneTreeControl.mouse_filter = MOUSE_FILTER_STOP
+		$VSplitContainer/PropertiesVBox/PanelContainer/PropertyInspector.mouse_filter = MOUSE_FILTER_STOP
+"
+
+[sub_resource type="GDScript" id=18]
+script/source = "extends Control
+
+func _init() -> void:
+	hide()
+
+func show() -> void:
+	visible = true
+
+func hide() -> void:
+	visible = false
+
+func toggle() -> void:
+	if not visible:
+		show()
+	else:
+		hide()
+
+func set_disabled(new_disabled: bool) -> void:
+	if new_disabled:
+		$EnvironmentVBox/EnvironmentInspector.mouse_filter = MOUSE_FILTER_IGNORE
+	else:
+		$EnvironmentVBox/EnvironmentInspector.mouse_filter = MOUSE_FILTER_STOP
+"
+
+[sub_resource type="GDScript" id=19]
+script/source = "extends Control
+
+func _ready() -> void:
+	var editor_build = false
+	for property in get_property_list():
+		if property.name == \"Script\" and property.usage == PROPERTY_USAGE_GROUP:
+			editor_build = true
+
+	if editor_build:
+		$InspectorPropertyModel.sculpt_paths = [\":Script Variables:Script\"]
+	else:
+		$InspectorPropertyModel.sculpt_paths = [\":Script Variables\"]
+"
+
+[sub_resource type="GDScript" id=20]
+script/source = "extends CheckBox
+
+func _init() -> void:
+	self.pressed = Profiler.active()
+	self.connect(\"toggled\", Profiler, \"set_active\")
+	Profiler.connect(\"active_changed\", self, \"set_pressed\")
+"
+
+[sub_resource type="GDScript" id=21]
+script/source = "extends CheckBox
+
+func _init() -> void:
+	self.pressed = Profiler.active()
+	self.connect(\"toggled\", Profiler, \"set_clear_on_process\")
+	Profiler.connect(\"clear_on_process_changed\", self, \"set_pressed\")
+"
+
+[sub_resource type="GDScript" id=22]
+script/source = "extends LineEdit
+
+func _init() -> void:
+	self.connect(\"text_changed\", Profiler, \"set_name_filter\")
+"
+
+[sub_resource type="GDScript" id=23]
+script/source = "extends Button
+
+func _init() -> void:
+	self.connect(\"pressed\", Profiler, \"clear\")
+"
+
+[sub_resource type="GDScript" id=24]
+script/source = "extends Control
+tool
+
+signal viewport_input(event)
+signal viewport_resized(rect_size)
+
+export(NodePath) var remote_rect_path setget set_remote_rect_path
+export(float) var lerp_speed := 5.0
+export(Curve) var lerp_curve
+
+var lerping := false
+var lerp_progress := 0.0
+var lerp_from := Rect2()
+var lerp_to := Rect2()
+
+func set_remote_rect_path(new_remote_rect_path: NodePath) -> void:
+	if remote_rect_path != new_remote_rect_path:
+		remote_rect_path = new_remote_rect_path
+		if is_inside_tree():
+			update_lerp()
+			lerp_progress = 0.0
+			lerping = true
+
+func get_main_viewport_texture() -> TextureRect:
+	return $MainViewportTexture as TextureRect
+
+func get_hover_overlay_viewport_texture() -> TextureRect:
+	return $HoverOverlayViewportTexture as TextureRect
+
+func get_selection_overlay_viewport_texture() -> TextureRect:
+	return $SelectionOverlayViewportTexture as TextureRect
+
+func get_texture_property_overlay() -> Control:
+	return $TexturePropertyOverlay as Control
+
+func _init() -> void:
+	connect(\"resized\", self, \"resized\")
+	GraphicsSettings.data.connect('resolution_scale_filter_changed', self, 'update_texture_filter')
+
+func _ready() -> void:
+	get_viewport().connect(\"gui_focus_changed\", self, \"gui_focus_changed\")
+	update_lerp()
+
+func gui_focus_changed(focused: Control) -> void:
+	if get_owner().mode == WorkshopRoot.WorkshopMode.Play and focused == get_node(\"MainViewportTexture\"):
+		set_remote_rect_path(NodePath(\"../../UILayout\"))
+	else:
+		set_remote_rect_path(NodePath(\"../../UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit/ViewportVBox/ViewportsDock\"))
+
+func _process(delta: float) -> void:
+	if lerping:
+		lerp_progress += delta * lerp_speed
+		lerp_progress = min(lerp_progress, 1.0)
+		rect_global_position = lerp(lerp_from.position, lerp_to.position, lerp_curve.interpolate(lerp_progress))
+		rect_size = lerp(lerp_from.size, lerp_to.size, lerp_progress)
+		if lerp_progress == 1.0:
+			lerping = false
+	else:
+		var remote_control = get_node_or_null(remote_rect_path) as Control
+		if remote_control:
+			rect_global_position = remote_control.rect_global_position
+			rect_size = remote_control.rect_size
+
+func update_lerp() -> void:
+	lerp_from = get_global_rect()
+	var remote_control = get_node_or_null(remote_rect_path) as Control
+	if remote_control:
+		lerp_to = remote_control.get_global_rect()
+	else:
+		lerp_to = lerp_from
+
+
+func resized() -> void:
+	emit_signal(\"viewport_resized\", rect_size)
+
+func update_texture_filter() ->  void:
+	var viewports := [
+		get_main_viewport_texture(),
+		get_hover_overlay_viewport_texture(),
+		get_selection_overlay_viewport_texture()
+	]
+
+	for viewport in viewports:
+		var texture = viewport.get_texture()
+		var flags = viewport.get_texture().flags
+		if GraphicsSettings.data.resolution_scale_filter:
+			flags = Texture.FLAG_FILTER;
+		else:
+			flags = 0;
+		texture.set_flags(flags)
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed:
+			grab_focus()
+	var viewport_scale = GraphicsSettings.data.resolution_scale_factor
+	var trx_event = event.xformed_by(Transform2D(Vector2.RIGHT * viewport_scale, Vector2.DOWN * viewport_scale, Vector2.ZERO), Vector2.ZERO)
+	emit_signal(\"viewport_input\", trx_event)
+"
+
+[sub_resource type="Curve" id=25]
+_data = [ Vector2( 0, 0 ), 0.0, 2.5, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="ViewportTexture" id=26]
+viewport_path = NodePath("ViewportSizer/MainViewport")
+
+[sub_resource type="GDScript" id=27]
+script/source = "extends TextureRect
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		grab_focus()
+"
+
+[sub_resource type="ViewportTexture" id=28]
+viewport_path = NodePath("ViewportSizer/HoverOverlayViewport")
+
+[sub_resource type="GDScript" id=29]
+script/source = "extends TextureRect
+
+export(Dictionary) var colors := {
+	BrickHillUtil.SelectionMode.SELECT_NODES: Color.white,
+	BrickHillUtil.SelectionMode.PAINT_NODES: Color.white,
+	BrickHillUtil.SelectionMode.PAINT_FACES: Color.white,
+	BrickHillUtil.SelectionMode.TOGGLE_LOCK: Color.white,
+	BrickHillUtil.SelectionMode.TOGGLE_ANCHOR: Color.white,
+}
+
+func populate_selection_mode() -> void:
+	var selection_mode = WorkshopDirectory.input_manager().selection_mode
+	material.set_shader_param('highlight_color', colors[selection_mode])
+"
+
+[sub_resource type="ViewportTexture" id=30]
+viewport_path = NodePath("ViewportSizer/SelectionOverlayViewport")
+
+[sub_resource type="Resource" id=31]
+resource_name = "Texture Property"
+script = ExtResource( 124 )
+property_name = "locked"
+texture = ExtResource( 108 )
+texture_origin = Vector2( 1, 1.25 )
+object_offset = Vector2( 0.5, 0 )
+
+[sub_resource type="Resource" id=32]
+resource_name = "Texture Property"
+script = ExtResource( 124 )
+property_name = "anchored"
+texture = ExtResource( 112 )
+texture_origin = Vector2( 0, 1.25 )
+object_offset = Vector2( 0.5, 0 )
+
+[sub_resource type="StyleBoxFlat" id=33]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_detail = 1
+
+[sub_resource type="GDScript" id=34]
+script/source = "extends PopupMenu
+
+signal show_graphics_options()
+
+func _init() -> void:
+	connect(\"index_pressed\", self, \"index_pressed\")
+
+func index_pressed(idx: int) -> void:
+	match idx:
+		0:
+			emit_signal(\"show_graphics_options\")
+		1:
+			get_tree().quit()
+"
+
+[sub_resource type="GDScript" id=35]
+script/source = "extends Node
+
+signal load_scene(path)
+signal import_brk(path)
+signal save_scene_as(path)
+
+const BRK_FILTER := \"brk\"
+
+var lock := false
+
+func load_scene() -> void:
+	if lock:
+		return
+
+	lock = true
+	var response = NativeDialog.open_file_dialog(BRK_FILTER, \"\")
+	if response.size() > 0:
+		emit_signal(\"load_scene\", response[0])
+	lock = false
+
+func import_brk() -> void:
+	if lock:
+		return
+
+	lock = true
+	var response = NativeDialog.open_file_dialog(BRK_FILTER, \"\")
+	if response.size() > 0:
+		emit_signal(\"import_brk\", response[0])
+	lock = false
+
+func save_scene_as() -> void:
+	if lock:
+		return
+
+	lock = true
+	var response = NativeDialog.open_save_dialog(BRK_FILTER, \"\")
+	if response.size() > 0:
+		emit_signal(\"save_scene_as\", response[0])
+	lock = false
+"
+
+[sub_resource type="GDScript" id=36]
+script/source = "extends WindowDialog
+
+func error(title: String, message: String) -> void:
+	window_title = title
+	$AlertVBox/AlertCenterContainer/AlertLabel.text = message
+	popup()
+"
+
+[node name="WorkshopRoot" type="Node"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="TODO" type="Node" parent="."]
+__meta__ = {
+"_editor_description_": "Old
+- Optimize model loading/collision generation to prevent excessive startup hang
+- Integrate models with new renderer
+- Better codify built-in models stored in res://"
+}
+
+[node name="HotkeyManager" type="Node" parent="."]
+script = ExtResource( 14 )
+
+[node name="SceneManager" type="Node" parent="."]
+script = ExtResource( 50 )
+
+[node name="SceneLoader" type="Node" parent="SceneManager"]
+script = ExtResource( 47 )
+
+[node name="LegacyLoader" type="Node" parent="SceneManager"]
+script = ExtResource( 46 )
+
+[node name="ColorPickerManager" type="Node" parent="."]
+script = ExtResource( 31 )
+
+[node name="EyedropperManager" type="Node" parent="."]
+script = ExtResource( 34 )
+
+[node name="HoveredNode" type="Node" parent="."]
+script = ExtResource( 19 )
+
+[node name="SelectedNodes" type="Node" parent="."]
+script = ExtResource( 20 )
+
+[node name="CopyBuffer" type="Node" parent="."]
+script = ExtResource( 48 )
+
+[node name="ViewportSizer" type="Node" parent="."]
+script = ExtResource( 11 )
+size = Vector2( 1232, 608 )
+
+[node name="MainViewport" type="Viewport" parent="ViewportSizer"]
+size = Vector2( 1232, 608 )
+handle_input_locally = false
+msaa = 2
+render_target_v_flip = true
+render_target_update_mode = 3
+physics_object_picking = true
+shadow_atlas_size = 4096
+script = ExtResource( 71 )
+
+[node name="HoverInput" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 103 )
+
+[node name="SelectionInput" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 102 )
+
+[node name="CameraFocusManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 43 )
+
+[node name="ViewportFocusManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 60 )
+
+[node name="GroupManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 12 )
+
+[node name="SnapToFaceManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 32 )
+
+[node name="PaintColorManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 27 )
+tool_mode_path = NodePath("../ObjectMovement/ToolMode")
+
+[node name="PaintSurfaceManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 26 )
+tool_mode_path = NodePath("../ObjectMovement/ToolMode")
+
+[node name="PaintMaterialManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 25 )
+tool_mode_path = NodePath("../ObjectMovement/ToolMode")
+
+[node name="LockManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 23 )
+tool_mode_path = NodePath("../ObjectMovement/ToolMode")
+
+[node name="AnchorManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 24 )
+tool_mode_path = NodePath("../ObjectMovement/ToolMode")
+
+[node name="DragBandboxManager" type="Node" parent="ViewportSizer/MainViewport"]
+script = ExtResource( 45 )
+
+[node name="ObjectMovement" type="Node" parent="ViewportSizer/MainViewport"]
+
+[node name="ToolMode" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 49 )
+
+[node name="CollisionSettings" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 18 )
+
+[node name="SnapSettings" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 21 )
+snap_move = true
+snap_rotate = true
+
+[node name="CoordinateSpace" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 17 )
+tool_mode_path = NodePath("../ToolMode")
+
+[node name="KeyboardMoveHandler" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 29 )
+snap_settings_path = NodePath("../SnapSettings")
+coordinate_space_path = NodePath("../CoordinateSpace")
+movement_proxy_path = NodePath("../../Root/MovementProxy")
+resize_proxy_path = NodePath("../../Root/MovementProxy/ResizeProxy")
+composite_object_path = NodePath("../../Root/CompositeObject")
+
+[node name="MousePlaneMoveHandler" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 28 )
+tool_mode_path = NodePath("../ToolMode")
+snap_settings_path = NodePath("../SnapSettings")
+coordinate_space_path = NodePath("../CoordinateSpace")
+mouse_plane_path = NodePath("../../Root/WorkshopCamera/MousePlane")
+movement_proxy_path = NodePath("../../Root/MovementProxy")
+resize_proxy_path = NodePath("../../Root/MovementProxy/ResizeProxy")
+composite_object_path = NodePath("../../Root/CompositeObject")
+widgets_path = NodePath("../../Root/Widgets")
+
+[node name="MousePlaneRotateHandler" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 22 )
+tool_mode_path = NodePath("../ToolMode")
+snap_settings_path = NodePath("../SnapSettings")
+mouse_plane_path = NodePath("../../Root/WorkshopCamera/MousePlane")
+movement_proxy_path = NodePath("../../Root/MovementProxy")
+composite_object_path = NodePath("../../Root/CompositeObject")
+
+[node name="CollisionObjectInputHandler" type="Node" parent="ViewportSizer/MainViewport/ObjectMovement"]
+script = ExtResource( 9 )
+composite_object_path = NodePath("../../Root/CompositeObject")
+mouse_plane_path = NodePath("../../Root/WorkshopCamera/MousePlane")
+movement_proxy_path = NodePath("../../Root/MovementProxy")
+resize_proxy_path = NodePath("../../Root/MovementProxy/ResizeProxy")
+widgets_path = NodePath("../../Root/Widgets")
+coordinate_space_path = NodePath("../CoordinateSpace")
+tool_mode_path = NodePath("../ToolMode")
+
+[node name="Root" type="Spatial" parent="ViewportSizer/MainViewport"]
+
+[node name="WorkshopCamera" type="Camera" parent="ViewportSizer/MainViewport/Root"]
+transform = Transform( 1, 0, 0, 0, 0.642787, 0.766045, 0, -0.766045, 0.642787, 0, 17.321, 12.856 )
+cull_mask = 1
+far = 500.0
+script = ExtResource( 8 )
+focus_curve = SubResource( 1 )
+
+[node name="HoverRemoteTransform" type="RemoteTransform" parent="ViewportSizer/MainViewport/Root/WorkshopCamera"]
+remote_path = NodePath("../../../../HoverOverlayViewport/Camera")
+
+[node name="SelectionRemoteTransform" type="RemoteTransform" parent="ViewportSizer/MainViewport/Root/WorkshopCamera"]
+remote_path = NodePath("../../../../SelectionOverlayViewport/Camera")
+
+[node name="MousePlane" type="Spatial" parent="ViewportSizer/MainViewport/Root/WorkshopCamera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+script = ExtResource( 30 )
+
+[node name="GeometryPlane" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root/WorkshopCamera/MousePlane"]
+visible = false
+material_override = SubResource( 2 )
+script = ExtResource( 39 )
+size = Vector2( 5, 5 )
+
+[node name="FarPlane" type="RigidBody" parent="ViewportSizer/MainViewport/Root/WorkshopCamera"]
+collision_layer = 2
+collision_mask = 2
+mode = 3
+script = ExtResource( 91 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportSizer/MainViewport/Root/WorkshopCamera/FarPlane"]
+shape = SubResource( 3 )
+
+[node name="MousePlaneControl" type="Node" parent="ViewportSizer/MainViewport/Root/WorkshopCamera/FarPlane"]
+script = ExtResource( 82 )
+mode = 1
+
+[node name="CollisionObjectInput" type="Node" parent="ViewportSizer/MainViewport/Root/WorkshopCamera/FarPlane"]
+script = ExtResource( 85 )
+
+[node name="CompositeObject" type="RigidBody" parent="ViewportSizer/MainViewport/Root"]
+mode = 3
+script = ExtResource( 94 )
+temp_collision_layer = 2
+temp_collision_mask = 2
+
+[node name="PointDebugGeo" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root/CompositeObject"]
+visible = false
+material_override = SubResource( 4 )
+script = ExtResource( 98 )
+
+[node name="VisualOffset" type="Spatial" parent="ViewportSizer/MainViewport/Root/CompositeObject"]
+
+[node name="SizeDebugGeo" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root/CompositeObject/VisualOffset"]
+material_override = SubResource( 6 )
+script = ExtResource( 95 )
+target = NodePath("../..")
+
+[node name="CollisionObjectInput" type="Node" parent="ViewportSizer/MainViewport/Root/CompositeObject"]
+script = ExtResource( 85 )
+
+[node name="BlockSelection" type="Node" parent="ViewportSizer/MainViewport/Root/CompositeObject"]
+script = ExtResource( 101 )
+
+[node name="BoxSelector" parent="ViewportSizer/MainViewport/Root" instance=ExtResource( 59 )]
+monitorable = false
+collision_layer = 0
+collision_mask = 3
+
+[node name="BandBoxSelector" type="Area" parent="ViewportSizer/MainViewport/Root"]
+input_ray_pickable = false
+monitorable = false
+collision_layer = 0
+collision_mask = 3
+script = ExtResource( 38 )
+bandbox_control_path = NodePath("../BandBox")
+use_unhandled_input = false
+
+[node name="WorldGrid" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root"]
+visible = false
+material_override = ExtResource( 73 )
+script = ExtResource( 72 )
+extents = Vector2( 64, 64 )
+
+[node name="BandBox" type="ColorRect" parent="ViewportSizer/MainViewport/Root"]
+mouse_filter = 2
+color = Color( 0, 0.662745, 0.996078, 0.501961 )
+
+[node name="SetRootContainer" type="Spatial" parent="ViewportSizer/MainViewport/Root"]
+
+[node name="MovementProxy" type="Spatial" parent="ViewportSizer/MainViewport/Root"]
+script = ExtResource( 97 )
+target = NodePath("../CompositeObject")
+collision_mask = 1
+
+[node name="PointDebugGeo" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root/MovementProxy"]
+visible = false
+material_override = SubResource( 7 )
+script = ExtResource( 98 )
+
+[node name="ResizeProxy" type="Node" parent="ViewportSizer/MainViewport/Root/MovementProxy"]
+script = ExtResource( 100 )
+movement_proxy_path = NodePath("..")
+
+[node name="WidgetsRemoteTransform" type="Node" parent="ViewportSizer/MainViewport/Root"]
+script = ExtResource( 63 )
+source = NodePath("../CompositeObject")
+target = NodePath("../Widgets")
+
+[node name="OriginDotRemoteTransform" type="Node" parent="ViewportSizer/MainViewport/Root"]
+script = ExtResource( 63 )
+source = NodePath("../CompositeObject")
+target = NodePath("../OriginDot")
+position_mode = 2
+
+[node name="Widgets" parent="ViewportSizer/MainViewport/Root" instance=ExtResource( 96 )]
+target = NodePath("../CompositeObject")
+tool_mode_path = NodePath("../../ObjectMovement/ToolMode")
+coordinate_space_path = NodePath("../../ObjectMovement/CoordinateSpace")
+widget = 0
+
+[node name="OriginDot" type="MeshInstance" parent="ViewportSizer/MainViewport/Root"]
+material_override = SubResource( 9 )
+cast_shadow = 0
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="HoverOverlayViewport" type="Viewport" parent="ViewportSizer"]
+size = Vector2( 1232, 608 )
+handle_input_locally = false
+render_target_v_flip = true
+render_target_update_mode = 3
+gui_disable_input = true
+script = ExtResource( 71 )
+ignore_shadows = true
+
+[node name="Camera" type="Camera" parent="ViewportSizer/HoverOverlayViewport"]
+transform = Transform( 1, 0, 0, 0, 0.642787, 0.766045, 0, -0.766045, 0.642787, 0, 17.321, 12.856 )
+cull_mask = 4
+far = 500.0
+
+[node name="NearPlane" type="MeshInstance" parent="ViewportSizer/HoverOverlayViewport/Camera"]
+layers = 4
+material_override = ExtResource( 79 )
+extra_cull_margin = 16384.0
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="SelectionOverlayViewport" type="Viewport" parent="ViewportSizer"]
+size = Vector2( 1232, 608 )
+handle_input_locally = false
+render_target_v_flip = true
+render_target_update_mode = 3
+gui_disable_input = true
+script = ExtResource( 71 )
+ignore_shadows = true
+
+[node name="Camera" type="Camera" parent="ViewportSizer/SelectionOverlayViewport"]
+transform = Transform( 1, 0, 0, 0, 0.642787, 0.766045, 0, -0.766045, 0.642787, 0, 17.321, 12.856 )
+cull_mask = 2
+far = 500.0
+
+[node name="NearPlane" type="MeshInstance" parent="ViewportSizer/SelectionOverlayViewport/Camera"]
+layers = 2
+material_override = ExtResource( 79 )
+extra_cull_margin = 16384.0
+mesh = SubResource( 12 )
+material/0 = null
+
+[node name="UILayout" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+mouse_filter = 2
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarViewportSplit" type="VBoxContainer" parent="UILayout"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ToolBarDock" type="Control" parent="UILayout/BarViewportSplit"]
+margin_right = 1280.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 13 )
+remote_path = NodePath("../../../UIControls/ToolBar")
+
+[node name="BarEditorSplit" type="HBoxContainer" parent="UILayout/BarViewportSplit"]
+margin_top = 40.0
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 2
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuBarDock" type="Control" parent="UILayout/BarViewportSplit/BarEditorSplit"]
+margin_right = 48.0
+margin_bottom = 680.0
+rect_min_size = Vector2( 48, 0 )
+script = ExtResource( 13 )
+remote_path = NodePath("../../../../UIControls/MenuBar")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayout/BarViewportSplit/BarEditorSplit"]
+margin_left = 48.0
+margin_right = 1280.0
+margin_bottom = 680.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="EditBarDock" type="Control" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer"]
+margin_right = 1232.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 48, 32 )
+script = ExtResource( 13 )
+remote_path = NodePath("../../../../../UIControls/EditBar")
+
+[node name="ViewportRect" type="ColorRect" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer"]
+margin_top = 32.0
+margin_right = 1232.0
+margin_bottom = 680.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.898039, 0.898039, 0.898039, 1 )
+
+[node name="ViewportHSplit" type="HSplitContainer" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/autohide = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SidebarDock" type="Control" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit"]
+visible = false
+margin_right = 380.0
+margin_bottom = 648.0
+rect_min_size = Vector2( 380, 0 )
+size_flags_vertical = 3
+script = ExtResource( 13 )
+remote_path = NodePath("../../../../../../../UIControls/SidebarTabs")
+
+[node name="ViewportVBox" type="VBoxContainer" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit"]
+margin_right = 1232.0
+margin_bottom = 648.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportTabBarDock" type="Control" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit/ViewportVBox"]
+margin_right = 1232.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 13 )
+remote_path = NodePath("../../../../../../../../UIControls/ViewportTabBar")
+
+[node name="ViewportsDock" type="Control" parent="UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit/ViewportVBox"]
+margin_top = 40.0
+margin_right = 1232.0
+margin_bottom = 648.0
+size_flags_vertical = 3
+
+[node name="UIControls" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+mouse_filter = 2
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ToolBar" parent="UIControls" instance=ExtResource( 3 )]
+
+[node name="EditBar" parent="UIControls" instance=ExtResource( 5 )]
+margin_left = 48.0
+margin_top = 40.0
+margin_right = 1280.0
+margin_bottom = 72.0
+
+[node name="MenuBar" parent="UIControls" instance=ExtResource( 4 )]
+margin_top = 40.0
+margin_bottom = 720.0
+
+[node name="SidebarTabs" type="TabContainer" parent="UIControls"]
+visible = false
+margin_left = 48.0
+margin_top = 72.0
+margin_right = 428.0
+margin_bottom = 720.0
+mouse_filter = 2
+tabs_visible = false
+script = ExtResource( 44 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NullTab" type="Control" parent="UIControls/SidebarTabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="FileTab" type="VBoxContainer" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource( 13 )
+
+[node name="FileHeader" type="Control" parent="UIControls/SidebarTabs/FileTab"]
+margin_right = 363.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 64 )
+title = "File"
+font = ExtResource( 61 )
+
+[node name="MarginContainer" type="MarginContainer" parent="UIControls/SidebarTabs/FileTab"]
+margin_top = 40.0
+margin_right = 363.0
+margin_bottom = 648.0
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 355.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+custom_constants/separation = 4
+
+[node name="NewButton" type="Button" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_right = 347.0
+margin_bottom = 25.0
+hint_tooltip = "New Scene"
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+keep_pressed_outside = true
+text = "New"
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "File"
+}
+
+[node name="LoadButton" type="Button" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 347.0
+margin_bottom = 54.0
+hint_tooltip = "Load Scene"
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+keep_pressed_outside = true
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "File"
+}
+
+[node name="SaveHBox" type="HBoxContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_top = 58.0
+margin_right = 347.0
+margin_bottom = 83.0
+custom_constants/separation = 4
+
+[node name="SaveButton" type="Button" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/SaveHBox"]
+margin_right = 171.0
+margin_bottom = 25.0
+hint_tooltip = "Save Scene"
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+keep_pressed_outside = true
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "File"
+}
+
+[node name="SaveAsButton" type="Button" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/SaveHBox"]
+margin_left = 175.0
+margin_right = 347.0
+margin_bottom = 25.0
+hint_tooltip = "Save Scene As"
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+keep_pressed_outside = true
+text = "Save As"
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "File"
+}
+
+[node name="RecentFilesLabel" type="VBoxContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_top = 87.0
+margin_right = 347.0
+margin_bottom = 112.0
+custom_constants/separation = 2
+script = ExtResource( 54 )
+text = "Recent Files"
+
+[node name="RecentFilesScroll" type="ScrollContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_top = 116.0
+margin_right = 347.0
+margin_bottom = 337.0
+size_flags_vertical = 3
+
+[node name="RecentFiles" type="VBoxContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/RecentFilesScroll"]
+margin_right = 347.0
+margin_bottom = 221.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 55 )
+
+[node name="BackupsLabel" type="VBoxContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_top = 341.0
+margin_right = 347.0
+margin_bottom = 366.0
+custom_constants/separation = 2
+script = ExtResource( 54 )
+text = "Backups"
+
+[node name="BackupsScroll" type="ScrollContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer"]
+margin_top = 370.0
+margin_right = 347.0
+margin_bottom = 592.0
+size_flags_vertical = 3
+
+[node name="Backups" type="VBoxContainer" parent="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/BackupsScroll"]
+margin_right = 347.0
+margin_bottom = 222.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 58 )
+
+[node name="WorkspaceTab" type="ColorRect" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+color = Color( 0.898039, 0.898039, 0.898039, 1 )
+script = SubResource( 17 )
+
+[node name="VSplitContainer" type="VSplitContainer" parent="UIControls/SidebarTabs/WorkspaceTab"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = 200
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SceneTreeVBox" type="VBoxContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer"]
+margin_right = 363.0
+margin_bottom = 318.0
+
+[node name="WorkspaceHeader" type="Control" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox"]
+margin_right = 363.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 64 )
+title = "Workspace"
+font = ExtResource( 61 )
+
+[node name="ColorRect" type="ColorRect" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox"]
+margin_top = 40.0
+margin_right = 363.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 0, 1 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="Control" type="Panel" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox"]
+margin_top = 41.0
+margin_right = 363.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="SceneTreeSearch" type="LineEdit" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+placeholder_text = "Search"
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SceneTreeControl" type="Tree" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox"]
+margin_top = 81.0
+margin_right = 363.0
+margin_bottom = 282.0
+size_flags_vertical = 3
+allow_rmb_select = true
+select_mode = 2
+script = ExtResource( 10 )
+custom_control_scene = ExtResource( 33 )
+
+[node name="PanelContainer" type="PanelContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox"]
+margin_top = 282.0
+margin_right = 363.0
+margin_bottom = 318.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox/PanelContainer"]
+margin_right = 363.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+
+[node name="AddObjectControl" type="HBoxContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox/PanelContainer/MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 359.0
+margin_bottom = 32.0
+custom_constants/separation = 4
+script = ExtResource( 62 )
+
+[node name="PropertiesVBox" type="VBoxContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer"]
+margin_top = 330.0
+margin_right = 363.0
+margin_bottom = 648.0
+
+[node name="PropertiesHeader" type="Control" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox"]
+margin_right = 363.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 64 )
+title = "Properties"
+font = ExtResource( 61 )
+show_button = false
+
+[node name="PanelContainer" type="PanelContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox"]
+margin_top = 40.0
+margin_right = 363.0
+margin_bottom = 318.0
+size_flags_vertical = 3
+
+[node name="PropertyInspector" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox/PanelContainer" instance=ExtResource( 36 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 363.0
+margin_bottom = 278.0
+size_flags_vertical = 3
+script = ExtResource( 7 )
+
+[node name="InspectorPropertyModel" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox/PanelContainer/PropertyInspector" index="0"]
+blacklist_paths = [ ":Script Variables:Script:colors", ":Script Variables:Script:uv_offset", ":Spatial:Transform:rotation", ":Spatial:Transform:scale", ":Script Variables::colors", ":Script Variables::uv_offset" ]
+
+[node name="InspectorPropertyTreeView" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox/PanelContainer/PropertyInspector" index="1"]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 363.0
+margin_bottom = 278.0
+property_controls = [ ExtResource( 37 ), ExtResource( 53 ), ExtResource( 56 ), ExtResource( 52 ), ExtResource( 51 ), ExtResource( 65 ), ExtResource( 57 ), ExtResource( 15 ), ExtResource( 42 ), ExtResource( 40 ), ExtResource( 41 ) ]
+
+[node name="EnvironmentTab" type="ColorRect" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+color = Color( 0.898039, 0.898039, 0.898039, 1 )
+script = SubResource( 18 )
+
+[node name="EnvironmentVBox" type="VBoxContainer" parent="UIControls/SidebarTabs/EnvironmentTab"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnvironmentHeader" type="Control" parent="UIControls/SidebarTabs/EnvironmentTab/EnvironmentVBox"]
+margin_right = 363.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 64 )
+title = "Environment"
+font = ExtResource( 61 )
+
+[node name="EnvironmentInspector" parent="UIControls/SidebarTabs/EnvironmentTab/EnvironmentVBox" instance=ExtResource( 36 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 40.0
+margin_right = 363.0
+margin_bottom = 648.0
+size_flags_vertical = 3
+script = SubResource( 19 )
+
+[node name="NullTab2" type="Control" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="NullTab3" type="Control" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="NullTab4" type="Control" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="NullTab5" type="Control" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="NullTab6" type="Control" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="NullTab7" type="Control" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="DebugTab" type="ColorRect" parent="UIControls/SidebarTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+color = Color( 0.898039, 0.898039, 0.898039, 1 )
+script = SubResource( 18 )
+
+[node name="DebugVBox" type="VBoxContainer" parent="UIControls/SidebarTabs/DebugTab"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugHeader" type="Control" parent="UIControls/SidebarTabs/DebugTab/DebugVBox"]
+margin_right = 363.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+script = ExtResource( 64 )
+title = "Profiler"
+font = ExtResource( 61 )
+
+[node name="PanelContainer" type="PanelContainer" parent="UIControls/SidebarTabs/DebugTab/DebugVBox"]
+margin_left = 22.0
+margin_top = 431.0
+margin_right = 1214.0
+margin_bottom = 463.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer"]
+margin_right = 1192.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ActiveCheckBox" type="CheckBox" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer/HBoxContainer"]
+margin_right = 64.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 64, 32 )
+text = "Active"
+script = SubResource( 20 )
+
+[node name="ClearOnProcess" type="CheckBox" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer/HBoxContainer"]
+margin_right = 64.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 64, 32 )
+text = "Clear on Process"
+script = SubResource( 21 )
+
+[node name="Control" type="Control" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer/HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="NameFilter" type="LineEdit" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer/HBoxContainer"]
+margin_left = 64.0
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_horizontal = 3
+placeholder_text = "Name Filter"
+script = SubResource( 22 )
+
+[node name="Control2" type="Control" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer/HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="ClearButton" type="Button" parent="UIControls/SidebarTabs/DebugTab/DebugVBox/PanelContainer/HBoxContainer"]
+margin_left = 64.0
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 64, 32 )
+text = "Clear"
+script = SubResource( 23 )
+
+[node name="TraceTree" type="Tree" parent="UIControls/SidebarTabs/DebugTab/DebugVBox"]
+margin_left = 22.0
+margin_top = 463.0
+margin_right = 1214.0
+margin_bottom = 632.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 66 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportTabBar" parent="UIControls" instance=ExtResource( 16 )]
+
+[node name="Viewports" type="Control" parent="UIControls"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = 112.0
+rect_min_size = Vector2( 16, 16 )
+rect_clip_content = true
+focus_mode = 1
+script = SubResource( 24 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+remote_rect_path = NodePath("../../UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit/ViewportVBox/ViewportsDock")
+lerp_curve = SubResource( 25 )
+
+[node name="MainViewportTexture" type="TextureRect" parent="UIControls/Viewports"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = SubResource( 26 )
+expand = true
+stretch_mode = 5
+script = SubResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HoverOverlayViewportTexture" type="TextureRect" parent="UIControls/Viewports"]
+material = ExtResource( 81 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = SubResource( 28 )
+expand = true
+stretch_mode = 5
+script = SubResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+colors = {
+0: Color( 0, 0.662745, 0.996078, 1 ),
+1: Color( 0, 0.662745, 0.996078, 1 ),
+2: Color( 0, 0.662745, 0.996078, 1 ),
+3: Color( 0, 0.662745, 0.996078, 1 ),
+4: Color( 0, 0.662745, 0.996078, 1 ),
+5: Color( 1, 1, 1, 1 ),
+6: Color( 1, 1, 1, 1 )
+}
+
+[node name="SelectionOverlayViewportTexture" type="TextureRect" parent="UIControls/Viewports"]
+material = ExtResource( 80 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = SubResource( 30 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TexturePropertyOverlay" type="Control" parent="UIControls/Viewports"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 123 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+property_textures = [ SubResource( 31 ), SubResource( 32 ) ]
+
+[node name="CameraWidget" parent="UIControls/Viewports" instance=ExtResource( 6 )]
+modulate = Color( 1, 1, 1, 0 )
+fade_speed = 10.0
+
+[node name="MainMenu" type="PopupMenu" parent="UIControls"]
+margin_left = 48.0
+margin_right = 400.0
+margin_bottom = 58.0
+mouse_filter = 1
+custom_styles/panel = SubResource( 33 )
+items = [ "Graphics Settings", null, 0, false, false, 0, 0, null, "", false, "Quit", null, 0, false, false, 1, 0, null, "", false ]
+script = SubResource( 34 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphicsSettings" parent="UIControls" instance=ExtResource( 35 )]
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+
+[node name="FileDialog" type="Node" parent="UIControls"]
+script = SubResource( 35 )
+
+[node name="ColorPopup" type="Popup" parent="UIControls"]
+margin_left = 688.0
+margin_top = 39.0
+margin_right = 1252.0
+margin_bottom = 289.0
+rect_min_size = Vector2( 564, 250 )
+focus_mode = 1
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="UIControls/ColorPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker" parent="UIControls/ColorPopup/PanelContainer" instance=ExtResource( 93 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 564.0
+margin_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color_lens_size = 0.1
+
+[node name="SurfacePopup" type="Popup" parent="UIControls"]
+margin_left = 837.0
+margin_top = 39.0
+margin_right = 1041.0
+margin_bottom = 83.0
+rect_min_size = Vector2( 204, 44 )
+focus_mode = 1
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="UIControls/SurfacePopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SurfacePicker" parent="UIControls/SurfacePopup/PanelContainer" instance=ExtResource( 89 )]
+margin_right = 204.0
+margin_bottom = 44.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MaterialPopup" type="Popup" parent="UIControls"]
+margin_left = 890.0
+margin_top = 39.0
+margin_right = 1128.0
+margin_bottom = 83.0
+rect_min_size = Vector2( 238, 44 )
+focus_mode = 1
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="UIControls/MaterialPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MaterialPicker" parent="UIControls/MaterialPopup/PanelContainer" instance=ExtResource( 86 )]
+margin_right = 238.0
+margin_bottom = 44.0
+mouse_filter = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="AlertPopup" type="WindowDialog" parent="UIControls"]
+anchor_left = 0.3
+anchor_top = 0.4
+anchor_right = 0.7
+anchor_bottom = 0.6
+margin_left = 420.0
+margin_top = -239.0
+margin_right = 560.8
+margin_bottom = -223.8
+mouse_filter = 2
+popup_exclusive = true
+script = SubResource( 36 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlertVBox" type="VBoxContainer" parent="UIControls/AlertPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -10.0
+mouse_filter = 2
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlertCenterContainer" type="CenterContainer" parent="UIControls/AlertPopup/AlertVBox"]
+margin_right = 512.0
+margin_bottom = 94.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlertLabel" type="Label" parent="UIControls/AlertPopup/AlertVBox/AlertCenterContainer"]
+margin_left = 256.0
+margin_top = 38.0
+margin_right = 256.0
+margin_bottom = 56.0
+
+[node name="AlertButtonHBox" type="HBoxContainer" parent="UIControls/AlertPopup/AlertVBox"]
+margin_top = 104.0
+margin_right = 512.0
+margin_bottom = 134.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="AlertButton" type="Button" parent="UIControls/AlertPopup/AlertVBox/AlertButtonHBox"]
+margin_left = 231.0
+margin_right = 281.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 50, 30 )
+size_flags_horizontal = 6
+text = "OK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/NewButton" to="SceneManager" method="new_scene"]
+[connection signal="pressed" from="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/LoadButton" to="UIControls/FileDialog" method="load_scene"]
+[connection signal="pressed" from="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/SaveHBox/SaveButton" to="SceneManager" method="save_scene"]
+[connection signal="pressed" from="UIControls/SidebarTabs/FileTab/MarginContainer/VBoxContainer/SaveHBox/SaveAsButton" to="UIControls/FileDialog" method="save_scene_as"]
+
+[editable path="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox/PanelContainer/PropertyInspector"]

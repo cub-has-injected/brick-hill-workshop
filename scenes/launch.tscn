@@ -1,0 +1,400 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://scripts/nodes/scene_loader.gd" type="Script" id=1]
+[ext_resource path="res://scenes/login.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/themes/workshop_general.tres" type="Theme" id=3]
+[ext_resource path="res://scripts/nodes/ui/engine_version_label.gd" type="Script" id=4]
+[ext_resource path="res://scripts/nodes/ui/game_version_label.gd" type="Script" id=5]
+[ext_resource path="res://resources/dynamic_font/montserrat_semibold.tres" type="DynamicFont" id=6]
+[ext_resource path="res://scripts/nodes/ui/site_session_username_label.gd" type="Script" id=7]
+[ext_resource path="res://scripts/nodes/ui/site_session_id_label.gd" type="Script" id=8]
+[ext_resource path="res://scripts/nodes/ui/video_driver_label.gd" type="Script" id=9]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+const BUG_REPORT_URL := \"https://docs.google.com/forms/d/e/1FAIpQLScpLvBIi0_TaaH_kOerHOwauq5mwiwpDru5sj6douZdu9s8jQ/viewform?usp=sf_link\"
+
+func toggle_developer_box() -> void:
+	$DeveloperBoxAnim/AnimationTree.set(\"parameters/state/current\", 0 if $DeveloperBoxAnim/AnimationTree.get(\"parameters/state/current\") == 1 else 1)
+"
+
+[sub_resource type="Animation" id=2]
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer:rect_position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -26.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer:rect_position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ -158.0, -26.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/MarginContainer/VBoxContainer/DeveloperButton/HBoxContainer/UpDownLabel:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ -180.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer:rect_position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ -26.0, -158.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/MarginContainer/VBoxContainer/DeveloperButton/HBoxContainer/UpDownLabel:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ 0.0, -180.0 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "close"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "open"
+
+[sub_resource type="AnimationNodeTransition" id=7]
+input_count = 2
+input_0/name = "closed"
+input_0/auto_advance = false
+input_1/name = "open"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeBlendTree" id=8]
+graph_offset = Vector2( -717, -136 )
+nodes/Closed/node = SubResource( 5 )
+nodes/Closed/position = Vector2( -220, 80 )
+nodes/Open/node = SubResource( 6 )
+nodes/Open/position = Vector2( -220, 300 )
+nodes/output/position = Vector2( 260, 160 )
+nodes/state/node = SubResource( 7 )
+nodes/state/position = Vector2( 20, 160 )
+node_connections = [ "state", 0, "Closed", "state", 1, "Open", "output", 0, "state" ]
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends Label
+
+var filter_window := []
+var window_size := 10
+
+func _process(delta: float) -> void:
+	filter_window.append(delta)
+	while filter_window.size() > window_size:
+		filter_window.pop_front()
+
+	var avg = 0.0
+	for frame in filter_window:
+		avg += frame
+	avg /= window_size
+
+	text = String(round(1.0 / max(avg, 0.0001)))
+"
+
+[node name="Launch" type="Node"]
+
+[node name="SceneLoader" type="Node" parent="."]
+script = ExtResource( 1 )
+packed_scene = ExtResource( 2 )
+
+[node name="GlobalUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 3 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeveloperBoxAnim" type="AnimationPlayer" parent="GlobalUI"]
+root_node = NodePath("../DeveloperWrapper")
+autoplay = "bind"
+playback_default_blend_time = 0.2
+method_call_mode = 1
+anims/bind = SubResource( 2 )
+anims/close = SubResource( 3 )
+anims/open = SubResource( 4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="GlobalUI/DeveloperBoxAnim"]
+tree_root = SubResource( 8 )
+anim_player = NodePath("..")
+active = true
+parameters/state/current = 0
+
+[node name="DeveloperWrapper" type="Control" parent="GlobalUI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="GlobalUI/DeveloperWrapper"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -137.0
+margin_top = -26.0
+margin_right = 137.0
+margin_bottom = 132.0
+mouse_filter = 2
+custom_constants/margin_right = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GlobalUI/DeveloperWrapper/MarginContainer"]
+margin_right = 274.0
+margin_bottom = 158.0
+color = Color( 0, 0, 0, 0.752941 )
+
+[node name="MarginContainer" type="MarginContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer"]
+margin_right = 274.0
+margin_bottom = 158.0
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 270.0
+margin_bottom = 154.0
+custom_constants/separation = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeveloperButton" type="ToolButton" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer"]
+margin_right = 266.0
+margin_bottom = 18.0
+action_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/DeveloperButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeveloperLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/DeveloperButton/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Developer"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpDownLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/DeveloperButton/HBoxContainer"]
+margin_left = 250.0
+margin_right = 266.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 16, 0 )
+rect_pivot_offset = Vector2( 8, 9 )
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "^"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPSHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer"]
+margin_top = 22.0
+margin_right = 266.0
+margin_bottom = 40.0
+custom_constants/separation = 4
+
+[node name="FPSLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/FPSHBox"]
+margin_right = 131.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "FPS"
+align = 2
+
+[node name="FPSReadoutLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/FPSHBox"]
+margin_left = 135.0
+margin_right = 266.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+script = SubResource( 9 )
+
+[node name="GameVersionHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer"]
+margin_left = 41.0
+margin_top = 44.0
+margin_right = 225.0
+margin_bottom = 62.0
+size_flags_horizontal = 4
+custom_constants/separation = 4
+
+[node name="GameLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/GameVersionHBox"]
+margin_right = 97.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Brick Hill Next"
+align = 2
+
+[node name="GameVersionLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/GameVersionHBox"]
+margin_left = 101.0
+margin_right = 184.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Editor Build"
+script = ExtResource( 5 )
+
+[node name="EngineVersionHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer"]
+margin_left = 38.0
+margin_top = 66.0
+margin_right = 227.0
+margin_bottom = 84.0
+size_flags_horizontal = 4
+custom_constants/separation = 4
+
+[node name="GodotLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/EngineVersionHBox"]
+margin_right = 48.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Godot "
+align = 2
+
+[node name="EngineVersionLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/EngineVersionHBox"]
+margin_left = 52.0
+margin_right = 189.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "3.3.2-stable (official)"
+script = ExtResource( 4 )
+
+[node name="VideoDriverHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer"]
+margin_left = 44.0
+margin_top = 88.0
+margin_right = 221.0
+margin_bottom = 106.0
+size_flags_horizontal = 4
+custom_constants/separation = 4
+
+[node name="GraphicsBackendLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/VideoDriverHBox"]
+margin_right = 128.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Graphics Backend:"
+align = 2
+
+[node name="VideoDriverLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/VideoDriverHBox"]
+margin_left = 132.0
+margin_right = 177.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "GLES3"
+script = ExtResource( 9 )
+
+[node name="UserHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer"]
+margin_top = 110.0
+margin_right = 266.0
+margin_bottom = 128.0
+custom_constants/separation = 4
+
+[node name="UsernameHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/UserHBox"]
+margin_right = 131.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_constants/separation = 4
+
+[node name="UserLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/UserHBox/UsernameHBox"]
+margin_right = 63.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "User:"
+align = 2
+
+[node name="SiteSessionUsernameLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/UserHBox/UsernameHBox"]
+margin_left = 67.0
+margin_right = 131.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Guest"
+script = ExtResource( 7 )
+
+[node name="IDHBox" type="HBoxContainer" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/UserHBox"]
+margin_left = 185.0
+margin_right = 216.0
+margin_bottom = 18.0
+size_flags_horizontal = 6
+custom_constants/separation = 4
+
+[node name="IDLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/UserHBox/IDHBox"]
+margin_right = 18.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "ID:"
+align = 2
+
+[node name="SiteSessionIDLabel" type="Label" parent="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/UserHBox/IDHBox"]
+margin_left = 22.0
+margin_right = 31.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+script = ExtResource( 8 )
+
+[connection signal="pressed" from="GlobalUI/DeveloperWrapper/MarginContainer/MarginContainer/VBoxContainer/DeveloperButton" to="GlobalUI" method="toggle_developer_box"]

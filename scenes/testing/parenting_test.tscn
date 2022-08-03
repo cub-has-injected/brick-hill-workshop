@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+
+# Declare member variables here. Examples:
+# var a: int = 2
+# var b: String = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var new_node = Spatial.new()
+	new_node.transform.origin = Vector3(4, 0, 0)
+	$Spatial.add_child(new_node)
+	print(\"Origin: %s, Global Origin: %s\" % [new_node.transform.origin, new_node.global_transform.origin])
+	yield(get_tree(), \"idle_frame\")
+	yield(get_tree(), \"idle_frame\")
+	yield(get_tree(), \"idle_frame\")
+	print(\"Origin: %s, Global Origin: %s\" % [new_node.transform.origin, new_node.global_transform.origin])
+"
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )

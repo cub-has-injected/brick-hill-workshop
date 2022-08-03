@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/resources/brick_face_surface.gd" type="Script" id=1]
+[ext_resource path="res://ui/icons/workshop-assets/Tiles/Flat.png" type="Texture" id=2]
+
+[resource]
+resource_name = "Flat"
+script = ExtResource( 1 )
+icon = ExtResource( 2 )
+studded = false
+alternating = false
+flip_depth = false
+bevel_edges = false

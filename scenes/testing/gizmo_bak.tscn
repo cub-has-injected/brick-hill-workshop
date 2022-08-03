@@ -1,0 +1,337 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://meshes/gizmos/rotate.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scripts/nodes/transform_gizmo/transform_gizmo.gd" type="Script" id=3]
+[ext_resource path="res://scripts/nodes/transform_gizmo/drag_gizmo.gd" type="Script" id=6]
+[ext_resource path="res://resources/material/gizmo/GizmoY.tres" type="Material" id=7]
+[ext_resource path="res://resources/material/gizmo/GizmoX.tres" type="Material" id=8]
+[ext_resource path="res://resources/material/gizmo/GizmoZ.tres" type="Material" id=9]
+[ext_resource path="res://scripts/nodes/pickable_collision_object.gd" type="Script" id=10]
+
+[sub_resource type="CylinderShape" id=1]
+resource_local_to_scene = true
+radius = 0.2
+height = 0.5
+
+[sub_resource type="CylinderMesh" id=2]
+top_radius = 0.001
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="SpatialMaterial" id=3]
+render_priority = 10
+flags_unshaded = true
+flags_no_depth_test = true
+flags_fixed_size = true
+
+[sub_resource type="SphereMesh" id=4]
+
+[sub_resource type="ConcavePolygonShape" id=5]
+data = PoolVector3Array( 2, 0, 0, 1.6168, 0.25, 0.6697, 1.75, 0.25, 0, 1.8478, 0, 0.7654, 1.6168, 0.25, 0.6697, 2, 0, 0, 1.75, 0.25, 0, 1.3858, 0, 0.574, 1.5, 0, 0, 1.6168, 0.25, 0.6697, 1.3858, 0, 0.574, 1.75, 0.25, 0, 1.5, 0, 0, 1.6168, -0.25, 0.6697, 1.75, -0.25, 0, 1.3858, 0, 0.574, 1.6168, -0.25, 0.6697, 1.5, 0, 0, 1.75, -0.25, 0, 1.8478, 0, 0.7654, 2, 0, 0, 1.6168, -0.25, 0.6697, 1.8478, 0, 0.7654, 1.75, -0.25, 0, 1.8478, 0, 0.7654, 1.2374, 0.25, 1.2374, 1.6168, 0.25, 0.6697, 1.4142, 0, 1.4142, 1.2374, 0.25, 1.2374, 1.8478, 0, 0.7654, 1.6168, 0.25, 0.6697, 1.0607, 0, 1.0607, 1.3858, 0, 0.574, 1.2374, 0.25, 1.2374, 1.0607, 0, 1.0607, 1.6168, 0.25, 0.6697, 1.3858, 0, 0.574, 1.2374, -0.25, 1.2374, 1.6168, -0.25, 0.6697, 1.0607, 0, 1.0607, 1.2374, -0.25, 1.2374, 1.3858, 0, 0.574, 1.6168, -0.25, 0.6697, 1.4142, 0, 1.4142, 1.8478, 0, 0.7654, 1.2374, -0.25, 1.2374, 1.4142, 0, 1.4142, 1.6168, -0.25, 0.6697, 1.4142, 0, 1.4142, 0.6697, 0.25, 1.6168, 1.2374, 0.25, 1.2374, 0.7654, 0, 1.8478, 0.6697, 0.25, 1.6168, 1.4142, 0, 1.4142, 1.2374, 0.25, 1.2374, 0.574, 0, 1.3858, 1.0607, 0, 1.0607, 0.6697, 0.25, 1.6168, 0.574, 0, 1.3858, 1.2374, 0.25, 1.2374, 1.0607, 0, 1.0607, 0.6697, -0.25, 1.6168, 1.2374, -0.25, 1.2374, 0.574, 0, 1.3858, 0.6697, -0.25, 1.6168, 1.0607, 0, 1.0607, 1.2374, -0.25, 1.2374, 0.7654, 0, 1.8478, 1.4142, 0, 1.4142, 0.6697, -0.25, 1.6168, 0.7654, 0, 1.8478, 1.2374, -0.25, 1.2374, 0.7654, 0, 1.8478, 0, 0.25, 1.75, 0.6697, 0.25, 1.6168, 0, 0, 2, 0, 0.25, 1.75, 0.7654, 0, 1.8478, 0.6697, 0.25, 1.6168, 0, 0, 1.5, 0.574, 0, 1.3858, 0, 0.25, 1.75, 0, 0, 1.5, 0.6697, 0.25, 1.6168, 0.574, 0, 1.3858, 0, -0.25, 1.75, 0.6697, -0.25, 1.6168, 0, 0, 1.5, 0, -0.25, 1.75, 0.574, 0, 1.3858, 0.6697, -0.25, 1.6168, 0, 0, 2, 0.7654, 0, 1.8478, 0, -0.25, 1.75, 0, 0, 2, 0.6697, -0.25, 1.6168, 0, 0, 2, -0.6697, 0.25, 1.6168, 0, 0.25, 1.75, -0.7654, 0, 1.8478, -0.6697, 0.25, 1.6168, 0, 0, 2, 0, 0.25, 1.75, -0.574, 0, 1.3858, 0, 0, 1.5, -0.6697, 0.25, 1.6168, -0.574, 0, 1.3858, 0, 0.25, 1.75, 0, 0, 1.5, -0.6697, -0.25, 1.6168, 0, -0.25, 1.75, -0.574, 0, 1.3858, -0.6697, -0.25, 1.6168, 0, 0, 1.5, 0, -0.25, 1.75, -0.7654, 0, 1.8478, 0, 0, 2, -0.6697, -0.25, 1.6168, -0.7654, 0, 1.8478, 0, -0.25, 1.75, -0.7654, 0, 1.8478, -1.2374, 0.25, 1.2374, -0.6697, 0.25, 1.6168, -1.4142, 0, 1.4142, -1.2374, 0.25, 1.2374, -0.7654, 0, 1.8478, -0.6697, 0.25, 1.6168, -1.0607, 0, 1.0607, -0.574, 0, 1.3858, -1.2374, 0.25, 1.2374, -1.0607, 0, 1.0607, -0.6697, 0.25, 1.6168, -0.574, 0, 1.3858, -1.2374, -0.25, 1.2374, -0.6697, -0.25, 1.6168, -1.0607, 0, 1.0607, -1.2374, -0.25, 1.2374, -0.574, 0, 1.3858, -0.6697, -0.25, 1.6168, -1.4142, 0, 1.4142, -0.7654, 0, 1.8478, -1.2374, -0.25, 1.2374, -1.4142, 0, 1.4142, -0.6697, -0.25, 1.6168, -1.4142, 0, 1.4142, -1.6168, 0.25, 0.6697, -1.2374, 0.25, 1.2374, -1.8478, 0, 0.7654, -1.6168, 0.25, 0.6697, -1.4142, 0, 1.4142, -1.2374, 0.25, 1.2374, -1.3858, 0, 0.574, -1.0607, 0, 1.0607, -1.6168, 0.25, 0.6697, -1.3858, 0, 0.574, -1.2374, 0.25, 1.2374, -1.0607, 0, 1.0607, -1.6168, -0.25, 0.6697, -1.2374, -0.25, 1.2374, -1.3858, 0, 0.574, -1.6168, -0.25, 0.6697, -1.0607, 0, 1.0607, -1.2374, -0.25, 1.2374, -1.8478, 0, 0.7654, -1.4142, 0, 1.4142, -1.6168, -0.25, 0.6697, -1.8478, 0, 0.7654, -1.2374, -0.25, 1.2374, -1.8478, 0, 0.7654, -1.75, 0.25, 0, -1.6168, 0.25, 0.6697, -2, 0, 0, -1.75, 0.25, 0, -1.8478, 0, 0.7654, -1.6168, 0.25, 0.6697, -1.5, 0, 0, -1.3858, 0, 0.574, -1.75, 0.25, 0, -1.5, 0, 0, -1.6168, 0.25, 0.6697, -1.3858, 0, 0.574, -1.75, -0.25, 0, -1.6168, -0.25, 0.6697, -1.5, 0, 0, -1.75, -0.25, 0, -1.3858, 0, 0.574, -1.6168, -0.25, 0.6697, -2, 0, 0, -1.8478, 0, 0.7654, -1.75, -0.25, 0, -2, 0, 0, -1.6168, -0.25, 0.6697, -2, 0, 0, -1.6168, 0.25, -0.6697, -1.75, 0.25, 0, -1.8478, 0, -0.7654, -1.6168, 0.25, -0.6697, -2, 0, 0, -1.75, 0.25, 0, -1.3858, 0, -0.574, -1.5, 0, 0, -1.6168, 0.25, -0.6697, -1.3858, 0, -0.574, -1.75, 0.25, 0, -1.5, 0, 0, -1.6168, -0.25, -0.6697, -1.75, -0.25, 0, -1.3858, 0, -0.574, -1.6168, -0.25, -0.6697, -1.5, 0, 0, -1.75, -0.25, 0, -1.8478, 0, -0.7654, -2, 0, 0, -1.6168, -0.25, -0.6697, -1.8478, 0, -0.7654, -1.75, -0.25, 0, -1.8478, 0, -0.7654, -1.2374, 0.25, -1.2374, -1.6168, 0.25, -0.6697, -1.4142, 0, -1.4142, -1.2374, 0.25, -1.2374, -1.8478, 0, -0.7654, -1.6168, 0.25, -0.6697, -1.0607, 0, -1.0607, -1.3858, 0, -0.574, -1.2374, 0.25, -1.2374, -1.0607, 0, -1.0607, -1.6168, 0.25, -0.6697, -1.3858, 0, -0.574, -1.2374, -0.25, -1.2374, -1.6168, -0.25, -0.6697, -1.0607, 0, -1.0607, -1.2374, -0.25, -1.2374, -1.3858, 0, -0.574, -1.6168, -0.25, -0.6697, -1.4142, 0, -1.4142, -1.8478, 0, -0.7654, -1.2374, -0.25, -1.2374, -1.4142, 0, -1.4142, -1.6168, -0.25, -0.6697, -1.4142, 0, -1.4142, -0.6697, 0.25, -1.6168, -1.2374, 0.25, -1.2374, -0.7654, 0, -1.8478, -0.6697, 0.25, -1.6168, -1.4142, 0, -1.4142, -1.2374, 0.25, -1.2374, -0.574, 0, -1.3858, -1.0607, 0, -1.0607, -0.6697, 0.25, -1.6168, -0.574, 0, -1.3858, -1.2374, 0.25, -1.2374, -1.0607, 0, -1.0607, -0.6697, -0.25, -1.6168, -1.2374, -0.25, -1.2374, -0.574, 0, -1.3858, -0.6697, -0.25, -1.6168, -1.0607, 0, -1.0607, -1.2374, -0.25, -1.2374, -0.7654, 0, -1.8478, -1.4142, 0, -1.4142, -0.6697, -0.25, -1.6168, -0.7654, 0, -1.8478, -1.2374, -0.25, -1.2374, -0.7654, 0, -1.8478, 0, 0.25, -1.75, -0.6697, 0.25, -1.6168, 0, 0, -2, 0, 0.25, -1.75, -0.7654, 0, -1.8478, -0.6697, 0.25, -1.6168, 0, 0, -1.5, -0.574, 0, -1.3858, 0, 0.25, -1.75, 0, 0, -1.5, -0.6697, 0.25, -1.6168, -0.574, 0, -1.3858, 0, -0.25, -1.75, -0.6697, -0.25, -1.6168, 0, 0, -1.5, 0, -0.25, -1.75, -0.574, 0, -1.3858, -0.6697, -0.25, -1.6168, 0, 0, -2, -0.7654, 0, -1.8478, 0, -0.25, -1.75, 0, 0, -2, -0.6697, -0.25, -1.6168, 0, 0, -2, 0.6697, 0.25, -1.6168, 0, 0.25, -1.75, 0.7654, 0, -1.8478, 0.6697, 0.25, -1.6168, 0, 0, -2, 0, 0.25, -1.75, 0.574, 0, -1.3858, 0, 0, -1.5, 0.6697, 0.25, -1.6168, 0.574, 0, -1.3858, 0, 0.25, -1.75, 0, 0, -1.5, 0.6697, -0.25, -1.6168, 0, -0.25, -1.75, 0.574, 0, -1.3858, 0.6697, -0.25, -1.6168, 0, 0, -1.5, 0, -0.25, -1.75, 0.7654, 0, -1.8478, 0, 0, -2, 0.6697, -0.25, -1.6168, 0.7654, 0, -1.8478, 0, -0.25, -1.75, 0.7654, 0, -1.8478, 1.2374, 0.25, -1.2374, 0.6697, 0.25, -1.6168, 1.4142, 0, -1.4142, 1.2374, 0.25, -1.2374, 0.7654, 0, -1.8478, 0.6697, 0.25, -1.6168, 1.0607, 0, -1.0607, 0.574, 0, -1.3858, 1.2374, 0.25, -1.2374, 1.0607, 0, -1.0607, 0.6697, 0.25, -1.6168, 0.574, 0, -1.3858, 1.2374, -0.25, -1.2374, 0.6697, -0.25, -1.6168, 1.0607, 0, -1.0607, 1.2374, -0.25, -1.2374, 0.574, 0, -1.3858, 0.6697, -0.25, -1.6168, 1.4142, 0, -1.4142, 0.7654, 0, -1.8478, 1.2374, -0.25, -1.2374, 1.4142, 0, -1.4142, 0.6697, -0.25, -1.6168, 1.4142, 0, -1.4142, 1.6168, 0.25, -0.6697, 1.2374, 0.25, -1.2374, 1.8478, 0, -0.7654, 1.6168, 0.25, -0.6697, 1.4142, 0, -1.4142, 1.2374, 0.25, -1.2374, 1.3858, 0, -0.574, 1.0607, 0, -1.0607, 1.6168, 0.25, -0.6697, 1.3858, 0, -0.574, 1.2374, 0.25, -1.2374, 1.0607, 0, -1.0607, 1.6168, -0.25, -0.6697, 1.2374, -0.25, -1.2374, 1.3858, 0, -0.574, 1.6168, -0.25, -0.6697, 1.0607, 0, -1.0607, 1.2374, -0.25, -1.2374, 1.8478, 0, -0.7654, 1.4142, 0, -1.4142, 1.6168, -0.25, -0.6697, 1.8478, 0, -0.7654, 1.2374, -0.25, -1.2374, 1.8478, 0, -0.7654, 1.75, 0.25, 0, 1.6168, 0.25, -0.6697, 2, 0, 0, 1.75, 0.25, 0, 1.8478, 0, -0.7654, 1.6168, 0.25, -0.6697, 1.5, 0, 0, 1.3858, 0, -0.574, 1.75, 0.25, 0, 1.5, 0, 0, 1.6168, 0.25, -0.6697, 1.3858, 0, -0.574, 1.75, -0.25, 0, 1.6168, -0.25, -0.6697, 1.5, 0, 0, 1.75, -0.25, 0, 1.3858, 0, -0.574, 1.6168, -0.25, -0.6697, 2, 0, 0, 1.8478, 0, -0.7654, 1.75, -0.25, 0, 2, 0, 0, 1.6168, -0.25, -0.6697 )
+
+[sub_resource type="SphereShape" id=6]
+radius = 0.4
+
+[sub_resource type="SphereMesh" id=7]
+radius = 0.25
+height = 0.5
+
+[node name="Gizmo" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Drag" type="Spatial" parent="."]
+script = ExtResource( 6 )
+
+[node name="TranslatePos" type="Spatial" parent="."]
+
+[node name="AreaX" type="Area" parent="TranslatePos"]
+transform = Transform( -1.09278e-07, -3.9339e-28, 2.5, -8.99973e-21, 2.5, 0, -2.5, -8.99973e-21, -1.09278e-07, 1.7, 0, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TranslatePos/AreaX"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TranslatePos/AreaX"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 8 )
+
+[node name="DotMesh" type="MeshInstance" parent="TranslatePos/AreaX"]
+transform = Transform( 0.002, 0, 0, 0, -8.74228e-11, -0.002, 0, 0.002, -8.74228e-11, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaY" type="Area" parent="TranslatePos"]
+transform = Transform( 2.5, 0, 0, 0, -1.09278e-07, -2.5, 0, 2.5, -1.09278e-07, 0, 1.7, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TranslatePos/AreaY"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TranslatePos/AreaY"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 7 )
+
+[node name="DotMesh" type="MeshInstance" parent="TranslatePos/AreaY"]
+transform = Transform( -8.74228e-11, 0.002, -3.25842e-10, -0.002, -8.74228e-11, 8.74228e-11, 8.74228e-11, 3.25842e-10, 0.002, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaZ" type="Area" parent="TranslatePos"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 1.7 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TranslatePos/AreaZ"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TranslatePos/AreaZ"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 9 )
+
+[node name="DotMesh" type="MeshInstance" parent="TranslatePos/AreaZ"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="TranslateNeg" type="Spatial" parent="."]
+transform = Transform( -1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0 )
+
+[node name="AreaX" type="Area" parent="TranslateNeg"]
+transform = Transform( -1.09278e-07, -3.9339e-28, 2.5, -8.99973e-21, 2.5, 0, -2.5, -8.99973e-21, -1.09278e-07, 1.7, 0, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TranslateNeg/AreaX"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TranslateNeg/AreaX"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 8 )
+
+[node name="DotMesh" type="MeshInstance" parent="TranslateNeg/AreaX"]
+transform = Transform( 0.002, 1.173e-30, -5.12733e-38, 0, -8.74228e-11, -0.002, -1.173e-30, 0.002, -8.74228e-11, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaY" type="Area" parent="TranslateNeg"]
+transform = Transform( 2.5, 0, 0, 0, -1.09278e-07, -2.5, 0, 2.5, -1.09278e-07, 0, 1.7, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TranslateNeg/AreaY"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TranslateNeg/AreaY"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 7 )
+
+[node name="DotMesh" type="MeshInstance" parent="TranslateNeg/AreaY"]
+transform = Transform( -8.74228e-11, 0.002, -3.25842e-10, -0.002, -8.74228e-11, 8.74228e-11, 8.74228e-11, 3.25842e-10, 0.002, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaZ" type="Area" parent="TranslateNeg"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 1.7 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TranslateNeg/AreaZ"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TranslateNeg/AreaZ"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 9 )
+
+[node name="DotMesh" type="MeshInstance" parent="TranslateNeg/AreaZ"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Rotate" type="Spatial" parent="."]
+
+[node name="AreaX" type="Area" parent="Rotate"]
+transform = Transform( -0.00663117, -0.999978, -0.000831689, -0.00364178, -0.000807539, 0.999993, -0.999971, 0.00663415, -0.00363634, 0, 0, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Rotate/AreaX"]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rotate/AreaX"]
+transform = Transform( 1, 3.81165e-21, -2.32831e-10, 0, 1, 1.63709e-11, 2.32831e-10, -1.63709e-11, 1, 0, 0, 0 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 8 )
+
+[node name="AreaY" type="Area" parent="Rotate"]
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Rotate/AreaY"]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rotate/AreaY"]
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 7 )
+
+[node name="AreaZ" type="Area" parent="Rotate"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Rotate/AreaZ"]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rotate/AreaZ"]
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 9 )
+
+[node name="ScalePos" type="Spatial" parent="."]
+
+[node name="AreaX" type="Area" parent="ScalePos"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 1.7, 0, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ScalePos/AreaX"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScalePos/AreaX"]
+mesh = SubResource( 7 )
+material/0 = ExtResource( 8 )
+
+[node name="DotMesh" type="MeshInstance" parent="ScalePos/AreaX"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaY" type="Area" parent="ScalePos"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1.7, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ScalePos/AreaY"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScalePos/AreaY"]
+mesh = SubResource( 7 )
+material/0 = ExtResource( 7 )
+
+[node name="DotMesh" type="MeshInstance" parent="ScalePos/AreaY"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaZ" type="Area" parent="ScalePos"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 1.7 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ScalePos/AreaZ"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScalePos/AreaZ"]
+mesh = SubResource( 7 )
+material/0 = ExtResource( 9 )
+
+[node name="DotMesh" type="MeshInstance" parent="ScalePos/AreaZ"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="ScaleNeg" type="Spatial" parent="."]
+transform = Transform( -1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0 )
+
+[node name="AreaX" type="Area" parent="ScaleNeg"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 1.7, 0, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNeg/AreaX"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNeg/AreaX"]
+mesh = SubResource( 7 )
+material/0 = ExtResource( 8 )
+
+[node name="DotMesh" type="MeshInstance" parent="ScaleNeg/AreaX"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaY" type="Area" parent="ScaleNeg"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 1.7, 0 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNeg/AreaY"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNeg/AreaY"]
+mesh = SubResource( 7 )
+material/0 = ExtResource( 7 )
+
+[node name="DotMesh" type="MeshInstance" parent="ScaleNeg/AreaY"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="AreaZ" type="Area" parent="ScaleNeg"]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 1.7 )
+input_capture_on_drag = true
+collision_mask = 0
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNeg/AreaZ"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNeg/AreaZ"]
+mesh = SubResource( 7 )
+material/0 = ExtResource( 9 )
+
+[node name="DotMesh" type="MeshInstance" parent="ScaleNeg/AreaZ"]
+transform = Transform( -8.74228e-11, 0.002, -8.74228e-11, 0, -8.74228e-11, -0.002, -0.002, -8.74228e-11, 3.82137e-18, 0, 0, 0 )
+material_override = SubResource( 3 )
+mesh = SubResource( 4 )
+material/0 = null

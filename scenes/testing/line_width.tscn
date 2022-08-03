@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/testing/line_width.gd" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_unshaded = true
+params_line_width = 78.7
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
+material_override = SubResource( 1 )
+cast_shadow = 0
+script = ExtResource( 1 )

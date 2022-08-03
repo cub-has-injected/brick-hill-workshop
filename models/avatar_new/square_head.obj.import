@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/square_head.obj-b2ec9068ab9270604dffe92a60ba4abe.mesh"
+
+[deps]
+
+files=[ "res://.import/square_head.obj-b2ec9068ab9270604dffe92a60ba4abe.mesh" ]
+
+source_file="res://models/avatar_new/square_head.obj"
+dest_files=[ "res://.import/square_head.obj-b2ec9068ab9270604dffe92a60ba4abe.mesh", "res://.import/square_head.obj-b2ec9068ab9270604dffe92a60ba4abe.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_unshaded = true
+flags_no_depth_test = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends RigidBody
+
+export(NodePath) var debug_geo_path := NodePath()
+
+func get_debug_geo() -> ImmediateGeometry:
+	return get_node_or_null(debug_geo_path) as ImmediateGeometry
+
+func _ready() -> void:
+	var cast_mover = CastMover.new(
+		get_world().direct_space_state,
+		global_transform,
+		$CollisionShape.shape,
+		collision_mask,
+		[self]
+	).move(
+		CastMover.Motion.new(Vector3.RIGHT * 3.0, CastMover.Motion.Mode.Obstructed)
+	).move(
+		CastMover.Motion.new(Vector3.UP * 2.0, CastMover.Motion.Mode.Unobstructed)
+	).move(
+		CastMover.Motion.new(Vector3.RIGHT * 2.0, CastMover.Motion.Mode.Unobstructed)
+	).move(
+		CastMover.Motion.new(Vector3.DOWN * 2.0, CastMover.Motion.Mode.Continuous)
+	)
+
+	print(cast_mover.results)
+	cast_mover.results.draw_debug(get_debug_geo())
+
+	global_transform = cast_mover.results.to
+"
+
+[sub_resource type="CylinderShape" id=3]
+
+[sub_resource type="CylinderMesh" id=4]
+
+[sub_resource type="BoxShape" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+uv1_scale = Vector3( 0.125, 0.125, 0.125 )
+uv1_triplanar = true
+
+[sub_resource type="CubeMesh" id=7]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="MotionDebugger" type="ImmediateGeometry" parent="."]
+material_override = SubResource( 1 )
+
+[node name="RigidBody" type="RigidBody" parent="."]
+script = SubResource( 2 )
+debug_geo_path = NodePath("../MotionDebugger")
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody/CollisionShape"]
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
+material_override = SubResource( 6 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -2, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody2"]
+material_override = SubResource( 6 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="StaticBody3" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -2, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody3"]
+material_override = SubResource( 6 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="StaticBody4" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody4"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody4"]
+material_override = SubResource( 6 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="StaticBody5" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -2, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody5"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody5"]
+material_override = SubResource( 6 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4, 8 )

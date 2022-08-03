@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://scripts/resources/brick_face_material.gd" type="Script" id=1]
+[ext_resource path="res://resources/texture/surfaces/ConcreteNormal.png" type="Texture" id=2]
+[ext_resource path="res://resources/texture/surfaces/Concrete.png" type="Texture" id=3]
+
+[resource]
+resource_name = "Concrete"
+script = ExtResource( 1 )
+icon = ExtResource( 3 )
+albedo_texture = ExtResource( 3 )
+normal_texture = ExtResource( 2 )
+ambient_occlusion_light_affect = 1.0

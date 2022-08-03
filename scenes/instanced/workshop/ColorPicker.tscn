@@ -1,0 +1,205 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/nodes/ui/color_picker/hue_ring.gd" type="Script" id=1]
+[ext_resource path="res://ui/icons/workshop/dropper.png" type="Texture" id=2]
+[ext_resource path="res://scripts/nodes/ui/color_picker/color_picker.gd" type="Script" id=3]
+[ext_resource path="res://scenes/instanced/workshop/ColorPalette.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+const float PI = 3.141;
+const float TAU = 6.282;
+
+uniform float ring_size = 0.1;
+
+vec3 angle_to_hue(float angle) {
+  angle /= TAU;
+  return clamp((abs(fract(angle+vec3(3.0, 2.0, 1.0)/3.0)*6.0-3.0)-1.0), 0.0, 1.0);
+}
+
+void fragment() {
+	// UV aspect ratio
+	vec2 base_uv = UV;
+	
+	// Fragment size for AA
+	vec2 frag_width = fwidth(UV);
+	float frag_size = length(frag_width);
+	
+	// Circular distance field
+	vec2 delta = UV - vec2(0.5);
+	float dist = 1.0 - length(delta);
+	
+	// Hue
+	float angle = atan(-delta.y, delta.x);
+	vec3 color = angle_to_hue(angle);
+	
+	// Alpha ring
+	float ring_size_half = ring_size * 0.5;
+	
+	float alpha_max = smoothstep(0.5, 0.5 + frag_size, dist);
+	float alpha_min = smoothstep(0.5 + ring_size_half, 0.5 + ring_size_half + frag_size, dist);
+	float alpha = alpha_max - alpha_min;
+	
+	COLOR = vec4(color, alpha);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/ring_size = 0.25
+
+[sub_resource type="ImageTexture" id=3]
+size = Vector2( 1, 1 )
+
+[node name="ColorPicker" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -750.0
+margin_bottom = -506.0
+rect_min_size = Vector2( 530, 214 )
+mouse_filter = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPalette" parent="HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 214.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+show_behind_parent = true
+margin_left = 364.0
+margin_right = 530.0
+margin_bottom = 214.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
+margin_right = 166.0
+margin_bottom = 164.0
+mouse_filter = 1
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="HueRing" type="Control" parent="HBoxContainer/VBoxContainer/MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 158.0
+margin_bottom = 156.0
+focus_mode = 2
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/MarginContainer/HueRing"]
+show_behind_parent = true
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 3 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 166.0
+margin_bottom = 214.0
+mouse_filter = 1
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer2"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 158.0
+margin_bottom = 38.0
+size_flags_vertical = 3
+custom_constants/separation = 8
+
+[node name="Border" type="ColorRect" parent="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+mouse_filter = 1
+color = Color( 0, 0, 0, 1 )
+
+[node name="ColorPreview" type="ColorRect" parent="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer/Border"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 38.0
+margin_right = 112.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+text = "#FFFFFF"
+
+[node name="Eyedropper" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 120.0
+margin_right = 150.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+focus_mode = 0
+mouse_filter = 1
+toggle_mode = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer/Eyedropper"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -9.5
+margin_top = -9.5
+margin_right = 9.5
+margin_bottom = 9.5
+rect_min_size = Vector2( 19, 19 )
+texture = ExtResource( 2 )
+stretch_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="color_selected" from="HBoxContainer/ColorPalette" to="." method="color_changed"]
+[connection signal="color_selected" from="HBoxContainer/ColorPalette" to="." method="color_committed"]
+[connection signal="color_changed" from="HBoxContainer/VBoxContainer/MarginContainer/HueRing" to="." method="color_changed"]
+[connection signal="color_committed" from="HBoxContainer/VBoxContainer/MarginContainer/HueRing" to="." method="color_committed"]
+[connection signal="text_entered" from="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer/LineEdit" to="." method="on_hex_color_changed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer/Eyedropper" to="." method="start_picking"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/MarginContainer2/HBoxContainer/Eyedropper" to="." method="set_picking"]

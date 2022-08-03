@@ -1,0 +1,266 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://scripts/nodes/default_player_script.gd" type="Script" id=1]
+[ext_resource path="res://scenes/testing/character/instanced/player.gd" type="Script" id=2]
+[ext_resource path="res://scenes/testing/character/src/player_controller.gd" type="Script" id=3]
+[ext_resource path="res://models/avatar_new/GameAvatarRig.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/nodes/camera_rig.gd" type="Script" id=5]
+[ext_resource path="res://addons/character_integrator/gdscript/physics_lerp_remote_transform.gd" type="Script" id=6]
+[ext_resource path="res://addons/character_integrator/gdscript/character_integrator.gd" type="Script" id=7]
+[ext_resource path="res://scripts/nodes/rigid_body_waker.gd" type="Script" id=8]
+[ext_resource path="res://scripts/nodes/brick_hill_camera.gd" type="Script" id=9]
+
+[sub_resource type="PhysicsMaterial" id=1]
+friction = 0.0
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends RigidBody
+
+export(Resource) var integrator: Resource = null
+
+export(float) var sneak_speed := 6.0
+export(float) var walk_speed := 12.0
+export(float) var sprint_speed := 20.0
+export(float) var air_speed := 12.0
+
+export(NodePath) var target_basis_path := NodePath()
+export(NodePath) var camera_anchor_path := NodePath()
+
+var wish_vector_binds := {
+	'move_forward': Vector3.FORWARD,
+	'move_backward': Vector3.BACK,
+	'move_left': Vector3.LEFT,
+	'move_right': Vector3.RIGHT
+}
+
+var _wish_vector := Vector3.ZERO
+
+func get_target_basis() -> Spatial:
+	return get_node_or_null(target_basis_path) as Spatial
+
+func get_camera_anchor() -> Spatial:
+	return get_node_or_null(camera_anchor_path) as Spatial
+
+func _ready() -> void:
+	# Configure main collision shape
+	var shape_owner = create_shape_owner(self)
+	shape_owner_add_shape(shape_owner, integrator.main_shape)
+
+	integrator.exclude = [self]
+	integrator.collision_mask = collision_mask
+
+func _process(delta: float) -> void:
+	integrator.process(delta, linear_velocity)
+
+	if integrator.stepped_down:
+		print(\"%s - Stepped down\" % [OS.get_ticks_msec()])
+		integrator.stepped_down = false
+
+	if integrator.stepped_up:
+		print(\"%s - Stepped up\" % [OS.get_ticks_msec()])
+		integrator.stepped_up = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action('move_jump'):
+		integrator.jump_buffered = event.is_action_pressed('move_jump')
+		integrator.jump_held = event.is_action_pressed('move_jump')
+
+func _integrate_forces(state: PhysicsDirectBodyState) -> void:
+	_wish_vector = Vector3.ZERO
+
+	for bind in wish_vector_binds:
+		_wish_vector += wish_vector_binds[bind] * Input.get_action_strength(bind)
+
+	_wish_vector = _wish_vector.normalized() * min(1.0, _wish_vector.length())
+
+	integrator.wish_vector = _wish_vector
+
+	integrator.target_basis = Basis.IDENTITY.rotated(Vector3.UP, get_target_basis().global_transform.basis.get_euler().y)
+
+	if integrator.grounded and integrator.prev_grounded:
+		integrator.soft_velocity_limit = walk_speed * _wish_vector.length()
+	else:
+		integrator.soft_velocity_limit = air_speed
+
+	integrator.integrate_forces(state)
+
+	# Update camera arm
+	var camera_anchor = get_camera_anchor()
+	if camera_anchor:
+		camera_anchor.global_transform = state.transform.translated(global_transform.basis.xform_inv(integrator.step_offset))
+		camera_anchor.global_transform.origin += global_transform.basis.y.normalized() * 1.875
+"
+
+[sub_resource type="CylinderShape" id=3]
+margin = 0.001
+radius = 0.5
+height = 0.5
+
+[sub_resource type="CylinderShape" id=4]
+margin = 0.001
+radius = 0.5
+height = 5.0
+
+[sub_resource type="Resource" id=5]
+resource_name = "Player Integrator"
+script = ExtResource( 7 )
+main_shape = SubResource( 4 )
+ground_shape = SubResource( 3 )
+collision_mask = 1
+gravity_factor = 6.7
+force_ground_acceleration = 200.0
+force_air_acceleration = 40.0
+force_ground_deceleration = 300.0
+force_air_deceleration = 40.0
+impulse_jump = 30.0
+force_jump = 20.0
+soft_velocity_limit = 12.0
+hard_velocity_limit = 100.0
+floor_normal_dot_limit = 0.1
+min_step_depth = 1.0
+step_down_range = 1.5
+min_step_down = 0.05
+step_up_range = 1.5
+step_offset_lerp_factor = 2.0
+min_step_offset_lerp_speed = 20.0
+
+[sub_resource type="CylinderShape" id=6]
+margin = 0.001
+radius = 1.5
+height = 6.2
+
+[sub_resource type="CylinderMesh" id=7]
+height = 5.2
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0, 0.623529, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_unshaded = true
+flags_no_depth_test = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_unshaded = true
+flags_no_depth_test = true
+vertex_color_use_as_albedo = true
+
+[node name="Player" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="DefaultPlayerScript" type="Node" parent="."]
+script = ExtResource( 1 )
+player_controller_path = NodePath("../PlayerController")
+camera_rig_path = NodePath("../CameraRig")
+character_rig_path = NodePath("../CharacterRig")
+
+[node name="PlayerController" type="Spatial" parent="."]
+script = ExtResource( 3 )
+look_rotation = Vector2( 0, -30 )
+target_paths = [ NodePath("../CharacterRig"), NodePath("../CameraRig") ]
+move_sensitivity = Vector3( 1, 1, 1 )
+camera_sensitivity = Vector2( 1, 1 )
+look_rotation = Vector2( 0, -30 )
+move/forward = 1
+move/backward = 2
+move/left = 3
+move/right = 4
+move/up = 5
+move/down = 6
+look/up = 7
+look/down = 8
+look/left = 9
+look/right = 10
+input_map = {
+"Look": {
+"Down": "look_down",
+"Left": "look_left",
+"Right": "look_right",
+"Up": "look_up"
+},
+"Move": {
+"Backward": "move_backward",
+"Down": "move_down",
+"Forward": "move_forward",
+"Left": "move_left",
+"Right": "move_right",
+"Up": "move_up"
+}
+}
+
+[node name="CharacterRig" type="RigidBody" parent="."]
+collision_layer = 0
+mode = 2
+physics_material_override = SubResource( 1 )
+custom_integrator = true
+continuous_cd = true
+contacts_reported = 16
+can_sleep = false
+script = SubResource( 2 )
+integrator = SubResource( 5 )
+target_basis_path = NodePath("../CameraRig/CameraYaw")
+camera_anchor_path = NodePath("../CameraAnchor")
+
+[node name="JumpTimer" type="Timer" parent="CharacterRig"]
+wait_time = 0.2
+one_shot = true
+
+[node name="RigidBodyWaker" type="Area" parent="CharacterRig"]
+collision_layer = 0
+script = ExtResource( 8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CharacterRig/RigidBodyWaker"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="CharacterRig"]
+visible = false
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="_ImmediateGeometry" type="ImmediateGeometry" parent="CharacterRig"]
+material_override = SubResource( 9 )
+
+[node name="CameraAnchor" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
+
+[node name="PhysicsLerpRemoteTransform" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
+script = ExtResource( 6 )
+target = NodePath("../CameraAnchor")
+
+[node name="GameAvatarRig" parent="PhysicsLerpRemoteTransform" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.875, 0 )
+
+[node name="CameraRig" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0 )
+script = ExtResource( 5 )
+position_target_path = NodePath("../PhysicsLerpRemoteTransform")
+local_offset = Vector3( 0, 0, 0 )
+world_offset = Vector3( 0, 0, 0 )
+use_position_spring = false
+rotation_mode = 0
+projection_mode = 0
+perspective_fov = 70.0
+target_distance = 12.0
+use_distance_spring = true
+distance_spring_tightness = 5.0
+distance_spring_radius = 0.25
+
+[node name="CameraYaw" type="Spatial" parent="CameraRig"]
+
+[node name="CameraPitch" type="Spatial" parent="CameraRig/CameraYaw"]
+
+[node name="Camera" type="Camera" parent="CameraRig/CameraYaw/CameraPitch"]
+transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -2.38419e-07, 6 )
+cull_mask = 1
+current = true
+far = 500.0
+script = ExtResource( 9 )
+
+[node name="DebugGeometry" type="Node" parent="."]
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="DebugGeometry"]
+visible = false
+material_override = SubResource( 10 )
+
+[connection signal="timeout" from="CharacterRig/JumpTimer" to="CharacterRig" method="jump_finished"]

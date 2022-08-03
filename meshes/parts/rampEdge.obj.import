@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/rampEdge.obj-4b46cc2335dbd1075f5a51713fcb7677.mesh"
+
+[deps]
+
+files=[ "res://.import/rampEdge.obj-4b46cc2335dbd1075f5a51713fcb7677.mesh" ]
+
+source_file="res://meshes/parts/rampEdge.obj"
+dest_files=[ "res://.import/rampEdge.obj-4b46cc2335dbd1075f5a51713fcb7677.mesh", "res://.import/rampEdge.obj-4b46cc2335dbd1075f5a51713fcb7677.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

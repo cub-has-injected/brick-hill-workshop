@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/themes/workshop_general.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/instanced/workshop/ColorPalette.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test_data/mockups/new-color-picker.png" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+func color_selected(color) -> void:
+	$ColorRect.color = color
+	$LineEdit.text = \"#\" + color.to_html(false).to_upper()
+"
+
+[node name="Control" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+theme = ExtResource( 1 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="new-color-picker" type="Sprite" parent="."]
+position = Vector2( 601, 252 )
+texture = ExtResource( 3 )
+
+[node name="ColorPalette" parent="." instance=ExtResource( 2 )]
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 736.277
+margin_top = 147.364
+margin_right = 874.277
+margin_bottom = 280.364
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 737.233
+margin_top = 148.182
+margin_right = 873.233
+margin_bottom = 279.182
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 759.965
+margin_top = 307.339
+margin_right = 859.965
+margin_bottom = 331.339
+text = "#000000"
+caret_blink = true
+caret_blink_speed = 0.5

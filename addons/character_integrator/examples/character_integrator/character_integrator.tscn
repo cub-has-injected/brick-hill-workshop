@@ -1,0 +1,1200 @@
+[gd_scene load_steps=61 format=2]
+
+[ext_resource path="res://addons/character_integrator/gdscript/physics_lerp_remote_transform.gd" type="Script" id=1]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/wire_cylinder.gd" type="Script" id=2]
+[ext_resource path="res://addons/character_integrator/gdscript/character_integrator.gd" type="Script" id=5]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/rigid_body_vcr.gd" type="Script" id=6]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/player.gd" type="Script" id=7]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/character_integrator_example.gd" type="Script" id=8]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/rotating_platform.gd" type="Script" id=9]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/moving_platform.gd" type="Script" id=10]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/fps_label.gd" type="Script" id=11]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/camera_yaw.gd" type="Script" id=12]
+[ext_resource path="res://addons/character_integrator/examples/character_integrator/camera_pitch.gd" type="Script" id=13]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 500, 1, 500 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+albedo_color = Color( 0, 0.156863, 1, 0.509804 )
+
+[sub_resource type="CubeMesh" id=5]
+size = Vector3( 1000, 2, 1000 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 10, 1, 10 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.313726, 0.470588, 0.47451, 1 )
+uv1_scale = Vector3( 0.125, 0.125, 0.125 )
+uv1_triplanar = true
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 20, 2, 20 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 40, 1, 40 )
+
+[sub_resource type="CubeMesh" id=10]
+size = Vector3( 80, 2, 80 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 150, 1, 150 )
+
+[sub_resource type="CubeMesh" id=12]
+size = Vector3( 300, 2, 300 )
+
+[sub_resource type="BoxShape" id=13]
+extents = Vector3( 1, 0.5, 10 )
+
+[sub_resource type="CubeMesh" id=14]
+size = Vector3( 2, 1, 20 )
+
+[sub_resource type="BoxShape" id=15]
+extents = Vector3( 10, 0.5, 10 )
+
+[sub_resource type="CubeMesh" id=16]
+size = Vector3( 20, 1, 20 )
+
+[sub_resource type="BoxShape" id=17]
+extents = Vector3( 10, 1, 5 )
+
+[sub_resource type="CubeMesh" id=18]
+size = Vector3( 20, 2, 10 )
+
+[sub_resource type="BoxShape" id=19]
+extents = Vector3( 1, 1, 10 )
+
+[sub_resource type="CubeMesh" id=20]
+size = Vector3( 2, 2, 20 )
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 2, 1, 5 )
+
+[sub_resource type="CubeMesh" id=22]
+size = Vector3( 4, 2, 10 )
+
+[sub_resource type="SphereShape" id=23]
+radius = 2.0
+
+[sub_resource type="SphereMesh" id=24]
+radius = 2.0
+height = 4.0
+
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 0.25, 0.25, 0.75 )
+
+[sub_resource type="BoxShape" id=26]
+extents = Vector3( 0.75, 0.25, 0.25 )
+
+[sub_resource type="SpatialMaterial" id=27]
+albedo_color = Color( 0.364706, 0.364706, 0.364706, 1 )
+uv1_scale = Vector3( 0.125, 0.125, 0.125 )
+uv1_triplanar = true
+
+[sub_resource type="BoxShape" id=49]
+extents = Vector3( 10, 0.5, 10 )
+
+[sub_resource type="SphereShape" id=28]
+radius = 4.0
+
+[sub_resource type="SphereMesh" id=29]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="CylinderShape" id=30]
+radius = 0.25
+height = 4.0
+
+[sub_resource type="BoxShape" id=31]
+extents = Vector3( 0.25, 1.5, 2 )
+
+[sub_resource type="PhysicsMaterial" id=32]
+
+[sub_resource type="BoxShape" id=33]
+extents = Vector3( 5, 1, 10 )
+
+[sub_resource type="BoxShape" id=34]
+extents = Vector3( 1, 8, 1 )
+
+[sub_resource type="BoxShape" id=35]
+extents = Vector3( 2, 2, 3 )
+
+[sub_resource type="PhysicsMaterial" id=36]
+friction = 0.0
+
+[sub_resource type="CylinderShape" id=37]
+margin = 0.001
+height = 0.5
+
+[sub_resource type="CylinderShape" id=38]
+margin = 0.001
+height = 4.0
+
+[sub_resource type="Resource" id=39]
+script = ExtResource( 5 )
+main_shape = SubResource( 38 )
+ground_shape = SubResource( 37 )
+collision_mask = 1
+gravity_factor = 6.7
+force_ground_acceleration = 200.0
+force_air_acceleration = 40.0
+force_ground_deceleration = 200.0
+force_air_deceleration = 40.0
+impulse_jump = 30.0
+force_jump = 20.0
+soft_velocity_limit = 12.0
+hard_velocity_limit = 100.0
+floor_normal_dot_limit = 0.1
+min_step_depth = 1.0
+step_down_range = 1.5
+min_step_down = 0.05
+step_up_range = 1.5
+step_offset_lerp_factor = 2.0
+min_step_offset_lerp_speed = 20.0
+
+[sub_resource type="SpatialMaterial" id=40]
+flags_unshaded = true
+flags_no_depth_test = true
+albedo_color = Color( 0, 0.835294, 1, 0.501961 )
+
+[sub_resource type="SpatialMaterial" id=41]
+albedo_color = Color( 1, 0.796078, 0, 1 )
+
+[sub_resource type="CylinderMesh" id=42]
+height = 4.0
+
+[sub_resource type="CylinderMesh" id=43]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 4.0
+
+[sub_resource type="CubeMesh" id=44]
+size = Vector3( 0.5, 3, 4 )
+
+[sub_resource type="CubeMesh" id=45]
+size = Vector3( 10, 2, 20 )
+
+[sub_resource type="CubeMesh" id=46]
+size = Vector3( 2, 16, 2 )
+
+[sub_resource type="CubeMesh" id=47]
+size = Vector3( 4, 4, 6 )
+
+[sub_resource type="SpatialMaterial" id=48]
+flags_unshaded = true
+flags_no_depth_test = true
+vertex_color_use_as_albedo = true
+
+[node name="CharacterIntegratorExample" type="Spatial"]
+pause_mode = 2
+script = ExtResource( 8 )
+
+[node name="RigidBodyVCR" type="Node" parent="."]
+script = ExtResource( 6 )
+dynamic_rigid_body_paths = [ NodePath("../Collision/Player"), NodePath("../Collision/Door") ]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.866025, -0.433013, -0.25, 0, -0.5, 0.866025, -0.5, -0.75, -0.433013, 0, 14, 0 )
+light_energy = 0.5
+
+[node name="Scene" type="Spatial" parent="."]
+pause_mode = 1
+
+[node name="Collision" type="Spatial" parent="Scene"]
+
+[node name="KillVolume" type="Area" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/KillVolume"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/KillVolume"]
+material_override = SubResource( 4 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Floor" type="StaticBody" parent="Scene/Collision"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Floor"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Floor/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="Floor2" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Floor2"]
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Floor2/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="BuggyLargeFloor" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 50 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyLargeFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 0, 0 )
+shape = SubResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyLargeFloor/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 12 )
+material/0 = null
+__meta__ = {
+"_editor_description_": "NOTE
+This collider is large enough that the physics system begins to return incorrect values.
+This occurs regardless of whether the size is encoded through unit meshes + transform, or unit transform + sized meshes."
+}
+
+[node name="Stair" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1.5, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Stair"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Stair/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="Stair2" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2.5, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Stair2"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Stair2/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="Stair3" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3.5, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Stair3"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Stair3/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="Stair4" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 4.5, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Stair4"]
+shape = SubResource( 15 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Stair4/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 16 )
+material/0 = null
+
+[node name="Slope" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -18, 5, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Slope"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Slope/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="Slope4" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( -2.68221e-07, 1, 0, -1, -2.68221e-07, 0, 0, 0, 1, -18, 5, 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Slope4"]
+shape = SubResource( 17 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Slope4/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="Slope5" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( -0.707107, 0.707106, 0, -0.707106, -0.707107, 0, 0, 0, 1, -24, 12, -5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Slope5"]
+shape = SubResource( 17 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Slope5/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="Slope2" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -8, 1, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Slope2"]
+shape = SubResource( 19 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Slope2/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 20 )
+material/0 = null
+
+[node name="Slope3" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.4, 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Slope3"]
+shape = SubResource( 21 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Slope3/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 22 )
+material/0 = null
+
+[node name="Sphere" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, 21 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Sphere"]
+shape = SubResource( 23 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Sphere/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 24 )
+material/0 = null
+
+[node name="Sphere2" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 2, 21 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Sphere2"]
+shape = SubResource( 23 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Sphere2/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 24 )
+material/0 = null
+
+[node name="Sphere3" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 3, 21 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Sphere3"]
+shape = SubResource( 23 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Sphere3/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 24 )
+material/0 = null
+
+[node name="Sphere4" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 4, 21 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Sphere4"]
+shape = SubResource( 23 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Sphere4/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 24 )
+material/0 = null
+
+[node name="Sphere5" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 5, 21 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Sphere5"]
+shape = SubResource( 23 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Sphere5/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 24 )
+material/0 = null
+
+[node name="DoorFrame" type="StaticBody" parent="Scene/Collision"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1.75, 0 )
+shape = SubResource( 25 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1.75, 0 )
+shape = SubResource( 25 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, -0.5 )
+shape = SubResource( 26 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0.5 )
+shape = SubResource( 26 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.75, 0 )
+shape = SubResource( 25 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.75, 0 )
+shape = SubResource( 25 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -0.5 )
+shape = SubResource( 26 )
+
+[node name="CollisionShape8" type="CollisionShape" parent="Scene/Collision/DoorFrame"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0.5 )
+shape = SubResource( 26 )
+
+[node name="ShallowStairs" type="Spatial" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.5, 22 )
+
+[node name="ShallowStair" type="StaticBody" parent="Scene/Collision/ShallowStairs"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/ShallowStairs/ShallowStair"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/ShallowStairs/ShallowStair/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair3" type="StaticBody" parent="Scene/Collision/ShallowStairs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/ShallowStairs/ShallowStair3"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/ShallowStairs/ShallowStair3/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair5" type="StaticBody" parent="Scene/Collision/ShallowStairs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 4, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/ShallowStairs/ShallowStair5"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/ShallowStairs/ShallowStair5/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair2" type="StaticBody" parent="Scene/Collision/ShallowStairs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/ShallowStairs/ShallowStair2"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/ShallowStairs/ShallowStair2/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair4" type="StaticBody" parent="Scene/Collision/ShallowStairs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 3, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/ShallowStairs/ShallowStair4"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/ShallowStairs/ShallowStair4/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair6" type="StaticBody" parent="Scene/Collision/ShallowStairs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/ShallowStairs/ShallowStair6"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/ShallowStairs/ShallowStair6/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="BuggyStripedFloor" type="Spatial" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.5, 55 )
+
+[node name="ShallowStair7" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair7"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair7/CollisionShape"]
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair8" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair8"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair8/CollisionShape"]
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair9" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair9"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair9/CollisionShape"]
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair13" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair13"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair13/CollisionShape"]
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair14" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair14"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair14/CollisionShape"]
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair15" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair15"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair15/CollisionShape"]
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair16" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair16"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair16/CollisionShape"]
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair10" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair10"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair10/CollisionShape"]
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair11" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair11"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair11/CollisionShape"]
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="ShallowStair12" type="StaticBody" parent="Scene/Collision/BuggyStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/BuggyStripedFloor/ShallowStair12"]
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/BuggyStripedFloor/ShallowStair12/CollisionShape"]
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="StableStripedFloor" type="Spatial" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.5, 77 )
+
+[node name="ShallowStair7" type="StaticBody" parent="Scene/Collision/StableStripedFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape9" type="CollisionShape" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0 )
+shape = SubResource( 49 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance3" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance4" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0 )
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 0 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance6" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0 )
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance7" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance8" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance9" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+material_override = SubResource( 27 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="MeshInstance10" type="MeshInstance" parent="Scene/Collision/StableStripedFloor/ShallowStair7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 0 )
+mesh = SubResource( 14 )
+material/0 = null
+
+[node name="Unanchored" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.5, 6.5, 55 )
+can_sleep = false
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Unanchored"]
+shape = SubResource( 28 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/Unanchored/CollisionShape"]
+mesh = SubResource( 29 )
+material/0 = null
+
+[node name="Door" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, 9 )
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Door"]
+shape = SubResource( 30 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Scene/Collision/Door"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+shape = SubResource( 31 )
+
+[node name="SeeSaw" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+mode = 3
+physics_material_override = SubResource( 32 )
+can_sleep = false
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/SeeSaw"]
+shape = SubResource( 33 )
+
+[node name="RotatingPlatform" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 4, -23 )
+mode = 3
+physics_material_override = SubResource( 32 )
+can_sleep = false
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+axis = Vector3( 0, 1, 0 )
+sine = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/RotatingPlatform"]
+shape = SubResource( 33 )
+
+[node name="MovingPlatform" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 28 )
+mode = 3
+physics_material_override = SubResource( 32 )
+can_sleep = false
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/MovingPlatform"]
+shape = SubResource( 33 )
+
+[node name="Hammer" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 25, 0 )
+mode = 3
+physics_material_override = SubResource( 32 )
+can_sleep = false
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = 3.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Scene/Collision/Hammer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, 0 )
+shape = SubResource( 34 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Scene/Collision/Hammer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17, 0 )
+shape = SubResource( 35 )
+
+[node name="Player" type="RigidBody" parent="Scene/Collision"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 7, 0 )
+mode = 2
+physics_material_override = SubResource( 36 )
+custom_integrator = true
+continuous_cd = true
+contacts_reported = 16
+contact_monitor = true
+can_sleep = false
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_group_": true
+}
+integrator = SubResource( 39 )
+target_basis_path = NodePath("../PhysicsLerpRemoteTransform/Yaw")
+camera_anchor_path = NodePath("../CameraAnchor")
+
+[node name="WireCylinder" type="ImmediateGeometry" parent="Scene/Collision/Player"]
+visible = false
+material_override = SubResource( 40 )
+script = ExtResource( 2 )
+radius = 1.0
+height = 4.0
+
+[node name="CameraAnchor" type="Spatial" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PhysicsLerpRemoteTransform" type="Spatial" parent="Scene/Collision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0 )
+script = ExtResource( 1 )
+target = NodePath("../CameraAnchor")
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Collision/PhysicsLerpRemoteTransform"]
+material_override = SubResource( 41 )
+mesh = SubResource( 42 )
+material/0 = null
+
+[node name="Yaw" type="Spatial" parent="Scene/Collision/PhysicsLerpRemoteTransform"]
+pause_mode = 2
+script = ExtResource( 12 )
+
+[node name="Pitch" type="Spatial" parent="Scene/Collision/PhysicsLerpRemoteTransform/Yaw"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0 )
+script = ExtResource( 13 )
+
+[node name="Camera" type="Camera" parent="Scene/Collision/PhysicsLerpRemoteTransform/Yaw/Pitch"]
+transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 11 )
+current = true
+far = 500.0
+
+[node name="Visuals" type="Spatial" parent="Scene"]
+
+[node name="DoorMeshes" type="Spatial" parent="Scene/Visuals"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, 9 )
+script = ExtResource( 1 )
+target = NodePath("../../../../CharacterIntegratorExample/Scene/Collision/Door")
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Visuals/DoorMeshes"]
+mesh = SubResource( 43 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Scene/Visuals/DoorMeshes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+mesh = SubResource( 44 )
+material/0 = null
+
+[node name="SeeSawMeshes" type="Spatial" parent="Scene/Visuals"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+script = ExtResource( 1 )
+target = NodePath("../../../../CharacterIntegratorExample/Scene/Collision/SeeSaw")
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Visuals/SeeSawMeshes"]
+mesh = SubResource( 45 )
+material/0 = null
+
+[node name="RotatingPlatformMeshes" type="Spatial" parent="Scene/Visuals"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 4, -23 )
+script = ExtResource( 1 )
+target = NodePath("../../../../CharacterIntegratorExample/Scene/Collision/RotatingPlatform")
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Visuals/RotatingPlatformMeshes"]
+mesh = SubResource( 45 )
+material/0 = null
+
+[node name="MovingPlatformMeshes" type="Spatial" parent="Scene/Visuals"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 28 )
+script = ExtResource( 1 )
+target = NodePath("../../../../CharacterIntegratorExample/Scene/Collision/MovingPlatform")
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Visuals/MovingPlatformMeshes"]
+mesh = SubResource( 45 )
+material/0 = null
+
+[node name="HammerMeshes" type="Spatial" parent="Scene/Visuals"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 25, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+target = NodePath("../../../../CharacterIntegratorExample/Scene/Collision/Hammer")
+
+[node name="MeshInstance" type="MeshInstance" parent="Scene/Visuals/HammerMeshes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, 0 )
+mesh = SubResource( 46 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Scene/Visuals/HammerMeshes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17, 0 )
+mesh = SubResource( 47 )
+material/0 = null
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="Scene/Visuals"]
+material_override = SubResource( 48 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control"]
+margin_right = 72.0
+margin_bottom = 23.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 67.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/Panel/MarginContainer/HBoxContainer"]
+margin_right = 30.0
+margin_bottom = 14.0
+text = "FPS: "
+
+[node name="FPSLabel" type="Label" parent="Control/Panel/MarginContainer/HBoxContainer"]
+margin_left = 34.0
+margin_right = 62.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+script = ExtResource( 11 )
+
+[node name="Panel2" type="PanelContainer" parent="Control"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -201.0
+margin_top = -172.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 194.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 181, 0 )
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel2/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 177.0
+margin_bottom = 148.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel2/MarginContainer/VBoxContainer"]
+margin_right = 167.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 143.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 143.0
+margin_bottom = 14.0
+text = "Wish Vector"
+
+[node name="Label3" type="Label" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 143.0
+margin_bottom = 32.0
+text = "Global Wish Vector"
+
+[node name="Label4" type="Label" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 143.0
+margin_bottom = 50.0
+text = "Linear Velocity"
+
+[node name="Label5" type="Label" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 143.0
+margin_bottom = 68.0
+text = "Lateral Velocity"
+
+[node name="Label6" type="Label" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 143.0
+margin_bottom = 86.0
+text = "Global Lateral Velocity"
+
+[node name="Label7" type="Label" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 143.0
+margin_bottom = 104.0
+text = "Ground Velocity"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 153.0
+margin_right = 167.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 14.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 14, 14 )
+color = Color( 1, 0, 0, 1 )
+
+[node name="ColorRect3" type="ColorRect" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 18.0
+margin_right = 14.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 14, 14 )
+color = Color( 1, 0.913725, 0, 1 )
+
+[node name="ColorRect4" type="ColorRect" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 36.0
+margin_right = 14.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 14, 14 )
+color = Color( 0.172549, 1, 0, 1 )
+
+[node name="ColorRect5" type="ColorRect" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 54.0
+margin_right = 14.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 14, 14 )
+color = Color( 0, 1, 0.976471, 1 )
+
+[node name="ColorRect6" type="ColorRect" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 72.0
+margin_right = 14.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 14, 14 )
+color = Color( 0.00784314, 0, 1, 1 )
+
+[node name="ColorRect7" type="ColorRect" parent="Control/Panel2/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 90.0
+margin_right = 14.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 14, 14 )
+color = Color( 0.945098, 0, 1, 1 )
+
+[node name="CheckBox" type="CheckBox" parent="Control/Panel2/MarginContainer/VBoxContainer"]
+margin_top = 114.0
+margin_right = 167.0
+margin_bottom = 138.0
+focus_mode = 0
+text = "Draw on physics tick"
+[connection signal="body_entered" from="Scene/Collision/KillVolume" to="." method="on_kill_volume_body_entered"]
+[connection signal="toggled" from="Control/Panel2/MarginContainer/VBoxContainer/CheckBox" to="." method="on_draw_on_physics_tick_toggled"]

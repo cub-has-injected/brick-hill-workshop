@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/archHalf.obj-09cbc33e4236df1537b0fb7d5f96a3ed.mesh"
+
+[deps]
+
+files=[ "res://.import/archHalf.obj-09cbc33e4236df1537b0fb7d5f96a3ed.mesh" ]
+
+source_file="res://meshes/parts/archHalf.obj"
+dest_files=[ "res://.import/archHalf.obj-09cbc33e4236df1537b0fb7d5f96a3ed.mesh", "res://.import/archHalf.obj-09cbc33e4236df1537b0fb7d5f96a3ed.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

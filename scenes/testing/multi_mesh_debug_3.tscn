@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/nodes/multi_mesh_instance/brick_instance.gd" type="Script" id=1]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ParentA" type="Spatial" parent="."]
+
+[node name="BrickInstance" type="VisibilityNotifier" parent="ParentA"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0286813, 0.110607, 0 )
+aabb = AABB( -0.5, -0.5, -0.5, 1, 1, 1 )
+script = ExtResource( 1 )
+palette_key = 9
+mesh_type = 0
+material_idx = 0
+albedo_palette = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 )
+emission_palette = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 )
+surface_palette = PoolByteArray( 0, 0, 0, 0, 0, 0 )
+opacity = 1.0
+refraction = 0.0
+roughness = 0.25
+metallic = 0.0
+use_in_baked_light = true
+
+[node name="BrickInstance2" type="VisibilityNotifier" parent="ParentA"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.44917, 0, 0 )
+aabb = AABB( -0.5, -0.5, -0.5, 1, 1, 1 )
+script = ExtResource( 1 )
+palette_key = 5
+mesh_type = 1
+material_idx = 0
+albedo_palette = PoolColorArray( 0.0313726, 1, 0, 1, 0.0313726, 1, 0, 1, 0.0313726, 1, 0, 1 )
+emission_palette = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 )
+surface_palette = PoolByteArray( 0, 0, 0 )
+opacity = 1.0
+refraction = 0.0
+roughness = 0.25
+metallic = 0.0
+use_in_baked_light = true
+
+[node name="BrickInstance3" type="VisibilityNotifier" parent="ParentA"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.44917, 0, 0 )
+aabb = AABB( -0.5, -0.5, -0.5, 1, 1, 1 )
+script = ExtResource( 1 )
+palette_key = 12
+mesh_type = 1
+material_idx = 0
+albedo_palette = PoolColorArray( 1, 0.937255, 0, 1, 1, 0.937255, 0, 1, 1, 0.937255, 0, 1 )
+emission_palette = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 )
+surface_palette = PoolByteArray( 0, 0, 0 )
+opacity = 1.0
+refraction = 0.0
+roughness = 0.25
+metallic = 0.0
+use_in_baked_light = true
+
+[node name="ParentB" type="Spatial" parent="."]

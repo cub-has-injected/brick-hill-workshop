@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://resources/texture/parts/surface_stud_normal.png" type="Texture" id=1]
+[ext_resource path="res://resources/texture/error.png" type="Texture" id=2]
+[ext_resource path="res://resources/texture/palette.png" type="Texture" id=3]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Viewport2")
+
+[node name="Spatial" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1280, 720 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="ViewportContainer/Viewport"]
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 1
+
+[node name="ViewportContainer2" type="ViewportContainer" parent="."]
+modulate = Color( 1, 1, 1, 0.501961 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer2"]
+size = Vector2( 1280, 720 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="ViewportContainer2/Viewport"]
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.501961 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = SubResource( 1 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport2" type="Viewport" parent="."]
+size = Vector2( 1280, 720 )
+handle_input_locally = false
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="Viewport2"]
+margin_right = 640.0
+margin_bottom = 320.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1

@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/icons/workshop-assets/controls/dropdownOpen.png" type="Texture" id=1]
+[ext_resource path="res://scripts/nodes/color_picker_button.gd" type="Script" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ColorRect
+"
+
+[node name="ColorPickerButton" type="Button"]
+margin_left = 34.0
+margin_top = 3.0
+margin_right = 78.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 44, 34 )
+hint_tooltip = "Active Color"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Border" type="ColorRect" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -12.0
+margin_right = 24.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 24, 24 )
+mouse_filter = 2
+size_flags_vertical = 4
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActiveColor" type="ColorRect" parent="Border"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 23.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 22, 22 )
+mouse_filter = 2
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DropdownIcon" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -3.5
+margin_right = -5.0
+margin_bottom = 3.5
+mouse_filter = 2
+texture = ExtResource( 1 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}

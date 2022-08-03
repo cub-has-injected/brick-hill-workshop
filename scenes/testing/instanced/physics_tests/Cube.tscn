@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="ConcavePolygonShape" id=1]
+data = PoolVector3Array( -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5 )
+
+[node name="Cube" type="Spatial"]
+
+[node name="Cube" type="StaticBody" parent="."]
+transform = Transform( 3.53553, 0, 3.53553, 0, 5, 0, -3.53553, 0, 3.53553, 0, 2.5, 7.15256e-07 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube"]
+shape = SubResource( 1 )
+
+[node name="Cube11" type="StaticBody" parent="."]
+transform = Transform( 3.83022, 0, 3.21393, 0, 5, 0, -3.21393, 0, 3.83022, 0, 2.5, 11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube11"]
+shape = SubResource( 1 )
+
+[node name="Cube12" type="StaticBody" parent="."]
+transform = Transform( 4.09576, 0, 2.86788, 0, 5, 0, -2.86788, 0, 4.09576, 0, 2.5, 20.2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube12"]
+shape = SubResource( 1 )
+
+[node name="Cube13" type="StaticBody" parent="."]
+transform = Transform( 4.33012, 0, 2.5, 0, 5, 0, -2.5, 0, 4.33012, 0, 2.5, 32 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube13"]
+shape = SubResource( 1 )
+
+[node name="Cube14" type="StaticBody" parent="."]
+transform = Transform( 4.53154, 0, 2.11309, 0, 5, 0, -2.11309, 0, 4.53154, 0, 2.5, 43.9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube14"]
+shape = SubResource( 1 )
+
+[node name="Cube15" type="StaticBody" parent="."]
+transform = Transform( 4.69846, 0, 1.7101, 0, 5, 0, -1.7101, 0, 4.69846, 0, 2.5, 55.9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube15"]
+shape = SubResource( 1 )
+
+[node name="Cube16" type="StaticBody" parent="."]
+transform = Transform( 4.82963, 0, 1.29409, 0, 5, 0, -1.29409, 0, 4.82963, 0, 2.5, 68.2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube16"]
+shape = SubResource( 1 )
+
+[node name="Cube17" type="StaticBody" parent="."]
+transform = Transform( 4.92403, 0, 0.86824, 0, 5, 0, -0.86824, 0, 4.92403, 0, 2.5, 80.3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube17"]
+shape = SubResource( 1 )
+
+[node name="Cube18" type="StaticBody" parent="."]
+transform = Transform( 4.98097, 0, 0.435778, 0, 5, 0, -0.435778, 0, 4.98097, 0, 2.5, 92.4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube18"]
+shape = SubResource( 1 )
+
+[node name="Cube19" type="StaticBody" parent="."]
+transform = Transform( 5, 0, 5.96046e-08, 0, 5, 0, -5.96046e-08, 0, 5, 0, 2.5, 102.5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube19"]
+shape = SubResource( 1 )
+
+[node name="Cube2" type="StaticBody" parent="."]
+transform = Transform( 3.21393, 0, 3.83022, 0, 5, 0, -3.83022, 0, 3.21393, 0, 2.5, -10.6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube2"]
+shape = SubResource( 1 )
+
+[node name="Cube3" type="StaticBody" parent="."]
+transform = Transform( 2.86788, 0, 4.09576, 0, 5, 0, -4.09576, 0, 2.86788, 0, 2.5, -19.9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube3"]
+shape = SubResource( 1 )
+
+[node name="Cube4" type="StaticBody" parent="."]
+transform = Transform( 2.5, 0, 4.33012, 0, 5, 0, -4.33012, 0, 2.5, 0, 2.5, -28.8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube4"]
+shape = SubResource( 1 )
+
+[node name="Cube5" type="StaticBody" parent="."]
+transform = Transform( 2.11309, 0, 4.53154, 0, 5, 0, -4.53154, 0, 2.11309, 0, 2.5, -37.8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube5"]
+shape = SubResource( 1 )
+
+[node name="Cube6" type="StaticBody" parent="."]
+transform = Transform( 1.7101, 0, 4.69846, 0, 5, 0, -4.69846, 0, 1.7101, 0, 2.5, -46.5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube6"]
+shape = SubResource( 1 )
+
+[node name="Cube7" type="StaticBody" parent="."]
+transform = Transform( 1.29409, 0, 4.82963, 0, 5, 0, -4.82963, 0, 1.29409, 0, 2.5, -56 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube7"]
+shape = SubResource( 1 )
+
+[node name="Cube8" type="StaticBody" parent="."]
+transform = Transform( 0.86824, 0, 4.92403, 0, 5, 0, -4.92403, 0, 0.86824, 0, 2.5, -64.6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube8"]
+shape = SubResource( 1 )
+
+[node name="Cube9" type="StaticBody" parent="."]
+transform = Transform( 0.435778, 0, 4.98097, 0, 5, 0, -4.98097, 0, 0.435778, 0, 2.5, -73.5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube9"]
+shape = SubResource( 1 )
+
+[node name="Cube10" type="StaticBody" parent="."]
+transform = Transform( 5.96046e-08, 0, 5, 0, 5, 0, -5, 0, 5.96046e-08, 0, 2.5, -81.8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cube10"]
+shape = SubResource( 1 )

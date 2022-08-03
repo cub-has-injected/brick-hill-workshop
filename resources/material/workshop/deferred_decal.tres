@@ -1,0 +1,68 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode depth_test_disable, cull_front, shadows_disabled;
+
+uniform vec3 extents = vec3(1.0, 1.0, 1.0);
+
+uniform sampler2D decal_albedo : hint_albedo;
+uniform sampler2D decal_normal : hint_normal;
+uniform vec4 albedo = vec4(1);
+uniform float metallic = 0.0;
+uniform float roughness = 1.0;
+
+uniform bool cull_normal = true;
+uniform float cull_normal_min = 0.1;
+uniform float cull_normal_max = 0.25;
+
+void fragment() {
+	// Calculate projected rect
+	float depth = textureLod(DEPTH_TEXTURE, SCREEN_UV, 0.0).r;
+	vec4 clip_position = vec4(SCREEN_UV * 2.0 - 1.0, depth * 2.0 - 1.0, 1.0);
+	vec4 unproj_position = INV_PROJECTION_MATRIX * clip_position;
+    vec3 view_position = unproj_position.xyz / unproj_position.w;
+	vec3 world_position = (CAMERA_MATRIX * vec4(view_position, 1.0)).xyz;
+	vec3 model_position = (inverse(WORLD_MATRIX) * vec4(world_position, 1.0)).xyz;
+	
+	// Clip off any pixels outside the projected rect
+	vec3 frag_size = fwidth(model_position);
+	vec3 mask = smoothstep(abs(extents) - frag_size, abs(extents), abs(model_position));
+	float alpha = 1.0 - max(mask.x, max(mask.y, mask.z));
+	
+	// Calculate normal from depth buffer
+	vec3 world_dfdx = dFdx(world_position);
+	vec3 world_dfdy = dFdy(world_position);
+	vec3 normal = normalize(cross(world_dfdx, world_dfdy));
+	
+	if(cull_normal) {
+		vec3 model_normal = inverse(mat3(WORLD_MATRIX)) * normal;
+		alpha *= smoothstep(cull_normal_min, cull_normal_max, dot(model_normal, vec3(0, 0, 1)));
+	}
+	
+	// Fetch textures
+	vec2 uv = model_position.xy * vec2(0.5, -0.5) + 0.5;
+	vec4 color = texture(decal_albedo, uv) * albedo;
+	vec4 normal_map = texture(decal_normal, uv);
+	
+	mat3 inv_camera_rotation = mat3(INV_CAMERA_MATRIX);
+	
+	// Output
+	ALBEDO = color.rgb;
+	ALPHA = color.a * alpha;
+	NORMAL = inv_camera_rotation * normal;
+	NORMALMAP = normal_map.rgb;
+	METALLIC = metallic;
+	ROUGHNESS = roughness;
+}
+"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/extents = Vector3( 1, 1, 1 )
+shader_param/albedo = Plane( 1, 1, 1, 1 )
+shader_param/metallic = 0.0
+shader_param/roughness = 1.0
+shader_param/cull_normal = true
+shader_param/cull_normal_min = 0.1
+shader_param/cull_normal_max = 0.25

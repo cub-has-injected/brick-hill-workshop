@@ -1,0 +1,76 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode depth_draw_never;
+
+uniform vec4 outer_color: hint_color = vec4(1);
+uniform vec4 inner_color: hint_color = vec4(1);
+uniform float longitude = 0.0;
+uniform float latitude = 0.0;
+uniform float gradient_min: hint_range(0, 1) = 0.0;
+uniform float gradient_max: hint_range(0, 1) = 1.0;
+uniform bool use_horizon_cutoff = false;
+
+const float PI = 3.141;
+const float TAU = 6.282;
+
+void vertex() {
+	POSITION = vec4(VERTEX, 1.0);
+}
+
+void fragment() {
+	float aspect = VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
+	vec2 screen_uv = vec2(UV.x, 1.0 - UV.y);
+	
+	vec2 offset = vec2(longitude * (PI / 180.0), -latitude * (PI / 180.0));
+	
+	screen_uv = 2.0 * screen_uv - 1.0;
+	screen_uv.x *= aspect;
+	
+	vec3 world = normalize(vec3(screen_uv, -1.425));
+	world = mat3(CAMERA_MATRIX) * world;
+	
+	float horizon_cutoff = smoothstep(0.5 * PI, 0.4999 * PI, acos(world.y / length(world)));
+	horizon_cutoff = use_horizon_cutoff ? horizon_cutoff : 1.0;
+	
+	mat3 lat_offset = mat3(vec3(cos(offset.x), 0.0, sin(offset.x)), vec3(0, 1, 0), vec3(-sin(offset.x), 0, cos(offset.x)));
+	world = lat_offset * world;
+	
+	mat3 lon_offset = mat3(vec3(1, 0, 0), vec3(0, cos(offset.y), -sin(offset.y)), vec3(0, sin(offset.y), cos(offset.y)));
+	world = lon_offset * world;
+	
+	float x = world.x;
+	float y = world.y;
+	float z = world.z;
+	float r = length(world);
+	float lon = atan(z / x) + PI / 2.0;
+	lon = world.x >= 0.0 ? lon : lon + PI;
+	float lat = acos(y / r);
+	
+	vec2 uv = vec2(lon / TAU, lat / PI);
+	vec2 delta = uv - vec2(0.5, 0.5);
+	delta.y *= 0.5;
+	float dist = length(delta);
+	dist = smoothstep(gradient_min * 0.1, gradient_max * 0.1, dist);
+	dist = 1.0 - dist;
+	dist *= horizon_cutoff;
+	
+	vec4 color = mix(outer_color, inner_color, dist);
+	
+	ALBEDO = vec3(0);
+	EMISSION = color.xyz;
+	ALPHA = dist * color.a;
+	
+	DEPTH = 1.0;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/outer_color = Color( 0.968627, 1, 0.431373, 1 )
+shader_param/inner_color = Color( 1, 0.423529, 0, 1 )
+shader_param/longitude = 180.0
+shader_param/latitude = 35.0
+shader_param/gradient_min = 0.03
+shader_param/gradient_max = 0.3
+shader_param/use_horizon_cutoff = true

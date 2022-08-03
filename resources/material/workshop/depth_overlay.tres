@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode unshaded;
+
+void vertex() {
+	POSITION = vec4(VERTEX, 1.0);
+}
+
+float linearize_depth(float depth, vec2 screen_uv, mat4 inv_projection) {
+	vec3 ndc = vec3(screen_uv, depth) * 2.0 - 1.0;
+	vec4 view = inv_projection * vec4(ndc, 1.0);
+	view.xyz /= view.w;
+	float linear_depth = -view.z;
+	return linear_depth;
+}
+
+float get_depth(sampler2D tex, vec2 screen_uv, mat4 inv_projection) {
+	return linearize_depth(texture(tex, screen_uv).r, screen_uv, inv_projection);
+}
+	
+void fragment() {
+	float depth = get_depth(DEPTH_TEXTURE, SCREEN_UV, INV_PROJECTION_MATRIX);
+	depth = smoothstep(0.05, 100.0, depth);
+	ALBEDO = vec3(depth);
+}"
+
+[resource]
+shader = SubResource( 1 )

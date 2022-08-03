@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PhysicsBodyEx
+
+var speed = 10.0
+
+var _gravity_force := 30.0
+var _jump_force := 20.0
+var _velocity := Vector3.ZERO
+var _terminal_velocity = 20.0
+
+func _physics_process(delta: float) ->  void:
+	_velocity.x = 0
+	_velocity.z = 0
+
+	var wish_vector = Vector3.ZERO
+	if Input.is_key_pressed(KEY_A):
+		wish_vector.x -= 1
+	if Input.is_key_pressed(KEY_D):
+		wish_vector.x += 1
+	if Input.is_key_pressed(KEY_W):
+		wish_vector.z -= 1
+	if Input.is_key_pressed(KEY_S):
+		wish_vector.z += 1
+	wish_vector = wish_vector.normalized()
+	_velocity.x = wish_vector.x * speed
+	_velocity.z = wish_vector.z * speed
+
+	if Input.is_key_pressed(KEY_SPACE):
+		_velocity.y = _jump_force
+
+	var terminal_velocity_delta = _velocity.y - (-_terminal_velocity)
+	if terminal_velocity_delta > 0:
+		_velocity.y -= min(_gravity_force * delta, terminal_velocity_delta)
+
+	queue_move(_velocity * delta)
+	._physics_process(delta)
+"
+
+[sub_resource type="CylinderShape" id=2]
+height = 5.0
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_unshaded = true
+flags_no_depth_test = true
+vertex_color_use_as_albedo = true
+
+[node name="KinematicBody" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.625, 0 )
+collision_layer = 2
+script = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )
+
+[node name="DebugDraw" type="Node" parent="."]
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="DebugDraw"]
+material_override = SubResource( 3 )

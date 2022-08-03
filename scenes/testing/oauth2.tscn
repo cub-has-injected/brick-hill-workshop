@@ -1,0 +1,172 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+const PROTOCOL := 'https'
+const DOMAIN := 'www.brick-hill.com'
+const CLIENT_ID := 1
+const REDIRECT_URI := 'com.brick-hill.app://auth'
+const RESPONSE_TYPE := 'code';
+const SCOPE := 'access-workshop'
+
+var _http: HTTPRequest
+var _oauth2: OAuth2
+
+var _access_token: String
+var _refresh_token: String
+var _expires_in: int
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$VBoxContainer/LinkButton.connect('pressed', self, 'login_button_pressed')
+
+	_oauth2 = OAuth2.new()
+
+	_http = HTTPRequest.new()
+	add_child(_http)
+
+func login_button_pressed() -> void:
+	assert(not _oauth2.is_authorizing())
+	_oauth2.connect(\"authorize_success\", self, \"authorize_success\", [], CONNECT_ONESHOT)
+	_oauth2.connect(\"authorize_timeout\", self, \"authorize_timeout\", [], CONNECT_ONESHOT)
+	_oauth2.authorize(PROTOCOL, DOMAIN, CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE, SCOPE)
+
+func authorize_success(code_verifier: String, code: String) -> void:
+	# Prepare authorization code request
+	var request_uri = _oauth2.get_token_request_uri(PROTOCOL, DOMAIN)
+	var request_headers = _oauth2.get_token_request_headers()
+	var request_body = _oauth2.get_token_request_body(CLIENT_ID, REDIRECT_URI, code_verifier, code)
+
+	# Send request
+	_http.request(request_uri, request_headers, true, HTTPClient.METHOD_POST, request_body)
+	var response = yield(_http, \"request_completed\")
+
+	# Error check for request success
+	var result: int = response[0]
+	assert(result == 0)
+
+	# Error check HTTP response code
+	var response_code: int = response[1]
+	assert(response_code == 200)
+
+	# Extract response data
+	var headers: PoolStringArray = response[2]
+	var body: PoolByteArray = response[3]
+
+	# Parse into a dictionary
+	var parse_result = JSON.parse(body.get_string_from_utf8())
+	assert(parse_result.error == OK)
+
+	var json = parse_result.result
+	assert(json.token_type == \"Bearer\")
+
+	# Store tokens for future use
+	_access_token = json.access_token
+	_refresh_token = json.refresh_token
+	_expires_in = json.expires_in
+
+	# Update UI
+	$VBoxContainer/LoginTokenTextEdit.text = \"%s\" % json
+
+	# Prepare user data request
+	request_headers = [\"Authorization: Bearer %s\" % [_access_token]]
+	request_body = \"\"
+	_http.request(\"https://api.brick-hill.com/v1/auth/currentUser\", request_headers, true, HTTPClient.METHOD_GET, request_body)
+	response = yield(_http, \"request_completed\")
+
+	# Error check for request success
+	result = response[0]
+	assert(result == 0)
+
+	# Error check HTTP response code
+	response_code = response[1]
+	assert(response_code == 200)
+
+	# Extract response data
+	headers = response[2]
+	body = response[3]
+
+	$VBoxContainer/UserDataTextEdit.text = \"Current user complete\\nResult: %s\\nResponse Code: %s\\nHeaders: %s\\n Body: %s\" % [result, response_code, headers, body.get_string_from_utf8()]
+
+func authorize_timeout() -> void:
+	printerr(\"Authorization error: Request timed out\")
+"
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LinkButton" type="Button" parent="VBoxContainer"]
+margin_right = 1260.0
+margin_bottom = 20.0
+text = "Login"
+
+[node name="Spacer3" type="Control" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1260.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 8 )
+
+[node name="Label5" type="Label" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 1260.0
+margin_bottom = 50.0
+text = "Authorization Data:"
+
+[node name="AuthDataTextEdit" type="TextEdit" parent="VBoxContainer"]
+margin_top = 54.0
+margin_right = 1260.0
+margin_bottom = 234.0
+rect_min_size = Vector2( 0, 180 )
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+margin_top = 238.0
+margin_right = 1260.0
+margin_bottom = 246.0
+rect_min_size = Vector2( 0, 8 )
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+margin_top = 250.0
+margin_right = 1260.0
+margin_bottom = 264.0
+text = "Login Token:"
+
+[node name="LoginTokenTextEdit" type="TextEdit" parent="VBoxContainer"]
+margin_top = 268.0
+margin_right = 1260.0
+margin_bottom = 448.0
+rect_min_size = Vector2( 0, 180 )
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+margin_top = 452.0
+margin_right = 1260.0
+margin_bottom = 460.0
+rect_min_size = Vector2( 0, 8 )
+
+[node name="Label6" type="Label" parent="VBoxContainer"]
+margin_top = 464.0
+margin_right = 1260.0
+margin_bottom = 478.0
+text = "User Data:"
+
+[node name="UserDataTextEdit" type="TextEdit" parent="VBoxContainer"]
+margin_top = 482.0
+margin_right = 1260.0
+margin_bottom = 662.0
+rect_min_size = Vector2( 0, 180 )

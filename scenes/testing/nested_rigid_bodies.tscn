@@ -1,0 +1,121 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/nodes/composite_rigid_body.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		if BUTTON_RIGHT & Input.get_mouse_button_mask():
+			rotate(Vector3.UP, -event.relative.x * 0.0025)
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Spatial
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		if BUTTON_RIGHT & Input.get_mouse_button_mask():
+			rotate(Vector3.RIGHT, -event.relative.y * 0.0025)
+"
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 10, 0.5, 10 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 20, 1, 20 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 1, 1, 1 )
+
+[node name="Spatial" type="Node"]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1280, 720 )
+handle_input_locally = false
+msaa = 3
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="CameraPivotY" type="Spatial" parent="ViewportContainer/Viewport"]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0 )
+script = SubResource( 1 )
+
+[node name="CameraPivotX" type="Spatial" parent="ViewportContainer/Viewport/CameraPivotY"]
+transform = Transform( 1, 0, 0, 0, 0.887011, 0.461749, 0, -0.461749, 0.887011, 0, 0, 0 )
+script = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport/CameraPivotY/CameraPivotX"]
+transform = Transform( 1, 0, 0, 0, 1, 1.78814e-07, 0, 8.9407e-08, 0.999999, 0, -9.53674e-07, 20 )
+
+[node name="RigidBody" type="RigidBody" parent="ViewportContainer/Viewport"]
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/RigidBody"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/RigidBody"]
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CompositeRigidBody" type="RigidBody" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.75, 8.25, 0 )
+mode = 1
+script = ExtResource( 1 )
+
+[node name="RigidBody2" type="RigidBody" parent="ViewportContainer/Viewport/CompositeRigidBody"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -0.749998, -0.249998, 0 )
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody2"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody2"]
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="RigidBody3" type="RigidBody" parent="ViewportContainer/Viewport/CompositeRigidBody"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -0.749996, 0.749998, 0 )
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody3"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody3"]
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="RigidBody4" type="RigidBody" parent="ViewportContainer/Viewport/CompositeRigidBody"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0.250002, -0.249998, 0 )
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody4"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody4"]
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="RigidBody5" type="RigidBody" parent="ViewportContainer/Viewport/CompositeRigidBody"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 1.24999, -0.25, 0 )
+mode = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody5"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/CompositeRigidBody/RigidBody5"]
+mesh = SubResource( 6 )
+material/0 = null

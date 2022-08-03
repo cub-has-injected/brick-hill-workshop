@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+
+# Declare member variables here. Examples:
+# var a: int = 2
+# var b: String = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var foo = $Spatial.duplicate(0)
+	add_child(foo)
+	#remove_child($Spatial)
+"
+
+[sub_resource type="BoxShape" id=2]
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="RigidBody" type="RigidBody" parent="Spatial"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial/RigidBody"]
+shape = SubResource( 2 )

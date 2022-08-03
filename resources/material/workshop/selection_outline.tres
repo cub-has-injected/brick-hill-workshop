@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://resources/shader/depth_outline_canvas.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/size = 4.0
+shader_param/highlight_color = Color( 0, 0.662745, 0.996078, 1 )
+shader_param/sobel_kernel = Basis( -1, -1, -1, -1, 8, -1, -1, -1, -1 )

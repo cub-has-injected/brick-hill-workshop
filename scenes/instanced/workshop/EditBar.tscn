@@ -1,0 +1,270 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ui/themes/workshop_general_spinbox.tres" type="Theme" id=1]
+[ext_resource path="res://ui/icons/workshop/edit/test.png" type="Texture" id=2]
+[ext_resource path="res://ui/icons/workshop/edit/simulate.png" type="Texture" id=3]
+[ext_resource path="res://ui/themes/workshop_general.tres" type="Theme" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PanelContainer
+
+signal set_coordinate_space(new_world_space)
+
+signal set_snap_translation(new_snap_translation)
+signal set_snap_rotation(new_snap_rotation)
+
+signal set_snap_translation_interval(new_snap_translation_interval)
+signal set_snap_rotation_interval(new_snap_rotation_interval)
+
+signal set_playing(new_playing)
+signal set_simulating(new_simulating)
+
+func set_coordinate_space(new_coordinate_space: int) -> void:
+	emit_signal(\"set_coordinate_space\", new_coordinate_space)
+
+func set_snap_translation(new_snap_translation: bool) -> void:
+	emit_signal(\"set_snap_translation\", new_snap_translation)
+
+func set_snap_rotation(new_snap_rotation: bool) -> void:
+	emit_signal(\"set_snap_rotation\", new_snap_rotation)
+
+func set_snap_translation_interval(new_snap_translation_interval: float) -> void:
+	emit_signal(\"set_snap_translation_interval\", new_snap_translation_interval)
+
+func set_snap_rotation_interval(new_snap_rotation_interval: float) -> void:
+	emit_signal(\"set_snap_rotation_interval\", new_snap_rotation_interval)
+
+func set_playing(new_playing: bool) -> void:
+	emit_signal(\"set_playing\", new_playing)
+
+func set_simulating(new_simulating: bool) -> void:
+	emit_signal(\"set_simulating\", new_simulating)
+
+func set_disabled(new_disabled: bool) -> void:
+	var nodes := [
+		$ScrollContainer/EditBarButtons/CoordinateSpaceMenuButton,
+		$ScrollContainer/EditBarButtons/StudCheckbox,
+		$ScrollContainer/EditBarButtons/StudSpinbox,
+		$ScrollContainer/EditBarButtons/RotateCheckbox,
+		$ScrollContainer/EditBarButtons/RotateSpinbox
+	]
+
+	for node in nodes:
+		if node.has_method(\"set_disabled\"):
+			node.set_disabled(new_disabled)
+		elif node.has_method(\"set_editable\"):
+			node.set_editable(not new_disabled)
+
+	if not $ScrollContainer/EditBarButtons/PlayButtonWrapper/PlayButton.pressed:
+		$ScrollContainer/EditBarButtons/PlayButtonWrapper/PlayButton.set_disabled(new_disabled)
+
+	if not $ScrollContainer/EditBarButtons/SimulateButtonWrapper/SimulateButton.pressed:
+		$ScrollContainer/EditBarButtons/SimulateButtonWrapper/SimulateButton.set_disabled(new_disabled)
+"
+
+[node name="EditBar" type="PanelContainer"]
+show_behind_parent = true
+margin_right = 1232.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+size_flags_horizontal = 3
+theme = ExtResource( 4 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 1232.0
+margin_bottom = 32.0
+
+[node name="EditBarButtons" type="HBoxContainer" parent="ScrollContainer"]
+margin_right = 1232.0
+margin_bottom = 32.0
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spacer4" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_bottom = 32.0
+
+[node name="CoordinateSpaceLabel" type="Label" parent="ScrollContainer/EditBarButtons"]
+margin_left = 8.0
+margin_top = 7.0
+margin_right = 131.0
+margin_bottom = 25.0
+text = "Coordinate Space"
+
+[node name="CoordinateSpaceMenuButton" type="OptionButton" parent="ScrollContainer/EditBarButtons"]
+margin_left = 139.0
+margin_top = 3.0
+margin_right = 215.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 76, 0 )
+size_flags_vertical = 4
+text = "Global"
+items = [ "Global", null, false, 0, false, "Local", null, false, 0, false ]
+selected = 0
+
+[node name="Spacer8" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_left = 223.0
+margin_right = 223.0
+margin_bottom = 32.0
+
+[node name="StudCheckbox" type="CheckBox" parent="ScrollContainer/EditBarButtons"]
+margin_left = 231.0
+margin_top = 7.0
+margin_right = 280.0
+margin_bottom = 25.0
+hint_tooltip = "Stud Snapping"
+size_flags_vertical = 4
+pressed = true
+action_mode = 0
+text = "Stud"
+flat = true
+
+[node name="StudSpinbox" type="SpinBox" parent="ScrollContainer/EditBarButtons"]
+margin_left = 288.0
+margin_top = 6.0
+margin_right = 354.0
+margin_bottom = 26.0
+hint_tooltip = "Stud Snapping"
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+min_value = 0.05
+max_value = 10.0
+step = 0.05
+value = 1.0
+
+[node name="Spacer7" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_left = 362.0
+margin_right = 362.0
+margin_bottom = 32.0
+
+[node name="RotateCheckbox" type="CheckBox" parent="ScrollContainer/EditBarButtons"]
+margin_left = 370.0
+margin_top = 7.0
+margin_right = 431.0
+margin_bottom = 25.0
+hint_tooltip = "Rotation Snapping"
+size_flags_vertical = 4
+pressed = true
+action_mode = 0
+text = "Rotate"
+flat = true
+
+[node name="RotateSpinbox" type="SpinBox" parent="ScrollContainer/EditBarButtons"]
+margin_left = 439.0
+margin_top = 6.0
+margin_right = 505.0
+margin_bottom = 26.0
+hint_tooltip = "Rotation Snapping"
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+min_value = 1.0
+max_value = 360.0
+value = 10.0
+rounded = true
+suffix = "°"
+
+[node name="Spacer6" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_left = 513.0
+margin_right = 513.0
+margin_bottom = 32.0
+
+[node name="ShowHiddenCheckbox" type="CheckBox" parent="ScrollContainer/EditBarButtons"]
+margin_left = 521.0
+margin_top = 7.0
+margin_right = 674.0
+margin_bottom = 25.0
+size_flags_vertical = 4
+disabled = true
+text = "Show hidden bricks"
+flat = true
+
+[node name="Spacer" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_left = 682.0
+margin_right = 682.0
+margin_bottom = 32.0
+
+[node name="SimulateButtonWrapper" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_left = 690.0
+margin_right = 722.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="SimulateButton" type="Button" parent="ScrollContainer/EditBarButtons/SimulateButtonWrapper"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -14.0
+margin_top = -14.0
+margin_right = 14.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 28, 28 )
+hint_tooltip = "Simulate"
+size_flags_vertical = 3
+toggle_mode = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/EditBarButtons/SimulateButtonWrapper/SimulateButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PlayButtonWrapper" type="Control" parent="ScrollContainer/EditBarButtons"]
+margin_left = 730.0
+margin_right = 762.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="PlayButton" type="Button" parent="ScrollContainer/EditBarButtons/PlayButtonWrapper"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -14.0
+margin_top = -14.0
+margin_right = 14.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 28, 28 )
+hint_tooltip = "Simulate"
+size_flags_vertical = 3
+toggle_mode = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/EditBarButtons/PlayButtonWrapper/PlayButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="ScrollContainer/EditBarButtons/CoordinateSpaceMenuButton" to="." method="set_coordinate_space"]
+[connection signal="toggled" from="ScrollContainer/EditBarButtons/StudCheckbox" to="." method="set_snap_translation"]
+[connection signal="value_changed" from="ScrollContainer/EditBarButtons/StudSpinbox" to="." method="set_snap_translation_interval"]
+[connection signal="toggled" from="ScrollContainer/EditBarButtons/RotateCheckbox" to="." method="set_snap_rotation"]
+[connection signal="value_changed" from="ScrollContainer/EditBarButtons/RotateSpinbox" to="." method="set_snap_rotation_interval"]
+[connection signal="toggled" from="ScrollContainer/EditBarButtons/SimulateButtonWrapper/SimulateButton" to="." method="set_simulating"]
+[connection signal="toggled" from="ScrollContainer/EditBarButtons/PlayButtonWrapper/PlayButton" to="." method="set_playing"]

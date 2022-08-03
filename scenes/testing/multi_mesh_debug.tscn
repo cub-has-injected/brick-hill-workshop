@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/nodes/set_root.gd" type="Script" id=1]
+[ext_resource path="res://scripts/nodes/brick_hill_object/brick_hill_physics_object/brick_hill_light_object/brick_hill_brick_object.gd" type="Script" id=2]
+
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Viewport")
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1280, 720 )
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( 0.999831, 0, -0.0184127, 0, 1, 0, 0.0184127, 0, 0.999831, 0, 0, 7 )
+
+[node name="SetRoot" type="Spatial" parent="Viewport"]
+script = ExtResource( 1 )
+workshop = false
+debug_gi = false
+force_rebake = false
+force_clear = false
+gi_subdiv = 1
+gi_dynamic_range = 4
+gi_propagation = 1.0
+gi_bias = 0.75
+gi_normal_bias = 0.25
+gi_probe_data = null
+
+[node name="BrickHillBrickObject" type="Spatial" parent="Viewport/SetRoot"]
+transform = Transform( 1.91069e-15, 8.74228e-08, 4, 1, -8.74228e-08, 0, 4.37114e-08, 2, -1.74846e-07, 0, 0, 0 )
+script = ExtResource( 2 )
+name = "BrickHillBrickObject"
+parent = null
+shape = 4
+position = Vector3( 0, 0, 0 )
+orientation = Vector3( 0, 90, 90 )
+size = Vector3( 1, 2, 4 )
+albedo = Color( 1, 1, 1, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 )
+material = 0
+opacity = 1.0
+roughness = 0.25
+metallic = 0.0
+refraction = 0.0
+reflection_mode = 0
+surfaces = PoolByteArray( 0, 0, 0, 0, 0, 0 )
+anchored = true
+locked = null
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+emission_color = Color( 0, 0, 0, 1 )
+emission_energy = 0.0
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 0.0
+light_range = 8.0

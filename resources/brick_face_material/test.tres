@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/resources/brick_face_material.gd" type="Script" id=1]
+[ext_resource path="res://resources/texture/surfaces/uv_test_512.png" type="Texture" id=2]
+
+
+
+
+[resource]
+resource_name = "Test"
+script = ExtResource( 1 )
+icon = ExtResource( 2 )
+albedo_texture = ExtResource( 2 )
+ambient_occlusion_light_affect = 1.0

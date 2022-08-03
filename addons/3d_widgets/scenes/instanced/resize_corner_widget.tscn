@@ -1,0 +1,484 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://addons/3d_widgets/gdscript/collision_object_input.gd" type="Script" id=1]
+[ext_resource path="res://addons/3d_widgets/gdscript/mouse_plane/mouse_plane_control.gd" type="Script" id=2]
+[ext_resource path="res://addons/3d_widgets/gdscript/block_selection.gd" type="Script" id=3]
+[ext_resource path="res://addons/3d_widgets/gdscript/resize_proxy/resize_proxy_control.gd" type="Script" id=4]
+[ext_resource path="res://addons/3d_widgets/scenes/instanced/resize_corner_widget.gd" type="Script" id=5]
+[ext_resource path="res://addons/3d_widgets/gdscript/object_projector.gd" type="Script" id=6]
+
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.5
+
+[sub_resource type="SpatialMaterial" id=2]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 1, 1, 0.501961 )
+
+[sub_resource type="SphereMesh" id=3]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="Shader" id=4]
+code = "shader_type spatial;
+render_mode blend_mix,cull_disabled,unshaded,depth_test_disable;
+uniform vec4 color : hint_color;
+uniform float band_start = 4.0;
+
+void vertex() {
+	UV -= 0.5;
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	if (PROJECTION_MATRIX[3][3] != 0.0) {
+		float h = abs(1.0 / (2.0 * PROJECTION_MATRIX[1][1]));
+		float sc = (h * 2.0); //consistent with Y-fov
+		MODELVIEW_MATRIX[0]*=sc;
+		MODELVIEW_MATRIX[1]*=sc;
+		MODELVIEW_MATRIX[2]*=sc;
+	} else {
+		float sc = -(MODELVIEW_MATRIX)[3].z;
+		MODELVIEW_MATRIX[0]*=sc;
+		MODELVIEW_MATRIX[1]*=sc;
+		MODELVIEW_MATRIX[2]*=sc;
+	}
+}
+
+void fragment() {
+	vec2 frag_size = fwidth(UV);
+	float frag_width = (frag_size.x + frag_size.y) * 0.5;
+	frag_width *= 2.0;
+	
+	float d = length(UV) * 2.0;
+	float a = 1.0 - d;
+	
+	float color_fac = smoothstep(band_start, band_start - 1.0, a / frag_width);
+	vec3 final_color = mix(vec3(1.0), color.rgb, color_fac);
+	float alpha = smoothstep(0.0, frag_width, a);
+	
+	ALBEDO = final_color;
+	ALPHA = alpha;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="QuadMesh" id=6]
+size = Vector2( 0.02, 0.02 )
+
+[sub_resource type="SpatialMaterial" id=7]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0, 0, 0, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="SpatialMaterial" id=9]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0, 0, 1, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 0, 0, 1, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="SpatialMaterial" id=11]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 1, 0, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 1, 1, 0, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="SpatialMaterial" id=13]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0, 1, 0, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=14]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 0, 1, 0, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="SpatialMaterial" id=15]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 0, 1, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=16]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 1, 0, 1, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="SpatialMaterial" id=17]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=18]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/band_start = 2.5
+
+[sub_resource type="SpatialMaterial" id=19]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0, 1, 1, 0.501961 )
+
+[sub_resource type="ShaderMaterial" id=20]
+resource_local_to_scene = true
+render_priority = 10
+shader = SubResource( 4 )
+shader_param/color = Color( 0, 1, 1, 1 )
+shader_param/band_start = 2.5
+
+[node name="ResizeCornerWidget" type="Spatial"]
+script = ExtResource( 5 )
+size = Vector3( 2, 2, 2 )
+
+[node name="AxisX+Y+Z+" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX+Y+Z+"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, 1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX+Y+Z+"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 1.5, 1.5, 1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX+Y+Z+/CollisionShape"]
+material_override = SubResource( 2 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX+Y+Z+/CollisionShape"]
+material_override = SubResource( 5 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX+Y+Z+"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX+Y+Z+"]
+script = ExtResource( 2 )
+mode = 1
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX+Y+Z+"]
+script = ExtResource( 4 )
+origin = Vector3( 1, 1, 1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX+Y+Z+"]
+script = ExtResource( 3 )
+
+[node name="AxisX-Y-Z-" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX-Y-Z-"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -1.5, -1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX-Y-Z-"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -1.5, -1.5, -1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX-Y-Z-/CollisionShape"]
+material_override = SubResource( 7 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX-Y-Z-/CollisionShape"]
+material_override = SubResource( 8 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX-Y-Z-"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX-Y-Z-"]
+script = ExtResource( 2 )
+mode = 1
+axes = 1
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX-Y-Z-"]
+script = ExtResource( 4 )
+origin = Vector3( -1, -1, -1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX-Y-Z-"]
+script = ExtResource( 3 )
+
+[node name="AxisX-Y-Z+" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX-Y-Z+"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -1.5, 1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX-Y-Z+"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -1.5, -1.5, 1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX-Y-Z+/CollisionShape"]
+material_override = SubResource( 9 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX-Y-Z+/CollisionShape"]
+material_override = SubResource( 10 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX-Y-Z+"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX-Y-Z+"]
+script = ExtResource( 2 )
+mode = 1
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX-Y-Z+"]
+script = ExtResource( 4 )
+origin = Vector3( -1, -1, 1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX-Y-Z+"]
+script = ExtResource( 3 )
+
+[node name="AxisX+Y+Z-" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX+Y+Z-"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, -1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX+Y+Z-"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 1.5, 1.5, -1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX+Y+Z-/CollisionShape"]
+material_override = SubResource( 11 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX+Y+Z-/CollisionShape"]
+material_override = SubResource( 12 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX+Y+Z-"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX+Y+Z-"]
+script = ExtResource( 2 )
+mode = 1
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX+Y+Z-"]
+script = ExtResource( 4 )
+origin = Vector3( 1, 1, -1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX+Y+Z-"]
+script = ExtResource( 3 )
+
+[node name="AxisX-Y+Z-" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX-Y+Z-"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, -1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX-Y+Z-"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -1.5, 1.5, -1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX-Y+Z-/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 0, 0 )
+material_override = SubResource( 13 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX-Y+Z-/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 0, 0 )
+material_override = SubResource( 14 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX-Y+Z-"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX-Y+Z-"]
+script = ExtResource( 2 )
+mode = 1
+custom_basis = Basis( 1, 0, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX-Y+Z-"]
+script = ExtResource( 4 )
+origin = Vector3( -1, 1, -1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX-Y+Z-"]
+script = ExtResource( 3 )
+
+[node name="AxisX+Y-Z+" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX+Y-Z+"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1.5, 1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX+Y-Z+"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 1.5, -1.5, 1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX+Y-Z+/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, 0 )
+material_override = SubResource( 15 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX+Y-Z+/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, 0 )
+material_override = SubResource( 16 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX+Y-Z+"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX+Y-Z+"]
+script = ExtResource( 2 )
+mode = 1
+custom_basis = Basis( 1, 0, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX+Y-Z+"]
+script = ExtResource( 4 )
+origin = Vector3( 1, -1, 1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX+Y-Z+"]
+script = ExtResource( 3 )
+
+[node name="AxisX+Y-Z-" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX+Y-Z-"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1.5, -1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX+Y-Z-"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, 1.5, -1.5, -1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX+Y-Z-/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, 0 )
+material_override = SubResource( 17 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX+Y-Z-/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, 0 )
+material_override = SubResource( 18 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX+Y-Z-"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX+Y-Z-"]
+script = ExtResource( 2 )
+mode = 1
+custom_basis = Basis( 1, 0, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX+Y-Z-"]
+script = ExtResource( 4 )
+origin = Vector3( 1, -1, -1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX+Y-Z-"]
+script = ExtResource( 3 )
+
+[node name="AxisX-Y+Z+" type="KinematicBody" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ObjectProjector" type="Spatial" parent="AxisX-Y+Z+"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, 1.5 )
+script = ExtResource( 6 )
+target = NodePath("../CollisionShape")
+
+[node name="CollisionShape" type="CollisionShape" parent="AxisX-Y+Z+"]
+transform = Transform( -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0, 1, -1.5, 1.5, 1.5 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="AxisX-Y+Z+/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, 0 )
+material_override = SubResource( 19 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DotMeshInstance" type="MeshInstance" parent="AxisX-Y+Z+/CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, 0 )
+material_override = SubResource( 20 )
+cast_shadow = 0
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionObjectInput" type="Node" parent="AxisX-Y+Z+"]
+script = ExtResource( 1 )
+
+[node name="MousePlaneControl" type="Node" parent="AxisX-Y+Z+"]
+script = ExtResource( 2 )
+mode = 1
+custom_basis = Basis( 1, 0, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="ResizeProxyControl" type="Node" parent="AxisX-Y+Z+"]
+script = ExtResource( 4 )
+origin = Vector3( -1, 1, 1 )
+
+[node name="BlockSelection" type="Node" parent="AxisX-Y+Z+"]
+script = ExtResource( 3 )

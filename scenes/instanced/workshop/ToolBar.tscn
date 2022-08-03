@@ -1,0 +1,871 @@
+[gd_scene load_steps=51 format=2]
+
+[ext_resource path="res://resources/texture/surfaces/Plastic.png" type="Texture" id=1]
+[ext_resource path="res://ui/icons/workshop-assets/Tiles/Flat.png" type="Texture" id=2]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Rotate.png" type="Texture" id=3]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Collision.png" type="Texture" id=4]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Paste.png" type="Texture" id=5]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Group.png" type="Texture" id=6]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Paint.png" type="Texture" id=7]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Resize.png" type="Texture" id=8]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Grid.png" type="Texture" id=9]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Lock.png" type="Texture" id=10]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Save.png" type="Texture" id=11]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Glue.png" type="Texture" id=12]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Drag.png" type="Texture" id=13]
+[ext_resource path="res://ui/icons/workshop/menu/menu.png" type="Texture" id=14]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Cut.png" type="Texture" id=15]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Surface.png" type="Texture" id=16]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Translate.png" type="Texture" id=17]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Copy.png" type="Texture" id=18]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Undo.png" type="Texture" id=19]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Anchor.png" type="Texture" id=20]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Material.png" type="Texture" id=21]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/default/Redo.png" type="Texture" id=22]
+[ext_resource path="res://ui/icons/workshop-assets/controls/dropdownOpen.png" type="Texture" id=23]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectGrid.png" type="Texture" id=24]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectRotate.png" type="Texture" id=25]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectResize.png" type="Texture" id=26]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectMaterial.png" type="Texture" id=27]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectLock.png" type="Texture" id=28]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectCut.png" type="Texture" id=29]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectTranslate.png" type="Texture" id=30]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectGroup.png" type="Texture" id=31]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectGlue.png" type="Texture" id=32]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectSave.png" type="Texture" id=33]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectDrag.png" type="Texture" id=34]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectSurface.png" type="Texture" id=35]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectPaste.png" type="Texture" id=36]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectAnchor.png" type="Texture" id=37]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectCopy.png" type="Texture" id=38]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectRedo.png" type="Texture" id=39]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectPaint.png" type="Texture" id=40]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectUndo.png" type="Texture" id=41]
+[ext_resource path="res://ui/icons/workshop-assets/buttons/selected/selectCollision.png" type="Texture" id=42]
+[ext_resource path="res://scripts/nodes/ui/icon_button.gd" type="Script" id=43]
+[ext_resource path="res://ui/themes/workshop_general.tres" type="Theme" id=44]
+[ext_resource path="res://scripts/nodes/ui/tool_bar.gd" type="Script" id=45]
+[ext_resource path="res://scenes/instanced/workshop/ColorPickerButton.tscn" type="PackedScene" id=46]
+[ext_resource path="res://scripts/nodes/ui/tool_buttons.gd" type="Script" id=47]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends TextureRect
+
+func populate_active_surface(active_surface: int) -> void:
+	var index = BrickHillResources.SURFACE_BITMASKS.values().find(active_surface)
+	texture = BrickHillResources.SURFACE_ICONS.values()[index]
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends TextureRect
+
+func populate_active_material(active_material: int) -> void:
+	texture = BrickHillResources.MATERIAL_ALBEDO_TEXTURES.values()[active_material]
+"
+
+[node name="ToolBar" type="PanelContainer"]
+margin_right = 1280.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+focus_mode = 2
+theme = ExtResource( 44 )
+script = ExtResource( 45 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1280.0
+margin_bottom = 40.0
+
+[node name="MenuWrapper" type="Control" parent="HBoxContainer"]
+margin_right = 48.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 48, 40 )
+
+[node name="MenuButton" type="Button" parent="HBoxContainer/MenuWrapper"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -18.0
+margin_right = 20.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 40, 36 )
+hint_tooltip = "Menu"
+action_mode = 0
+keep_pressed_outside = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "Menu"
+}
+
+[node name="MenuIcon" type="TextureRect" parent="HBoxContainer/MenuWrapper/MenuButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 14 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_left = 48.0
+margin_right = 1280.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+scroll_vertical_enabled = false
+
+[node name="Buttons" type="HBoxContainer" parent="HBoxContainer/ScrollContainer"]
+margin_right = 1228.0
+margin_bottom = 40.0
+mouse_filter = 2
+custom_constants/separation = 8
+
+[node name="Save" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_top = 2.0
+margin_right = 36.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Save"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 43 )
+button_icon = ExtResource( 11 )
+pressed_icon = ExtResource( 33 )
+
+[node name="SavePasteSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 44.0
+margin_right = 54.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/SavePasteSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Copy" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 62.0
+margin_top = 2.0
+margin_right = 98.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Copy
+"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 43 )
+button_icon = ExtResource( 18 )
+pressed_icon = ExtResource( 38 )
+
+[node name="Paste" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 106.0
+margin_top = 2.0
+margin_right = 142.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Paste"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 43 )
+button_icon = ExtResource( 5 )
+pressed_icon = ExtResource( 36 )
+
+[node name="Cut" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 150.0
+margin_top = 2.0
+margin_right = 186.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Cut"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 43 )
+button_icon = ExtResource( 15 )
+pressed_icon = ExtResource( 29 )
+
+[node name="CutUndoSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 194.0
+margin_right = 204.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/CutUndoSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Undo" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 212.0
+margin_top = 2.0
+margin_right = 248.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Undo"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 43 )
+button_icon = ExtResource( 19 )
+pressed_icon = ExtResource( 41 )
+
+[node name="Redo" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 256.0
+margin_top = 2.0
+margin_right = 292.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Redo"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 22 )
+pressed_icon = ExtResource( 39 )
+
+[node name="RedoCollisionSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 300.0
+margin_right = 310.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/RedoCollisionSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Collision" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 318.0
+margin_top = 3.0
+margin_right = 352.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Collision"
+size_flags_vertical = 4
+toggle_mode = true
+pressed = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 4 )
+pressed_icon = ExtResource( 42 )
+
+[node name="Grid" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 360.0
+margin_top = 3.0
+margin_right = 394.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Grid"
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 9 )
+pressed_icon = ExtResource( 24 )
+
+[node name="BoxSelect" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 402.0
+margin_top = 3.0
+margin_right = 436.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Box Selection"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 43 )
+button_icon = ExtResource( 13 )
+pressed_icon = ExtResource( 34 )
+
+[node name="GridGroupSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 444.0
+margin_right = 454.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/GridGroupSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Group" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 462.0
+margin_top = 3.0
+margin_right = 496.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Group"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 6 )
+pressed_icon = ExtResource( 31 )
+
+[node name="Glue" type="Button" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 504.0
+margin_top = 3.0
+margin_right = 538.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Glue"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 12 )
+pressed_icon = ExtResource( 32 )
+
+[node name="GlueToolSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 546.0
+margin_right = 556.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/GlueToolSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToolButtons" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/Buttons"]
+margin_left = 564.0
+margin_right = 1228.0
+margin_bottom = 40.0
+custom_constants/separation = 8
+script = ExtResource( 47 )
+
+[node name="MoveDrag" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Drag Move"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+pressed = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 1 )
+script = ExtResource( 43 )
+button_icon = ExtResource( 13 )
+pressed_icon = ExtResource( 34 )
+
+[node name="MoveAxis" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 42.0
+margin_top = 3.0
+margin_right = 76.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Axis Move"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 17 )
+pressed_icon = ExtResource( 30 )
+
+[node name="MovePlane" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 84.0
+margin_top = 3.0
+margin_right = 118.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Plane Move"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 17 )
+pressed_icon = ExtResource( 30 )
+
+[node name="RotatePlane" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 126.0
+margin_top = 3.0
+margin_right = 160.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Rotate"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+group = SubResource( 1 )
+script = ExtResource( 43 )
+button_icon = ExtResource( 3 )
+pressed_icon = ExtResource( 25 )
+
+[node name="ResizeFace" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 168.0
+margin_top = 3.0
+margin_right = 202.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Face Resize"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+group = SubResource( 1 )
+script = ExtResource( 43 )
+button_icon = ExtResource( 8 )
+pressed_icon = ExtResource( 26 )
+
+[node name="ResizeEdge" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 210.0
+margin_top = 3.0
+margin_right = 244.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Edge Resize"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+group = SubResource( 1 )
+script = ExtResource( 43 )
+button_icon = ExtResource( 8 )
+pressed_icon = ExtResource( 26 )
+
+[node name="ResizeCorner" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 252.0
+margin_top = 3.0
+margin_right = 286.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Corner Resize"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+group = SubResource( 1 )
+script = ExtResource( 43 )
+button_icon = ExtResource( 8 )
+pressed_icon = ExtResource( 26 )
+
+[node name="ScaleColorSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 294.0
+margin_right = 304.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ScaleColorSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorHBox" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 312.0
+margin_right = 390.0
+margin_bottom = 40.0
+
+[node name="ColorTool" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ColorHBox"]
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Paint"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": ""
+}
+button_icon = ExtResource( 7 )
+pressed_icon = ExtResource( 40 )
+
+[node name="ColorPicker" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ColorHBox" instance=ExtResource( 46 )]
+
+[node name="SurfaceHBox" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 398.0
+margin_right = 476.0
+margin_bottom = 40.0
+
+[node name="SurfaceTool" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox"]
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Surface"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": ""
+}
+button_icon = ExtResource( 16 )
+pressed_icon = ExtResource( 35 )
+
+[node name="SurfacePicker" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox"]
+margin_left = 34.0
+margin_top = 3.0
+margin_right = 78.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 44, 34 )
+hint_tooltip = "Active Surface"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": ""
+}
+
+[node name="Border" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox/SurfacePicker"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -12.0
+margin_right = 29.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 24, 24 )
+mouse_filter = 2
+size_flags_vertical = 4
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActiveSurface" type="TextureRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox/SurfacePicker/Border"]
+margin_left = 1.0
+margin_top = 0.512314
+margin_right = 23.0
+margin_bottom = 22.5123
+rect_min_size = Vector2( 18, 18 )
+mouse_filter = 2
+texture = ExtResource( 2 )
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DropdownIcon" type="TextureRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox/SurfacePicker"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -3.5
+margin_right = -5.0
+margin_bottom = 3.5
+mouse_filter = 2
+texture = ExtResource( 23 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MaterialHBox" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 484.0
+margin_right = 562.0
+margin_bottom = 40.0
+
+[node name="MaterialTool" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox"]
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Material"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": ""
+}
+button_icon = ExtResource( 21 )
+pressed_icon = ExtResource( 27 )
+
+[node name="MaterialPicker" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox"]
+margin_left = 34.0
+margin_top = 3.0
+margin_right = 78.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 44, 34 )
+hint_tooltip = "Active Material"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": ""
+}
+
+[node name="Border" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox/MaterialPicker"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -12.0
+margin_right = 29.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 24, 24 )
+mouse_filter = 2
+size_flags_vertical = 4
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActiveMaterial" type="TextureRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox/MaterialPicker/Border"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+rect_min_size = Vector2( 22, 18 )
+rect_clip_content = true
+mouse_filter = 2
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 4
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DropdownIcon" type="TextureRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox/MaterialPicker"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -3.5
+margin_right = -5.0
+margin_bottom = 3.5
+mouse_filter = 2
+texture = ExtResource( 23 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MaterialNodeSeparator" type="CenterContainer" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 570.0
+margin_right = 580.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 10, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialNodeSeparator"]
+margin_left = 4.0
+margin_top = 11.0
+margin_right = 5.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 1, 18 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NodeButtons" type="HBoxContainer" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons"]
+margin_left = 588.0
+margin_right = 664.0
+margin_bottom = 40.0
+custom_constants/separation = 8
+
+[node name="Lock" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/NodeButtons"]
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Lock"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 10 )
+pressed_icon = ExtResource( 28 )
+
+[node name="Anchor" type="Button" parent="HBoxContainer/ScrollContainer/Buttons/ToolButtons/NodeButtons"]
+margin_left = 42.0
+margin_top = 3.0
+margin_right = 76.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 34, 34 )
+hint_tooltip = "Anchor"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+group = SubResource( 1 )
+script = ExtResource( 43 )
+__meta__ = {
+"_editor_description_": ""
+}
+button_icon = ExtResource( 20 )
+pressed_icon = ExtResource( 37 )
+
+[connection signal="pressed" from="HBoxContainer/MenuWrapper/MenuButton" to="." method="menu"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Save" to="." method="save"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Copy" to="." method="copy"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Paste" to="." method="paste"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Cut" to="." method="cut"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Undo" to="." method="undo"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Redo" to="." method="redo"]
+[connection signal="toggled" from="HBoxContainer/ScrollContainer/Buttons/Collision" to="." method="set_collision"]
+[connection signal="toggled" from="HBoxContainer/ScrollContainer/Buttons/Grid" to="." method="set_grid"]
+[connection signal="toggled" from="HBoxContainer/ScrollContainer/Buttons/BoxSelect" to="." method="set_box_select"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Group" to="." method="group"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/Glue" to="." method="glue"]
+[connection signal="tool_anchor" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_anchor"]
+[connection signal="tool_lock" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_lock"]
+[connection signal="tool_move_axis" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_move_axis"]
+[connection signal="tool_move_drag" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_move_drag"]
+[connection signal="tool_move_plane" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_move_plane"]
+[connection signal="tool_paint_color" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_paint_color"]
+[connection signal="tool_paint_material" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_paint_material"]
+[connection signal="tool_paint_surface" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_paint_surface"]
+[connection signal="tool_resize_corner" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_resize_corner"]
+[connection signal="tool_resize_edge" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_resize_edge"]
+[connection signal="tool_resize_face" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_resize_face"]
+[connection signal="tool_rotate_plane" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons" to="." method="tool_rotate_plane"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MoveDrag" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_move_drag"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MoveAxis" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_move_axis"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MovePlane" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_move_plane"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/RotatePlane" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_rotate_plane"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ResizeFace" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_resize_face"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ResizeEdge" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_resize_edge"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ResizeCorner" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_resize_corner"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ColorHBox/ColorTool" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_paint_color"]
+[connection signal="toggled" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/ColorHBox/ColorPicker" to="." method="color_picker_toggled"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox/SurfaceTool" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_paint_surface"]
+[connection signal="toggled" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/SurfaceHBox/SurfacePicker" to="." method="show_surface_picker"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox/MaterialTool" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_paint_material"]
+[connection signal="toggled" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/MaterialHBox/MaterialPicker" to="." method="show_material_picker"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/NodeButtons/Lock" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_lock"]
+[connection signal="pressed" from="HBoxContainer/ScrollContainer/Buttons/ToolButtons/NodeButtons/Anchor" to="HBoxContainer/ScrollContainer/Buttons/ToolButtons" method="tool_anchor"]

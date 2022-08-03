@@ -1,0 +1,311 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PanelContainer
+
+func get_version_tree() -> Tree:
+	return $VBoxContainer/VersionTree as Tree
+
+func get_switch_version_button() -> Button:
+	return $VBoxContainer/HBoxContainer/UpdateButton as Button
+
+func _enter_tree() -> void:
+	BrickHillAuth.connect(\"login_success\", self, \"_on_login_success\")
+
+func _on_login_success() -> void:
+	$VBoxContainer/HBoxContainer2/Refresh.disabled = false
+
+func _on_refresh_pressed() -> void:
+	get_version_tree().refresh()
+
+func _on_download_pressed() -> void:
+	get_version_tree().download_selected()
+
+func _on_update_pressed() -> void:
+	var tree = get_version_tree()
+	var selected = tree.get_selected()
+	if selected:
+		var target_version = selected.get_text(0)
+		var update_info = selected.get_metadata(0)
+		if UpdateManager.run_local_update(update_info.channel, update_info.tag, target_version):
+			# If the update was a success, disable the button to prevent further interaction
+			get_switch_version_button().disabled = true
+		else:
+			# If the update failed, refresh the tree
+			tree.refresh()
+
+func _on_delete_pressed() -> void:
+	var tree = get_version_tree()
+	var item = tree.get_selected()
+	if item == null:
+		return
+
+	var version = item.get_metadata(0)
+	if version == null:
+		return
+
+	UpdateManager.delete_update(version)
+
+func _process(delta: float) -> void:
+	update_context_buttons()
+
+func update_context_buttons() -> void:
+	$VBoxContainer/HBoxContainer/DeleteButton.visible = false
+	$VBoxContainer/HBoxContainer/UpdateButton.visible = false
+	$VBoxContainer/HBoxContainer/DownloadButton.visible = false
+
+	var tree = get_version_tree()
+	var item = tree.get_selected()
+	if item == null:
+		return
+
+	var version = item.get_metadata(0)
+	if version == null:
+		return
+
+	$VBoxContainer/HBoxContainer/DeleteButton.visible = version.local
+	$VBoxContainer/HBoxContainer/UpdateButton.visible = version.local
+	$VBoxContainer/HBoxContainer/DownloadButton.visible = version.site and not version.local
+	$VBoxContainer/HBoxContainer/DownloadButton.disabled = version.downloading
+
+func _on_channel_selected(index: int) -> void:
+	var version_tree = get_version_tree()
+	match index:
+		0:
+			version_tree.channel = \"debug\"
+		1:
+			version_tree.channel = \"release\"
+	version_tree.refresh()
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Tree
+
+var channel: String = \"debug\"
+
+var _root: TreeItem
+
+func _init() -> void:
+	columns = 5
+
+	set_column_titles_visible(true)
+	set_column_title(0, \"Version\")
+	set_column_title(1, \"Created\")
+	set_column_title(2, \"Current\")
+	set_column_title(3, \"Installed\")
+	set_column_title(4, \"Available\")
+
+	set_column_min_width(1, 2)
+
+	connect(\"nothing_selected\", self, \"_on_nothing_selected\")
+
+func _on_nothing_selected() -> void:
+	_root.select(0)
+
+func _enter_tree() -> void:
+	UpdateManager.connect(\"versions_changed\", self, \"versions_changed\")
+	versions_changed()
+
+func refresh() -> void:
+	UpdateManager.fetch_local_updates(channel)
+	UpdateManager.fetch_site_updates(channel)
+
+func versions_changed() -> void:
+	var versions = UpdateManager.get_version_list(channel)
+
+	clear()
+	_root = create_item()
+	for version in versions:
+		var item = create_item(_root)
+
+		var meta := []
+		if version.tag == Version.STRING:
+			meta.append(\"Current\")
+		if version.local:
+			meta.append(\"Local\")
+		if version.site:
+			meta.append(\"Site\")
+
+		item.set_text(0, version.tag)
+		item.set_text_align(0, TreeItem.ALIGN_CENTER)
+
+		var created_at = UpdateInfo.parse_iso_date(version.created_at)
+		item.set_text(1, \"%s/%s/%s %s:%s\" % [
+			created_at.day,
+			created_at.month,
+			created_at.year,
+			created_at.hour,
+			created_at.minute
+		])
+		item.set_text_align(1, TreeItem.ALIGN_CENTER)
+
+		item.set_cell_mode(2, TreeItem.CELL_MODE_CHECK)
+		item.set_checked(2, version.tag == Version.STRING)
+
+		item.set_cell_mode(3, TreeItem.CELL_MODE_CHECK)
+		item.set_checked(3, version.local)
+
+		item.set_cell_mode(4, TreeItem.CELL_MODE_CHECK)
+		item.set_checked(4, version.site)
+
+		item.set_metadata(0, version)
+
+func draw_version_progress(item: TreeItem, rect: Rect2) -> void:
+	var position = rect.position + Vector2(2, 2)
+	var size = rect.size - Vector2(4, 4)
+
+	draw_rect(Rect2(position, size), Color.white, true)
+
+	var update_info = item.get_metadata(0)
+	var progress = update_info.progress()
+	position += Vector2(1, 1)
+	size -= Vector2(2, 2)
+	draw_rect(Rect2(position, Vector2(size.x * progress, size.y)), Color(\"#00a9fe\"), true)
+
+	var font = get_font(\"\")
+	var percent_str = String(int(progress * 100.0)) + \"%\"
+	var str_size = font.get_string_size(percent_str)
+
+	draw_string(font, position + Vector2(int(size.x * 0.5 - str_size.x * 0.5), int(str_size.y * 0.8)), percent_str, Color.black)
+
+func download_selected() -> void:
+	var selected = get_selected()
+	if selected == null:
+		printerr(\"Download failed: No version selected\")
+		return
+
+	var update_info = selected.get_metadata(0)
+	UpdateManager.run_remote_update(update_info)
+
+func _process(_delta: float) -> void:
+	update()
+"
+
+[node name="PanelContainer" type="PanelContainer"]
+margin_left = 440.0
+margin_top = 236.0
+margin_right = 860.0
+margin_bottom = 506.0
+rect_min_size = Vector2( 420, 270 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 413.0
+margin_bottom = 263.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 406.0
+margin_bottom = 24.0
+custom_constants/separation = 6
+
+[node name="Control3" type="Control" parent="VBoxContainer/HBoxContainer2"]
+margin_bottom = 24.0
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 6.0
+margin_right = 263.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_horizontal = 3
+text = " Updates"
+valign = 1
+
+[node name="Channel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 269.0
+margin_right = 324.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+text = "Channel:"
+align = 2
+valign = 1
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 330.0
+margin_right = 400.0
+margin_bottom = 24.0
+text = "Debug"
+items = [ "Debug", null, false, 0, null, "Release", null, false, 1, null ]
+selected = 0
+
+[node name="Refresh" type="Button" parent="VBoxContainer/HBoxContainer2"]
+visible = false
+margin_left = 340.0
+margin_right = 400.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+disabled = true
+text = "Refresh"
+
+[node name="Control4" type="Control" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 406.0
+margin_right = 406.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+
+[node name="VersionTree" type="Tree" parent="VBoxContainer"]
+margin_top = 28.0
+margin_right = 406.0
+margin_bottom = 228.0
+rect_min_size = Vector2( 400, 200 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+allow_reselect = true
+hide_root = true
+select_mode = 1
+script = SubResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 232.0
+margin_right = 406.0
+margin_bottom = 256.0
+rect_min_size = Vector2( 0, 24 )
+custom_constants/separation = 6
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+margin_right = 400.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="DownloadButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 200.0
+margin_right = 275.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+text = "Download"
+
+[node name="UpdateButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 281.0
+margin_right = 339.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+text = "Update"
+
+[node name="DeleteButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 345.0
+margin_right = 400.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+text = "Delete"
+
+[node name="Control2" type="Control" parent="VBoxContainer/HBoxContainer"]
+margin_left = 406.0
+margin_right = 406.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer2/OptionButton" to="." method="_on_channel_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Refresh" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DownloadButton" to="." method="_on_download_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/UpdateButton" to="." method="_on_update_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_delete_pressed"]

@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://default_env.tres" type="Environment" id=1]
+
+[sub_resource type="World" id=1]
+environment = ExtResource( 1 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends StaticBody
+
+func _input_event(camera: Object, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int) -> void:
+	print(\"%s input event: %s, %s, %s, %s, %s\" % [self, camera, event, click_position, click_normal, shape_idx])
+"
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="BoxShape" id=4]
+
+[sub_resource type="World" id=5]
+environment = ExtResource( 1 )
+
+[sub_resource type="SphereMesh" id=6]
+
+[sub_resource type="SphereShape" id=7]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BaseViewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1280, 720 )
+size_override_stretch = true
+own_world = true
+world = SubResource( 1 )
+physics_object_picking = true
+
+[node name="StaticBody" type="StaticBody" parent="ViewportContainer/BaseViewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+input_capture_on_drag = true
+script = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/BaseViewport/StaticBody"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/BaseViewport/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="Camera" type="Camera" parent="ViewportContainer/BaseViewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
+
+[node name="OverlayViewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1280, 720 )
+own_world = true
+world = SubResource( 5 )
+transparent_bg = true
+physics_object_picking = true
+
+[node name="StaticBody2" type="StaticBody" parent="ViewportContainer/OverlayViewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1 )
+input_capture_on_drag = true
+script = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="ViewportContainer/OverlayViewport/StaticBody2"]
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/OverlayViewport/StaticBody2"]
+shape = SubResource( 7 )
+
+[node name="Camera" type="Camera" parent="ViewportContainer/OverlayViewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
