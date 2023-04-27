@@ -11,6 +11,6 @@ Oops, we couldn't compile it, but you can try compile via Godot Game Engine. (ht
 
 ## I want to install compiled version!
 It still requires auth to use it but latest releases is:
-[Windows](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.exe)  - 0.0.40beta
-[Mac OS](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.dmg) - 0.0.40beta
-[Linux](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.tar.gz) - 0.0.40beta
+- [Windows](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.exe)  - 0.0.40beta
+- [Mac OS](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.dmg) - 0.0.40beta
+- [Linux](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.tar.gz) - 0.0.40beta
