@@ -20,7 +20,7 @@ It still requires auth to use it but latest releases is:
 [GitHub](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.40beta/BrickHill.tar.gz) | [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.40/BrickHill.tar.gz)
 ## 0.0.35beta:
 - Windows:
-- [GitHub](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.35beta/BrickHill.exe) | [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.35/BrickHill.exe)
+[GitHub](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.35beta/BrickHill.exe) | [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.35/BrickHill.exe)
 - Mac OS:
 [GitHub](https://github.com/cub-has-injected/brick-hill-workshop/releases/download/0.0.35beta/BrickHill.dmg) | [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.35/BrickHill.dmg)
 - Linux:
