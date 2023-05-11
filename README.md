@@ -10,6 +10,8 @@ Awfully decompiled the new beta Brick Hill Workshop for 25$.
 Oops, we couldn't compile it, but you can try compile via Godot Game Engine. (https://godotengine.org/)
 
 ## I want to install compiled version!
+> **Warning**
+> #### Some links may not work. (try to install from github releases or links, if brick-hill cdn dont works or it was removed)
 It still requires auth to use it but latest releases is:
 ## 0.0.40beta:
 - Windows:
@@ -32,3 +34,10 @@ It still requires auth to use it but latest releases is:
 [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.30/BrickHill.dmg)
 - Linux:
 [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.30/BrickHill.tar.gz)
+## 0.0.25beta:
+- Windows:
+[Brick-Hill](https://downloads.brkcdn.com/installer/0.0.25/BrickHill.exe)
+- Mac OS:
+[Brick-Hill](https://downloads.brkcdn.com/installer/0.0.25/BrickHill.dmg)
+- Linux:
+[Brick-Hill](https://downloads.brkcdn.com/installer/0.0.25/BrickHill.tar.gz)
