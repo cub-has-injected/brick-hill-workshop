@@ -12,7 +12,7 @@ Oops, we couldn't compile it, but you can try compile via Godot Game Engine. (ht
 ## I want to install compiled version!
 > **Warning**
 > ## Some links may not work.
-> Try to install from GitHub releases or links, if Brick-Hill cdn dont works or it was removed.
+> Try to install from GitHub releases or links if Brick-Hill-CDN doesn't work or has been removed.
 
 It still requires auth to use it but latest releases is:
 ## 0.0.40beta:
