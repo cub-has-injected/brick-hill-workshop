@@ -3,7 +3,7 @@
 
 Awfully decompiled the new beta Brick Hill Workshop for 25$.
 
-- Client/Installers was found by [me](https://github.com/cub-has-injected)
+- Client/Installers was found by [me](https://github.com/mindtheice)
 - Decompiling was made by [thedenbruh](https://github.com/thedenbruh)
 
 ## I want to compile it!
