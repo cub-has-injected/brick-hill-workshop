@@ -1,15 +1,16 @@
 # Brick-Hill Experimental Workshop build.
 ![image](https://user-images.githubusercontent.com/83903792/182595889-7051752c-1689-40ce-afcc-3d4da2d3208e.png)
 
-Awfully decompiled the new beta Brick Hill Workshop for 25$.
+***Awfully*** decompiled the new beta Brick Hill Workshop for 25$.
 
 - Client/Installers was found by [me](https://github.com/cub-has-injected/)
 - Decompiling was made by [thedenbruh](https://github.com/thedenbruh)
+- Possible to run and use *(maybe)*
 
 ## I want to compile it!
-Oops, we couldn't compile it, because it's impossible.
+Oops, we couldn't compile it, but you can run it in Godot Editor! *(and potentially use it for your future places)*
 
-## I want to install compiled version!
+## I want to install compiled version! (not recommended)
 > ## Some links may not work.
 > Try to install from GitHub releases or links if Brick-Hill-CDN doesn't work or has been removed.
 
@@ -49,5 +50,3 @@ It still requires auth to use it but latest releases is:
 [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.20/BrickHill.dmg)
 - Linux:
 [Brick-Hill](https://downloads.brkcdn.com/installer/0.0.20/BrickHill.tar.gz)
-
-> we are making something new for you :P
