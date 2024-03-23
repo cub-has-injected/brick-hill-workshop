@@ -1,0 +1,3 @@
+class_name BandBoxSelectorPlugin
+extends EditorPlugin
+tool 

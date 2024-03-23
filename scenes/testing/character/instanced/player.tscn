@@ -93,13 +93,13 @@ func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 
 [sub_resource type="CylinderShape" id=3]
 margin = 0.001
-radius = 0.5
 height = 0.5
+radius = 0.5
 
 [sub_resource type="CylinderShape" id=4]
 margin = 0.001
-radius = 0.5
 height = 5.0
+radius = 0.5
 
 [sub_resource type="Resource" id=5]
 resource_name = "Player Integrator"
@@ -126,8 +126,8 @@ min_step_offset_lerp_speed = 20.0
 
 [sub_resource type="CylinderShape" id=6]
 margin = 0.001
-radius = 1.5
 height = 6.2
+radius = 1.5
 
 [sub_resource type="CylinderMesh" id=7]
 height = 5.2

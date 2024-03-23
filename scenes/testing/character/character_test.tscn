@@ -20,8 +20,6 @@ func _unhandled_input(event: InputEvent) -> void:
 script/source = "extends Viewport
 tool
 
-func _enter_tree() -> void:
-	size = OS.window_size
 "
 
 [sub_resource type="CubeMesh" id=3]
@@ -67,7 +65,7 @@ viewport_path = NodePath("Viewport")
 script = SubResource( 1 )
 
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 2560, 1387 )
+size = Vector2( 1366, 768 )
 handle_input_locally = false
 msaa = 2
 render_target_v_flip = true
@@ -201,7 +199,6 @@ collision_mask = 0
 [node name="MeshInstance2" type="MeshInstance" parent="Viewport/Scene/Geometry/Box3"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -1.25, 0.5, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Viewport/Scene/Geometry/Box3"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, -1.25, 0.5, 0 )
@@ -210,7 +207,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/Box3"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 1.25, 0.5, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape3" type="CollisionShape" parent="Viewport/Scene/Geometry/Box3"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, 1.25, 0.5, 0 )
@@ -219,7 +215,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance4" type="MeshInstance" parent="Viewport/Scene/Geometry/Box3"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -9.53674e-07, 1.5, -9.53674e-07 )
 mesh = SubResource( 8 )
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Viewport/Scene/Geometry/Box3"]
 transform = Transform( 1.5, 0, 0, 0, 1, 0, 0, 0, 8, -9.53674e-07, 1.5, -9.53674e-07 )
@@ -232,7 +227,6 @@ collision_mask = 0
 [node name="MeshInstance2" type="MeshInstance" parent="Viewport/Scene/Geometry/Box4"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -1.75, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Viewport/Scene/Geometry/Box4"]
 transform = Transform( 1, 0, 0, 0, 4, 0, 0, 0, 8, -1.75, 0.5, 0 )
@@ -241,7 +235,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/Box4"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 1.75, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape3" type="CollisionShape" parent="Viewport/Scene/Geometry/Box4"]
 transform = Transform( 1, 0, 0, 0, 4, 0, 0, 0, 8, 1.75, 0.5, 0 )
@@ -250,7 +243,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance4" type="MeshInstance" parent="Viewport/Scene/Geometry/Box4"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -1.90735e-06, 2, -9.53674e-07 )
 mesh = SubResource( 9 )
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Viewport/Scene/Geometry/Box4"]
 transform = Transform( 2.5, 0, 0, 0, 1, 0, 0, 0, 8, -9.53674e-07, 2, -9.53674e-07 )
@@ -263,7 +255,6 @@ collision_mask = 0
 [node name="MeshInstance2" type="MeshInstance" parent="Viewport/Scene/Geometry/Box5"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -2.25, 0.5, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Viewport/Scene/Geometry/Box5"]
 transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 8, -2.25, 0.5, 0 )
@@ -272,7 +263,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/Box5"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 2.25, 0.5, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape3" type="CollisionShape" parent="Viewport/Scene/Geometry/Box5"]
 transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 8, 2.25, 0.5, 0 )
@@ -281,7 +271,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance4" type="MeshInstance" parent="Viewport/Scene/Geometry/Box5"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.5, -9.53674e-07 )
 mesh = SubResource( 10 )
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Viewport/Scene/Geometry/Box5"]
 transform = Transform( 3.5, 0, 0, 0, 1, 0, 0, 0, 8, 0, 2.5, -9.53674e-07 )
@@ -294,7 +283,6 @@ collision_mask = 0
 [node name="MeshInstance2" type="MeshInstance" parent="Viewport/Scene/Geometry/Box6"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -1.25, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Viewport/Scene/Geometry/Box6"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, -1.25, 0, 0 )
@@ -303,7 +291,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/Box6"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 1.25, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape3" type="CollisionShape" parent="Viewport/Scene/Geometry/Box6"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, 1.25, 0, 0 )
@@ -316,7 +303,6 @@ collision_mask = 0
 [node name="MeshInstance2" type="MeshInstance" parent="Viewport/Scene/Geometry/Box7"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -1.75, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Viewport/Scene/Geometry/Box7"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, -1.75, 0, 0 )
@@ -325,7 +311,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/Box7"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 1.75, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape3" type="CollisionShape" parent="Viewport/Scene/Geometry/Box7"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, 1.75, 0, 0 )
@@ -338,7 +323,6 @@ collision_mask = 0
 [node name="MeshInstance2" type="MeshInstance" parent="Viewport/Scene/Geometry/Box8"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -2.25, 0.5, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Viewport/Scene/Geometry/Box8"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, -2.25, 0.5, 0 )
@@ -347,7 +331,6 @@ shape = SubResource( 5 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/Box8"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 2.25, 0.5, 0 )
 mesh = SubResource( 7 )
-material/0 = null
 
 [node name="CollisionShape3" type="CollisionShape" parent="Viewport/Scene/Geometry/Box8"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 8, 2.25, 0.5, 0 )
@@ -360,7 +343,6 @@ collision_mask = 0
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/HalfCylinderScaled"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, 0 )
 mesh = ExtResource( 4 )
-material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Viewport/Scene/Geometry/HalfCylinderScaled"]
 shape = SubResource( 11 )
@@ -375,7 +357,6 @@ shape = SubResource( 12 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/InverseHalfCylinderScaled"]
 transform = Transform( 1, -1.69407e-21, 0, 6.77626e-21, 1, 6.9191e-20, 3.55271e-15, 3.55271e-15, 1, 0, 0, 0 )
 mesh = ExtResource( 5 )
-material/0 = null
 
 [node name="HalfCylinder" type="StaticBody" parent="Viewport/Scene/Geometry"]
 transform = Transform( -3.25841e-07, 0, -2, 0, 2, 0, 2, 0, -3.25841e-07, 5.8333, 0, 19.8333 )
@@ -387,7 +368,6 @@ shape = SubResource( 11 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/HalfCylinder"]
 transform = Transform( 1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 0, 0, 0 )
 mesh = ExtResource( 4 )
-material/0 = null
 
 [node name="InverseHalfCylinder" type="StaticBody" parent="Viewport/Scene/Geometry"]
 transform = Transform( -3.89414e-07, -6.51682e-07, -2, -1.74846e-07, -2, 6.51682e-07, -2, 1.74846e-07, 3.89414e-07, 21.8333, 2, 19.8333 )
@@ -399,7 +379,6 @@ shape = SubResource( 12 )
 [node name="MeshInstance3" type="MeshInstance" parent="Viewport/Scene/Geometry/InverseHalfCylinder"]
 transform = Transform( 1, 0, 1.42109e-14, 7.10543e-15, 1, -1.13998e-14, 0, 1.70219e-14, 1, 0, 0, 0 )
 mesh = ExtResource( 5 )
-material/0 = null
 
 [node name="Position3D" type="Position3D" parent="Viewport/Scene/Geometry"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 5, -3 )

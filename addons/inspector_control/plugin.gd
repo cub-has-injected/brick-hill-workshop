@@ -1,0 +1,3 @@
+class_name InspectorControlPlugin
+extends EditorPlugin
+tool 

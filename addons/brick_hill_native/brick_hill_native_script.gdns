@@ -1,8 +1,0 @@
-[gd_resource type="NativeScript" load_steps=2 format=2]
-
-[ext_resource path="res://addons/brick_hill_native/brick_hill_native_library.tres" type="GDNativeLibrary" id=1]
-
-[resource]
-class_name = "BrickHillNative"
-library = ExtResource( 1 )
-script_class_name = "BrickHillNative"

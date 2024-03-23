@@ -104,7 +104,7 @@ albedo_color = Color( 1, 1, 1, 0.705882 )
 
 [sub_resource type="BoxShape" id=3]
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=37]
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 
@@ -120,7 +120,7 @@ flags_unshaded = true
 flags_no_depth_test = true
 albedo_color = Color( 0, 0.647059, 1, 0.25098 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=38]
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 
@@ -197,6 +197,10 @@ func set_disabled(new_disabled: bool) -> void:
 		node.set_disabled(new_disabled)
 "
 
+[sub_resource type="DynamicFont" id=16]
+size = 18
+font_data = ExtResource( 78 )
+
 [sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0, 0.75, 1, 1 )
 border_width_left = 1
@@ -214,10 +218,6 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0, 0.533333, 0.8, 1 )
 corner_detail = 1
-
-[sub_resource type="DynamicFont" id=16]
-size = 18
-font_data = ExtResource( 78 )
 
 [sub_resource type="GDScript" id=17]
 script/source = "extends Control
@@ -523,19 +523,14 @@ func load_scene() -> void:
 		return
 
 	lock = true
-	var response = NativeDialog.open_file_dialog(BRK_FILTER, \"\")
-	if response.size() > 0:
-		emit_signal(\"load_scene\", response[0])
-	lock = false
+	#var response = NativeDialog.open_file_dialog(BRK_FILTER, \"\")
+
 
 func import_brk() -> void:
 	if lock:
 		return
 
 	lock = true
-	var response = NativeDialog.open_file_dialog(BRK_FILTER, \"\")
-	if response.size() > 0:
-		emit_signal(\"import_brk\", response[0])
 	lock = false
 
 func save_scene_as() -> void:
@@ -543,9 +538,6 @@ func save_scene_as() -> void:
 		return
 
 	lock = true
-	var response = NativeDialog.open_save_dialog(BRK_FILTER, \"\")
-	if response.size() > 0:
-		emit_signal(\"save_scene_as\", response[0])
 	lock = false
 "
 
@@ -757,7 +749,7 @@ temp_collision_mask = 2
 
 [node name="PointDebugGeo" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root/CompositeObject"]
 visible = false
-material_override = SubResource( 4 )
+material_override = SubResource( 37 )
 script = ExtResource( 98 )
 
 [node name="VisualOffset" type="Spatial" parent="ViewportSizer/MainViewport/Root/CompositeObject"]
@@ -774,15 +766,15 @@ script = ExtResource( 85 )
 script = ExtResource( 101 )
 
 [node name="BoxSelector" parent="ViewportSizer/MainViewport/Root" instance=ExtResource( 59 )]
-monitorable = false
 collision_layer = 0
 collision_mask = 3
+monitorable = false
 
 [node name="BandBoxSelector" type="Area" parent="ViewportSizer/MainViewport/Root"]
-input_ray_pickable = false
-monitorable = false
 collision_layer = 0
 collision_mask = 3
+input_ray_pickable = false
+monitorable = false
 script = ExtResource( 38 )
 bandbox_control_path = NodePath("../BandBox")
 use_unhandled_input = false
@@ -806,7 +798,7 @@ collision_mask = 1
 
 [node name="PointDebugGeo" type="ImmediateGeometry" parent="ViewportSizer/MainViewport/Root/MovementProxy"]
 visible = false
-material_override = SubResource( 7 )
+material_override = SubResource( 38 )
 script = ExtResource( 98 )
 
 [node name="ResizeProxy" type="Node" parent="ViewportSizer/MainViewport/Root/MovementProxy"]
@@ -834,7 +826,6 @@ widget = 0
 material_override = SubResource( 9 )
 cast_shadow = 0
 mesh = SubResource( 10 )
-material/0 = null
 
 [node name="HoverOverlayViewport" type="Viewport" parent="ViewportSizer"]
 size = Vector2( 1232, 608 )
@@ -855,7 +846,6 @@ layers = 4
 material_override = ExtResource( 79 )
 extra_cull_margin = 16384.0
 mesh = SubResource( 11 )
-material/0 = null
 
 [node name="SelectionOverlayViewport" type="Viewport" parent="ViewportSizer"]
 size = Vector2( 1232, 608 )
@@ -876,7 +866,6 @@ layers = 2
 material_override = ExtResource( 79 )
 extra_cull_margin = 16384.0
 mesh = SubResource( 12 )
-material/0 = null
 
 [node name="UILayout" type="Control" parent="."]
 anchor_right = 1.0
@@ -1072,13 +1061,13 @@ custom_constants/separation = 4
 margin_right = 347.0
 margin_bottom = 25.0
 hint_tooltip = "New Scene"
-custom_styles/hover = SubResource( 14 )
-custom_styles/normal = SubResource( 15 )
-custom_fonts/font = SubResource( 16 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 16 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
 keep_pressed_outside = true
 text = "New"
 __meta__ = {
@@ -1092,13 +1081,13 @@ margin_right = 347.0
 margin_bottom = 54.0
 hint_tooltip = "Load Scene"
 size_flags_horizontal = 3
-custom_styles/hover = SubResource( 14 )
-custom_styles/normal = SubResource( 15 )
-custom_fonts/font = SubResource( 16 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 16 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
 keep_pressed_outside = true
 text = "Load"
 __meta__ = {
@@ -1117,13 +1106,13 @@ margin_right = 171.0
 margin_bottom = 25.0
 hint_tooltip = "Save Scene"
 size_flags_horizontal = 3
-custom_styles/hover = SubResource( 14 )
-custom_styles/normal = SubResource( 15 )
-custom_fonts/font = SubResource( 16 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 16 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
 keep_pressed_outside = true
 text = "Save"
 __meta__ = {
@@ -1137,13 +1126,13 @@ margin_right = 347.0
 margin_bottom = 25.0
 hint_tooltip = "Save Scene As"
 size_flags_horizontal = 3
-custom_styles/hover = SubResource( 14 )
-custom_styles/normal = SubResource( 15 )
-custom_fonts/font = SubResource( 16 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 16 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
 keep_pressed_outside = true
 text = "Save As"
 __meta__ = {
@@ -1219,8 +1208,8 @@ __meta__ = {
 }
 
 [node name="SceneTreeVBox" type="VBoxContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer"]
-margin_right = 363.0
-margin_bottom = 318.0
+margin_right = 379.0
+margin_bottom = 282.0
 
 [node name="WorkspaceHeader" type="Control" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/SceneTreeVBox"]
 margin_right = 363.0
@@ -1290,8 +1279,8 @@ custom_constants/separation = 4
 script = ExtResource( 62 )
 
 [node name="PropertiesVBox" type="VBoxContainer" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer"]
-margin_top = 330.0
-margin_right = 363.0
+margin_top = 294.0
+margin_right = 379.0
 margin_bottom = 648.0
 
 [node name="PropertiesHeader" type="Control" parent="UIControls/SidebarTabs/WorkspaceTab/VSplitContainer/PropertiesVBox"]
@@ -1498,6 +1487,9 @@ __meta__ = {
 }
 
 [node name="ViewportTabBar" parent="UIControls" instance=ExtResource( 16 )]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Viewports" type="Control" parent="UIControls"]
 anchor_right = 1.0
@@ -1509,8 +1501,7 @@ rect_clip_content = true
 focus_mode = 1
 script = SubResource( 24 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 remote_rect_path = NodePath("../../UILayout/BarViewportSplit/BarEditorSplit/VBoxContainer/ViewportRect/ViewportHSplit/ViewportVBox/ViewportsDock")
 lerp_curve = SubResource( 25 )
@@ -1589,6 +1580,7 @@ __meta__ = {
 }
 
 [node name="GraphicsSettings" parent="UIControls" instance=ExtResource( 35 )]
+visible = true
 anchor_left = 0.2
 anchor_top = 0.2
 anchor_right = 0.8
